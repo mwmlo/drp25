@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'com.example.drp25'
-    compileSdk 30
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.drp25"
