@@ -1,7 +1,0 @@
-include:
-  # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Android.latest.gitlab-ci.yml
-  - template: Android.latest.gitlab-ci.yml
-
-variables:
-  ANDROID_COMPILE_SDK: "33"
-  ANDROID_BUILD_TOOLS: "30.0.3"
