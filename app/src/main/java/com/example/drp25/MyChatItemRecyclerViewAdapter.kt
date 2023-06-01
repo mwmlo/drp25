@@ -1,8 +1,8 @@
 package com.example.drp25
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
@@ -14,8 +14,14 @@ import com.example.drp25.databinding.FragmentItemBinding
  * TODO: Replace the implementation with code for your data type.
  */
 class MyChatItemRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
+    private var values: List<String>
 ) : RecyclerView.Adapter<MyChatItemRecyclerViewAdapter.ViewHolder>() {
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateDataset(newDataset: List<String>) {
+        values = newDataset
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -30,9 +36,8 @@ class MyChatItemRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.idView.text = position.toString()
+        holder.contentView.text = values[position]
     }
 
     override fun getItemCount(): Int = values.size
