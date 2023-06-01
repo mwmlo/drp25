@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "612004271041",
+    "project_id": "drp25-d1bbb",
+    "storage_bucket": "drp25-d1bbb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612004271041:android:d820ce240a98671ce85540",
+        "android_client_info": {
+          "package_name": "com.example.DRP25"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLZ_ceOgGUr11qM34rHZefSJAUcvTQBjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
