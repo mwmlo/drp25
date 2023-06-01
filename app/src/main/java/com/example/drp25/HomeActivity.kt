@@ -22,8 +22,8 @@ class HomeActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        binding.fab.setOnClickListener {
-            matchesRef.child("match2").setValue("Pierre")
+        binding.matchButton.setOnClickListener {
+            matchesRef.child("Pierre").setValue("1")
         }
 
     }
