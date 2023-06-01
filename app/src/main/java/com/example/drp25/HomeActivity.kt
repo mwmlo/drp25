@@ -9,6 +9,15 @@ import com.google.firebase.database.FirebaseDatabase
 
 class HomeActivity : AppCompatActivity() {
 
+    // Get match for demo
+    private val NAMES = listOf<String>("Pierre", "Kevin", "Martha", "India", "Jerry", "Simon")
+    private var i = 0
+    private fun getMatch(): String {
+        val match = NAMES.get(i)
+        i = (i+1)%(NAMES.size)
+        return match
+    }
+
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
 
@@ -26,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
         binding.matchButton.setOnClickListener {
             val key = matchesRef.push().key
             if (key != null) {
-                matchesRef.child(key).setValue("Pierre")
+                matchesRef.child(key).setValue(getMatch())
             }
         }
 

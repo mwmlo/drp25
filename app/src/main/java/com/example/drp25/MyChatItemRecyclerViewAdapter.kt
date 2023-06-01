@@ -36,18 +36,16 @@ class MyChatItemRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.idView.text = position.toString()
-        holder.contentView.text = values[position]
+        holder.contentView.text = "Chat with " + values[position]
     }
 
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
         val contentView: TextView = binding.content
 
         override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+            return super.toString() + "Chat with " + contentView.text
         }
     }
 
