@@ -24,7 +24,10 @@ class HomeActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         binding.matchButton.setOnClickListener {
-            matchesRef.child("Pierre").setValue("1")
+            val key = matchesRef.push().key
+            if (key != null) {
+                matchesRef.child(key).setValue("Pierre")
+            }
         }
 
     }
