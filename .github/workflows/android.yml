@@ -17,12 +17,26 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: gradle
-    - name: Grant execute permission for gradlew
+    - name: grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
+    - name: build with gradle
       run: ./gradlew build
+  test:
+    name: run unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+      - name: run tests
+        run: ./gradlew test --stacktrace 
   apk:
-    name: generate APK
+    name: generate apk
     needs: build
     runs-on: ubuntu-latest
     steps:
