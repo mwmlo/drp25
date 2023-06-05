@@ -3,9 +3,11 @@ package com.example.drp25
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.size
 import com.example.drp25.databinding.ActivityChatBinding
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.logger.ChatLogLevel
+import io.getstream.chat.android.client.models.Channel
 import io.getstream.chat.android.client.models.Filters
 import io.getstream.chat.android.client.models.User
 import io.getstream.chat.android.offline.model.message.attachments.UploadAttachmentsNetworkType
@@ -61,6 +63,31 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
+        // Pub channel creation
+        val channelClient = client.channel(channelType = "messaging", channelId = "general")
+
+        channelClient.create(memberIds = listOf("demo-user", "another-user", "a-third-user"), extraData = emptyMap()).enqueue { result ->
+            if (result.isSuccess) {
+                val newChannel: Channel = result.data()
+            } else {
+                // Handle result.error()
+            }
+        }
+
+        // Channel for multiple members
+        client.createChannel(
+            channelType = "messaging",
+            channelId = "",
+            memberIds = listOf("thierry", "tomasso", user.id),
+            extraData = emptyMap()
+        ).enqueue { result ->
+            if (result.isSuccess) {
+                val channel = result.data()
+            } else {
+                // Handle result.error()
+            }
+        }
+
         // Step 4 - Set the channel list filter and order
         // This can be read as requiring only channels whose "type" is "messaging" AND
         // whose "members" include our "user.id"
@@ -71,11 +98,16 @@ class ChatActivity : AppCompatActivity() {
         val viewModelFactory = ChannelListViewModelFactory(filter, ChannelListViewModel.DEFAULT_SORT)
         val viewModel: ChannelListViewModel by viewModels { viewModelFactory }
 
+        //System.out.print(client.queryChannels().execute().data().size)
+        // System.out.println(binding.channelListView.size)
+
         // Step 5 - Connect the ChannelListViewModel to the ChannelListView, loose
         //          coupling makes it easy to customize
         viewModel.bindView(binding.channelListView, this)
         binding.channelListView.setChannelItemClickListener { channel ->
             startActivity(ChannelActivity.newIntent(this, channel))
         }
+
+
     }
 }
