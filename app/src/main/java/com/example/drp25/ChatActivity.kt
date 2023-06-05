@@ -10,6 +10,7 @@ import io.getstream.chat.android.client.logger.ChatLogLevel
 import io.getstream.chat.android.client.models.Channel
 import io.getstream.chat.android.client.models.Filters
 import io.getstream.chat.android.client.models.User
+import io.getstream.chat.android.offline.extensions.watchChannelAsState
 import io.getstream.chat.android.offline.model.message.attachments.UploadAttachmentsNetworkType
 import io.getstream.chat.android.offline.plugin.configuration.Config
 import io.getstream.chat.android.offline.plugin.factory.StreamOfflinePluginFactory
@@ -46,7 +47,7 @@ class ChatActivity : AppCompatActivity() {
             .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
             .build()
 
-        // Step 3 - Authenticate and connect the user
+        // Step 3 - Authenticate and connect the user (MVP, not for production!)
         val user = User(
             id = "demo-user",
             name = "Demo User",
@@ -63,26 +64,15 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
-        // Pub channel creation
-        val channelClient = client.channel(channelType = "messaging", channelId = "general")
-
-        channelClient.create(memberIds = listOf("demo-user", "another-user", "a-third-user"), extraData = emptyMap()).enqueue { result ->
+        val channelClient = client.channel(channelType = "messaging", channelId = "friend")
+        val extraData = mutableMapOf<String, Any>(
+            "name" to "My first friend"
+        )
+        // Creating a channel with the low level client
+        channelClient.create(memberIds = emptyList(), extraData = extraData).enqueue { result ->
             if (result.isSuccess) {
-                val newChannel: Channel = result.data()
-            } else {
-                // Handle result.error()
-            }
-        }
-
-        // Channel for multiple members
-        client.createChannel(
-            channelType = "messaging",
-            channelId = "",
-            memberIds = listOf("thierry", "tomasso", user.id),
-            extraData = emptyMap()
-        ).enqueue { result ->
-            if (result.isSuccess) {
-                val channel = result.data()
+                val channel: Channel = result.data()
+                // Use channel by calling methods on channelClient
             } else {
                 // Handle result.error()
             }
@@ -91,7 +81,7 @@ class ChatActivity : AppCompatActivity() {
         // Step 4 - Set the channel list filter and order
         // This can be read as requiring only channels whose "type" is "messaging" AND
         // whose "members" include our "user.id"
-        val filter = Filters.and(
+        val filter = Filters.or(
             Filters.eq("type", "messaging"),
             Filters.`in`("members", listOf(user.id))
         )
