@@ -46,14 +46,20 @@ class ChatActivity : AppCompatActivity() {
 
         // Step 3 - Authenticate and connect the user
         val user = User(
-            id = "tutorial-droid",
-            name = "Tutorial Droid",
+            id = "demo-user",
+            name = "Demo User",
             image = "https://bit.ly/2TIt8NR"
         )
         client.connectUser(
             user = user,
-            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidHV0b3JpYWwtZHJvaWQifQ.NhEr0hP9W9nwqV7ZkdShxvi02C5PR7SJE7Cs4y7kyqg"
-        ).enqueue()
+            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGVtby11c2VyIn0.WX_Ovhfcj7wXRFdRd2uu9rqHK8shSNwI9jD6x-Tdl7A"
+        ).enqueue { result ->
+            if (result.isSuccess) {
+                print("Success")
+            } else {
+                print("Failed to auth user")
+            }
+        }
 
         // Step 4 - Set the channel list filter and order
         // This can be read as requiring only channels whose "type" is "messaging" AND
