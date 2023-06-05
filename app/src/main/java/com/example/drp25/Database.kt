@@ -8,6 +8,7 @@ import com.google.firebase.database.ValueEventListener
 
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
 private val matcher: Matcher = BasicMatcher()
+private val INTERESTS = listOf("ballet", "books")
 
 private fun snapshotListener(ref: DatabaseReference, callback: (DataSnapshot) -> Unit) {
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -76,7 +77,6 @@ fun updateMatches(uniId: String, userId: String, snapshot: DataSnapshot) {
     }
 }
 
-
 fun getMatches(uniId: String, userId: String): List<String> {
     val matchesRef = unisRef.child(uniId).child("users").child(userId).child("matches")
     return getValueData(matchesRef)
@@ -100,6 +100,11 @@ fun addUser(uniId: String, name: String, nationality: String): String? {
             }
 
         })
+        INTERESTS.forEach { interest ->
+            run {
+                userRef.child("interests").child(interest).setValue(false)
+            }
+        }
     }
     return userId
 }
