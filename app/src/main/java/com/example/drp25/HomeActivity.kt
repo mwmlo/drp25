@@ -1,6 +1,9 @@
 package com.example.drp25
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.ui.AppBarConfiguration
@@ -39,6 +42,13 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        val chatbtn = findViewById<Button>(R.id.chatButton)
+        chatbtn.setOnClickListener {view ->
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
+        }
     }
+
+
 
 }

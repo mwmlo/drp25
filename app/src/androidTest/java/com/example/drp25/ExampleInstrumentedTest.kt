@@ -19,6 +19,7 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        System.out.println("Running the instrumented test");
         assertEquals("com.example.drp25", appContext.packageName)
     }
 }
