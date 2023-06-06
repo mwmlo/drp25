@@ -17,12 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize" />
 
+        <!--
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:text="Your current chats" />
+        -->
     </com.google.android.material.appbar.AppBarLayout>
 
     <Button
@@ -30,7 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:text="Meet someone new!" />
+        android:text="@string/home_match_button"
+        android:textSize="24sp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

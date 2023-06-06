@@ -2,10 +2,14 @@
     <string name="app_name">DRP25</string>
     <string name="title_activity_home">HomeActivity</string>
 
-    <!-- Strings visible on match page. -->
-    <string name="match">matched!</string>
+    <!-- Home Page -->
+    <string name="home_match_button">meet someone new!</string>
+
+    <!-- Match Page -->
+    <string name="match_matched">matched!</string>
     <string name="match_caption">Swipe to see your matches.</string>
     <string name="match_prompt">Send a stamp to start a chat!</string>
+    <string name="match_send_button">send</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

@@ -12,22 +12,22 @@
         android:id="@+id/matched"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/match"
+        android:layout_margin="@dimen/text_margin_32"
+        android:text="@string/match_matched"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="48sp"
-        android:layout_margin="@dimen/text_margin_32" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/match_caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/matched"
+        android:layout_margin="@dimen/text_margin_32"
         android:text="@string/match_caption"
         android:textAlignment="center"
         android:textSize="24sp"
-        android:layout_margin="@dimen/text_margin_32"/>
+        app:layout_constraintTop_toBottomOf="@id/matched" />
 
     <HorizontalScrollView
         android:id="@+id/scrollView"
@@ -42,14 +42,18 @@
         app:layout_constraintWidth_percent="0.6">
 
         <LinearLayout
+            android:id="@+id/match_matches"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <!-- Add your views here -->
+            <!-- Views -->
+
+            <!--
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,25 +63,53 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Child 2" />
+            -->
 
         </LinearLayout>
 
     </HorizontalScrollView>
 
     <TextView
+        android:id="@+id/match_prompt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/scrollView"
         android:text="@string/match_prompt"
         android:textAlignment="center"
         android:textSize="24sp"
-        android:layout_margin="@dimen/text_margin_32"/>
+        android:layout_margin="@dimen/text_margin_32"
+        app:layout_constraintTop_toBottomOf="@id/scrollView" />
+
+    <!-- Stamp Display
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/match_prompt"
+        app:layout_constraintBottom_toTopOf="@id/match_send_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Child 1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Child 1" />
+        </TableRow>
+    </TableLayout>
+    -->
 
     <Button
+        android:id="@+id/match_send_button"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_margin="@dimen/button_send"
+        android:text="@string/match_send_button"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
