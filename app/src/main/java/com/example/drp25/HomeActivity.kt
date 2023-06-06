@@ -2,6 +2,7 @@ package com.example.drp25
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +46,7 @@ class HomeActivity : AppCompatActivity() {
 //        }
         binding.homeMatchButton.setOnClickListener { _ ->
             val intent = Intent(this, MatchActivity::class.java)
+            addInterest("imperialId", "-NXFxXFaQ7eJRjX5O-aF", "ballet")
             startActivity(intent)
         }
 
