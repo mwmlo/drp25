@@ -3,6 +3,7 @@ package com.example.drp25
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -26,7 +27,8 @@ class MatchActivity : AppCompatActivity() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         // update view
                         val entry = TextView(context)
-                        entry.text = snapshot.getValue(String::class.java)
+                        val text = snapshot.getValue(String::class.java)
+                        entry.text = text
                         entry.setPadding(16, 16, 16, 16)
                         linearLayout.addView(entry)
                     }
@@ -46,7 +48,7 @@ class MatchActivity : AppCompatActivity() {
 
         context = this
         linearLayout = findViewById(R.id.match_matches)
-        matchObservers.add(observer)
+        addMatchObserver(observer)
     }
 
 }

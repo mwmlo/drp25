@@ -16,6 +16,11 @@ val gson = Gson()
 var matches = listOf<String>()
 val matchObservers = mutableListOf<Observer>()
 
+fun addMatchObserver(observer: Observer) {
+    matchObservers.add(observer)
+    observer.notify(matches)
+}
+
 fun listenToUser(uniId: String, userId: String) {
     val userRef = unisRef.child(uniId).child("users").child(userId)
     userRef.addValueEventListener(object: ValueEventListener {
@@ -32,7 +37,7 @@ fun listenToUser(uniId: String, userId: String) {
         override fun onDataChange(snapshot: DataSnapshot) {
             val value = snapshot.getValue(String::class.java)
             matches = gson.fromJson(value, Array<String>::class.java).toList()
-            matchObservers.forEach{observer ->  observer.notify(matches)}
+            matchObservers.forEach{observer -> observer.notify(matches)}
         }
 
         override fun onCancelled(error: DatabaseError) {
