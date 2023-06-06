@@ -44,7 +44,7 @@ class HomeActivity : AppCompatActivity() {
 //            }
 //        }
         // indicates this is the person logged in
-        listenToUser("imperialId", "-NXGCPbXSUP2NX9qUO6C")
+        listenToUser("imperialId", "-NXGEo30rzoWUgTYoYi_")
         binding.homeMatchButton.setOnClickListener { _ ->
             val intent = Intent(this, MatchActivity::class.java)
             startActivity(intent)

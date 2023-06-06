@@ -9,11 +9,11 @@ import com.google.gson.Gson
 
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
 private val matcher: Matcher = BasicMatcher()
-private val gson = Gson()
+val gson = Gson()
 
 fun listenToUser(uniId: String, userId: String) {
     val userRef = unisRef.child(uniId).child("users").child(userId)
-    userRef.child("interests").addValueEventListener(object: ValueEventListener {
+    userRef.addValueEventListener(object: ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             updateMatches(uniId, userId, snapshot)
         }
