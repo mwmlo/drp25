@@ -4,11 +4,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ValueEventListener
 
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
 private val matcher: Matcher = BasicMatcher()
-private val INTERESTS = listOf("ballet", "books")
 
 private fun snapshotListener(ref: DatabaseReference, callback: (DataSnapshot) -> Unit) {
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -46,20 +46,46 @@ fun getKeyData(ref: DatabaseReference): List<String> {
     return dataList
 }
 
+private fun getSet(ref: DatabaseReference): Set<String> {
+    val snapshot = getSnapshot(ref)
+    val dataSet: MutableSet<String> = mutableSetOf()
+    if (snapshot != null) {
+        for (childSnapshot in snapshot.children) {
+            val element = childSnapshot.key
+            if (element != null) {
+                dataSet.add(element)
+            }
+        }
+    }
+    return dataSet
+}
+
 private fun addMatch(uniId: String, user1Id: String, user2Id: String) {
     val usersRef = unisRef.child(uniId).child("users")
-    val user1MatchesRef = usersRef.child(user1Id).child("matches")
-    val user2MatchesRef = usersRef.child(user2Id).child("matches")
-    user1MatchesRef.child(user2Id).setValue("")
-    user2MatchesRef.child(user1Id).setValue("")
+    val matches1Ref = usersRef.child(user1Id).child("matches")
+    val matches2Ref = usersRef.child(user2Id).child("matches")
+
+    val matches1 = getSet(matches1Ref).toMutableSet()
+    val matches2 = getSet(matches2Ref).toMutableSet()
+    matches1.add(user2Id)
+    matches2.add(user1Id)
+
+    matches1Ref.setValue(matches1)
+    matches2Ref.setValue(matches2)
 }
 
 private fun removeMatch(uniId: String, user1Id: String, user2Id: String) {
     val usersRef = unisRef.child(uniId).child("users")
-    val user1MatchesRef = usersRef.child(user1Id).child("matches")
-    val user2MatchesRef = usersRef.child(user2Id).child("matches")
-    user1MatchesRef.child(user2Id).removeValue()
-    user2MatchesRef.child(user1Id).removeValue()
+    val matches1Ref = usersRef.child(user1Id).child("matches")
+    val matches2Ref = usersRef.child(user2Id).child("matches")
+
+    val matches1 = getSet(matches1Ref).toMutableSet()
+    val matches2 = getSet(matches2Ref).toMutableSet()
+    matches1.remove(user2Id)
+    matches2.remove(user1Id)
+
+    matches1Ref.setValue(matches1)
+    matches2Ref.setValue(matches2)
 }
 
 fun updateMatches(uniId: String, userId: String, snapshot: DataSnapshot) {
@@ -100,21 +126,23 @@ fun addUser(uniId: String, name: String, nationality: String): String? {
             }
 
         })
-        INTERESTS.forEach { interest ->
-            run {
-                userRef.child("interests").child(interest).setValue(false)
-            }
-        }
+        userRef.child("interests").setValue(setOf<String>())
     }
     return userId
 }
 
-fun addInterest(uniId: String, userId: String, interest: String) {
-    modifyInterest(uniId, userId, interest, true)
+fun addInterest(uniId: String, userId: String, newInterest: String) {
+    val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
+    val interests = getSet(interestsRef).toMutableSet()
+    interests.add(newInterest)
+    interestsRef.setValue(interests)
 }
 
-fun removeInterest(uniId: String, userId: String, interest: String) {
-    modifyInterest(uniId, userId, interest, false)
+fun removeInterest(uniId: String, userId: String, oldInterest: String) {
+    val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
+    val interests = getSet(interestsRef).toMutableSet()
+    interests.remove(oldInterest)
+    interestsRef.setValue(interests)
 }
 
 private fun modifyInterest(uniId: String, userId: String, interest: String, boolean: Boolean) {
