@@ -22,10 +22,34 @@ import io.getstream.chat.android.ui.channel.list.viewmodel.ChannelListViewModel
 import io.getstream.chat.android.ui.channel.list.viewmodel.bindView
 import io.getstream.chat.android.ui.channel.list.viewmodel.factory.ChannelListViewModelFactory
 
+import com.example.drp25.Backend
 
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
+
+    private fun createDemoChannel(client: ChatClient, user: User) {
+        // Create a fake demo channel for the user
+        client.createChannel(
+            channelType = "messaging",
+            channelId = "124",
+            memberIds = listOf(user.id, "friend-1"),
+            extraData = emptyMap()
+        ).enqueue { result ->
+            if (result.isSuccess) {
+                Log.e("createChannel", "success")
+            } else {
+                Log.e("createChannel", "fail")
+                Log.e("createChannel", result.toString())
+            }
+        }
+    }
+
+    private fun createDemoFriends(client: ChatClient, user: User) {
+        // Create friends and channels
+        Backend.createFriend("friend-1")
+        createDemoChannel(client, user)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,25 +85,11 @@ class ChatActivity : AppCompatActivity() {
         // Step 3 - Authenticate and connect the user (MVP)
         client.connectUser(
             user = user,
-            token = client.devToken(user.id)
-//            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGVtby11c2VyIn0.WX_Ovhfcj7wXRFdRd2uu9rqHK8shSNwI9jD6x-Tdl7A"
+            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGVtby11c2VyIn0.WX_Ovhfcj7wXRFdRd2uu9rqHK8shSNwI9jD6x-Tdl7A"
         ).enqueue { connectResult ->
             if (connectResult.isSuccess) {
                 Log.e("connectUser", "success")
-                // Create a fake demo channel for the user
-                client.createChannel(
-                    channelType = "messaging",
-                    channelId = "123",
-                    memberIds = listOf(user.id, "friend-1"),
-                    extraData = emptyMap()
-                ).enqueue { result ->
-                    if (result.isSuccess) {
-                        Log.e("createChannel", "success")
-                    } else {
-                        Log.e("createChannel", "fail")
-                        Log.e("createChannel", result.toString())
-                    }
-                }
+                createDemoFriends(client, user)
             } else {
                 Log.e("connectUser", "fail")
                 Log.e("connectUser", connectResult.toString())
