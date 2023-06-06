@@ -79,7 +79,7 @@
         android:layout_margin="@dimen/text_margin_32"
         app:layout_constraintTop_toBottomOf="@id/scrollView" />
 
-    <!--
+    <!-- Stamp Display
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
