@@ -43,10 +43,10 @@ class HomeActivity : AppCompatActivity() {
 //                matchesRef.child(key).setValue(getMatch())
 //            }
 //        }
+        // indicates this is the person logged in
+        listenToUser("imperialId", "-NXGCPbXSUP2NX9qUO6C")
         binding.homeMatchButton.setOnClickListener { _ ->
             val intent = Intent(this, MatchActivity::class.java)
-//            addInterest("imperialId", "-NXGCPbSl1-5R6GZXftG", "stargazing")
-//            addInterest("imperialId", "-NXGCPbXSUP2NX9qUO6C", "stargazing")
             startActivity(intent)
         }
 

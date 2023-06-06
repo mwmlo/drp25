@@ -1,5 +1,6 @@
 package com.example.drp25
 
+import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -9,6 +10,20 @@ import com.google.gson.Gson
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
 private val matcher: Matcher = BasicMatcher()
 private val gson = Gson()
+
+fun listenToUser(uniId: String, userId: String) {
+    val userRef = unisRef.child(uniId).child("users").child(userId)
+    userRef.child("interests").addValueEventListener(object: ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            updateMatches(uniId, userId, snapshot)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            TODO("Not yet implemented")
+        }
+
+    })
+}
 
 private fun addMatch(uniId: String, user1Id: String, user2Id: String) {
     val usersRef = unisRef.child(uniId).child("users")
@@ -123,7 +138,8 @@ fun addUser(uniId: String, name: String, nationality: String): String? {
         userRef.child("nationality").setValue(nationality)
         userRef.child("interests").addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                //updateMatches(uniId, userId, snapshot)
+                Log.i("addUser", "calling update matches")
+                updateMatches(uniId, userId, snapshot)
             }
 
             override fun onCancelled(error: DatabaseError) {
