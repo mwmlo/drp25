@@ -123,7 +123,7 @@ fun addUser(uniId: String, name: String, nationality: String): String? {
         userRef.child("nationality").setValue(nationality)
         userRef.child("interests").addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                updateMatches(uniId, userId, snapshot)
+                //updateMatches(uniId, userId, snapshot)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -132,6 +132,7 @@ fun addUser(uniId: String, name: String, nationality: String): String? {
 
         })
         userRef.child("interests").setValue(gson.toJson(listOf<String>()))
+        userRef.child("matches").setValue(gson.toJson(listOf<String>()))
     }
     return userId
 }

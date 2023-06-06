@@ -35,7 +35,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 //        setSupportActionBar(binding.toolbar)
-        addInterest("imperialId", "-NXFgQjhZca8T4PMOU8M", "ballet")
 
         /* Defines function of "Meet Someone New" button. */
 //        binding.matchButton.setOnClickListener {
@@ -46,7 +45,8 @@ class HomeActivity : AppCompatActivity() {
 //        }
         binding.homeMatchButton.setOnClickListener { _ ->
             val intent = Intent(this, MatchActivity::class.java)
-            addInterest("imperialId", "-NXFxXFaQ7eJRjX5O-aF", "ballet")
+//            addInterest("imperialId", "-NXGCPbSl1-5R6GZXftG", "stargazing")
+//            addInterest("imperialId", "-NXGCPbXSUP2NX9qUO6C", "stargazing")
             startActivity(intent)
         }
 
