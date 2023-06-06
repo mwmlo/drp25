@@ -46,18 +46,9 @@ fun getKeyData(ref: DatabaseReference): List<String> {
     return dataList
 }
 
-private fun getSet(ref: DatabaseReference): Set<String> {
+private fun getList(ref: DatabaseReference): List<String>? {
     val snapshot = getSnapshot(ref)
-    val dataSet: MutableSet<String> = mutableSetOf()
-    if (snapshot != null) {
-        for (childSnapshot in snapshot.children) {
-            val element = childSnapshot.key
-            if (element != null) {
-                dataSet.add(element)
-            }
-        }
-    }
-    return dataSet
+    return snapshot?.getValue(object : GenericTypeIndicator<List<String>>() {})
 }
 
 private fun addMatch(uniId: String, user1Id: String, user2Id: String) {
@@ -65,10 +56,10 @@ private fun addMatch(uniId: String, user1Id: String, user2Id: String) {
     val matches1Ref = usersRef.child(user1Id).child("matches")
     val matches2Ref = usersRef.child(user2Id).child("matches")
 
-    val matches1 = getSet(matches1Ref).toMutableSet()
-    val matches2 = getSet(matches2Ref).toMutableSet()
-    matches1.add(user2Id)
-    matches2.add(user1Id)
+    val matches1 = getList(matches1Ref)?.toMutableList()
+    val matches2 = getList(matches2Ref)?.toMutableList()
+    matches1?.add(user2Id)
+    matches2?.add(user1Id)
 
     matches1Ref.setValue(matches1)
     matches2Ref.setValue(matches2)
@@ -79,10 +70,10 @@ private fun removeMatch(uniId: String, user1Id: String, user2Id: String) {
     val matches1Ref = usersRef.child(user1Id).child("matches")
     val matches2Ref = usersRef.child(user2Id).child("matches")
 
-    val matches1 = getSet(matches1Ref).toMutableSet()
-    val matches2 = getSet(matches2Ref).toMutableSet()
-    matches1.remove(user2Id)
-    matches2.remove(user1Id)
+    val matches1 = getList(matches1Ref)?.toMutableList()
+    val matches2 = getList(matches2Ref)?.toMutableList()
+    matches1?.remove(user2Id)
+    matches2?.remove(user1Id)
 
     matches1Ref.setValue(matches1)
     matches2Ref.setValue(matches2)
@@ -133,15 +124,15 @@ fun addUser(uniId: String, name: String, nationality: String): String? {
 
 fun addInterest(uniId: String, userId: String, newInterest: String) {
     val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
-    val interests = getSet(interestsRef).toMutableSet()
-    interests.add(newInterest)
+    val interests = getList(interestsRef)?.toMutableList()
+    interests?.add(newInterest)
     interestsRef.setValue(interests)
 }
 
 fun removeInterest(uniId: String, userId: String, oldInterest: String) {
     val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
-    val interests = getSet(interestsRef).toMutableSet()
-    interests.remove(oldInterest)
+    val interests = getList(interestsRef)?.toMutableList()
+    interests?.remove(oldInterest)
     interestsRef.setValue(interests)
 }
 

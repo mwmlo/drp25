@@ -31,6 +31,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        addInterest("imperialId", "-NXFgQjhZca8T4PMOU8M", "ballet")
 
         binding.matchButton.setOnClickListener {
             val key = matchesRef.push().key
