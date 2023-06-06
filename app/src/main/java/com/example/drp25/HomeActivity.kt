@@ -11,6 +11,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.example.drp25.databinding.ActivityHomeBinding
 import com.google.firebase.database.FirebaseDatabase
 
+// our logged in user
+val UNI_ID = "imperialId"
+val USER_ID = "-NXGEo30rzoWUgTYoYi_"
+
 class HomeActivity : AppCompatActivity() {
 
     // Get match for demo
@@ -45,7 +49,7 @@ class HomeActivity : AppCompatActivity() {
 //        }
 
         // indicates this is the person logged in (currently Kevin)
-        listenToUser("imperialId", "-NXGEo30rzoWUgTYoYi_")
+        listenToUser(UNI_ID, USER_ID)
 
         binding.homeMatchButton.setOnClickListener { _ ->
             val intent = Intent(this, MatchActivity::class.java)

@@ -1,21 +1,38 @@
 package com.example.drp25
 
+import android.app.Activity
+import android.content.Context
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
+import okhttp3.internal.notify
 
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
 private val matcher: Matcher = BasicMatcher()
 val gson = Gson()
+var matches = listOf<String>()
+val matchObservers = mutableListOf<Observer>()
 
 fun listenToUser(uniId: String, userId: String) {
     val userRef = unisRef.child(uniId).child("users").child(userId)
     userRef.addValueEventListener(object: ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             updateMatches(uniId, userId, snapshot)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            TODO("Not yet implemented")
+        }
+
+    })
+    userRef.child("matches").addValueEventListener(object: ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val value = snapshot.getValue(String::class.java)
+            matches = gson.fromJson(value, Array<String>::class.java).toList()
+            matchObservers.forEach{observer ->  observer.notify(matches)}
         }
 
         override fun onCancelled(error: DatabaseError) {
