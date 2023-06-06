@@ -33,21 +33,25 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
+//        setSupportActionBar(binding.toolbar)
         addInterest("imperialId", "-NXFgQjhZca8T4PMOU8M", "ballet")
 
-        binding.matchButton.setOnClickListener {
-            val key = matchesRef.push().key
-            if (key != null) {
-                matchesRef.child(key).setValue(getMatch())
-            }
-        }
-
-        val chatbtn = findViewById<Button>(R.id.chatButton)
-        chatbtn.setOnClickListener {view ->
-            val intent = Intent(this, ChatActivity::class.java)
+        /* Defines function of "Meet Someone New" button. */
+//        binding.matchButton.setOnClickListener {
+//            val key = matchesRef.push().key
+//            if (key != null) {
+//                matchesRef.child(key).setValue(getMatch())
+//            }
+//        }
+        binding.homeMatchButton.setOnClickListener { _ ->
+            val intent = Intent(this, MatchActivity::class.java)
             startActivity(intent)
         }
+
+//        binding.chatButton.setOnClickListener { _ ->
+//            val intent = Intent(this, ChatActivity::class.java)
+//            startActivity(intent)
+//        }
     }
 
 
