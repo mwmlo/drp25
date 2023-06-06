@@ -61,7 +61,8 @@ class ChatActivity : AppCompatActivity() {
         // Step 3 - Authenticate and connect the user (MVP)
         client.connectUser(
             user = user,
-            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGVtby11c2VyIn0.WX_Ovhfcj7wXRFdRd2uu9rqHK8shSNwI9jD6x-Tdl7A"
+            token = client.devToken(user.id)
+//            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGVtby11c2VyIn0.WX_Ovhfcj7wXRFdRd2uu9rqHK8shSNwI9jD6x-Tdl7A"
         ).enqueue { connectResult ->
             if (connectResult.isSuccess) {
                 Log.e("connectUser", "success")
@@ -69,7 +70,7 @@ class ChatActivity : AppCompatActivity() {
                 client.createChannel(
                     channelType = "messaging",
                     channelId = "123",
-                    memberIds = listOf(user.id),
+                    memberIds = listOf(user.id, "friend-1"),
                     extraData = emptyMap()
                 ).enqueue { result ->
                     if (result.isSuccess) {
