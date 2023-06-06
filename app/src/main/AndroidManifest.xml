@@ -19,6 +19,11 @@
             android:name=".ChannelActivity"
             android:exported="false" />
         <activity
+            android:name=".ChatActivity"
+            android:exported="true"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/Theme.DRP25" />
+        <activity
             android:name=".HomeActivity"
             android:exported="true"
             android:label="@string/title_activity_home"
@@ -28,11 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ChatActivity"
-            android:exported="false"
-            android:label="@string/title_activity_chat"
-            android:theme="@style/Theme.DRP25" />
     </application>
 
 </manifest>
