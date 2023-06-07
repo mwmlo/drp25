@@ -33,7 +33,7 @@ class ChatActivity : AppCompatActivity() {
         client.createChannel(
             channelType = "messaging",
             channelId = "124",
-            memberIds = listOf(user.id, "friend-1"),
+            memberIds = listOf(user.id, "friend-1", "friend-2"),
             extraData = emptyMap()
         ).enqueue { result ->
             if (result.isSuccess) {
@@ -48,11 +48,15 @@ class ChatActivity : AppCompatActivity() {
     private fun createDemoFriends(client: ChatClient, user: User) {
         // Create friends and channels
         Backend.createFriend("friend-1")
+        Backend.createFriend("friend-2")
+        Log.e("Made friends", "success")
         createDemoChannel(client, user)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.e("ServerInit", "success")
+        Backend.serverInit()
 
         // MVP: Create a demo user who is logged in
         val user = User(
@@ -81,6 +85,7 @@ class ChatActivity : AppCompatActivity() {
             .withPlugin(offlinePluginFactory)
             .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
             .build()
+
 
         // Step 3 - Authenticate and connect the user (MVP)
         client.connectUser(
