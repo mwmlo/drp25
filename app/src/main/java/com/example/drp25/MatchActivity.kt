@@ -1,9 +1,11 @@
 package com.example.drp25
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -49,6 +51,12 @@ class MatchActivity : AppCompatActivity() {
         context = this
         linearLayout = findViewById(R.id.match_matches)
         addMatchObserver(observer)
+
+        val sendBtn = findViewById<Button>(R.id.match_send_button)
+        sendBtn.setOnClickListener { view ->
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 }
