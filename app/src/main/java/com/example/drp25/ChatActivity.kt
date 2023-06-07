@@ -100,7 +100,7 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
-        /* Create views for the list of channels */
+        /* Connects list header + list to the view.  */
         val channelListHeaderViewModel: ChannelListHeaderViewModel by viewModels()
         val channelListFactory: ChannelListViewModelFactory = ChannelListViewModelFactory(
             filter = Filters.and(
@@ -114,6 +114,12 @@ class ChatActivity : AppCompatActivity() {
 
         channelListHeaderViewModel.bindView(binding.channelListHeaderView, this)
         channelListViewModel.bindView(binding.channelListView, this)
+
+        /* When the user avatar is clicked, the user is taken to their profile page. */
+        binding.channelListHeaderView.setOnUserAvatarClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
 
         /* When a channel is clicked, the user is taken to the channel. */
         binding.channelListView.setChannelItemClickListener { channel ->
