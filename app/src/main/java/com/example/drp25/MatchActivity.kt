@@ -56,7 +56,7 @@ class MatchActivity : AppCompatActivity() {
         /* Functionality for SEND button -> takes user to chat page. */
         val sendBtn = findViewById<Button>(R.id.match_send_button)
         sendBtn.setOnClickListener { view ->
-            val intent = Intent(this, ChatActivity::class.java)
+            val intent = Intent(this, ChannelActivity::class.java)
             startActivity(intent)
         }
     }

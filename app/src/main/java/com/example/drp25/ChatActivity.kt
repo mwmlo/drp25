@@ -84,7 +84,7 @@ class ChatActivity : AppCompatActivity() {
                 client.createChannel(
                     channelType = "messaging",
                     channelId = "123",
-                    memberIds = listOf(user.id),
+                    memberIds = listOf(user.id, "tim"),
                     extraData = emptyMap()
                 ).enqueue { result ->
                     if (result.isSuccess) {

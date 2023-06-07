@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 
-import com.example.drp25.placeholder.PlaceholderContent.PlaceholderItem
+//import com.example.drp25. 5.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.drp25.databinding.FragmentItemBinding
 
 /**
