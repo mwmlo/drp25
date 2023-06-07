@@ -31,7 +31,8 @@ class MatchActivity : AppCompatActivity() {
                         val entry = TextView(context)
                         val text = snapshot.getValue(String::class.java)
                         entry.text = text
-                        entry.setPadding(16, 16, 16, 16)
+                        entry.setPadding(128, 16, 128, 16)
+                        entry.textSize = 48f
                         linearLayout.addView(entry)
                     }
 
