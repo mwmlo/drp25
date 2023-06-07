@@ -28,7 +28,22 @@ class Backend {
 
             // Add members with ids "thierry" and "josh"
             // Add members with ids "thierry" and "josh"
-            client.addMembers("message", "124", listOf<String>(userId))
+            // I think this tries to add these members but because they don't
+            // exist in the server, nothing can be added. 123 is the bottom channel
+            // 2... is the top channel, I think 234
+            // 124 is the middle channel
+            // Create a user with the given id
+            // This breaks it
+
+            // MVP: Create a guest user who isn't logged in
+            val user2 = io.getstream.chat.android.client.models.User(
+                id = userId,
+                name = "Bob",
+                image = "https://bit.ly/2TIt8NR"
+            )
+            client.connectGuestUser(userId, "Bob", null)
+            // Add them using the following code
+            client.addMembers("message", "123", listOf<String>(userId))
                 .enqueue { result ->
                     if (result.isSuccess) {
                        val channel: Channel = result.data()
@@ -37,15 +52,6 @@ class Backend {
                     }
                 }
 
-
-//            User.upsert()
-//                .user(
-//                    User.UserRequestObject.builder()
-//                        .id(userId)
-//                        .role("admin")
-//                        .additionalField("book", "dune")
-//                        .build())
-//                .request();
             //val user1 = User.UserRequestObject.builder().id(userId).role("user").build();
             //User.upsert().user(user1).request();
         }

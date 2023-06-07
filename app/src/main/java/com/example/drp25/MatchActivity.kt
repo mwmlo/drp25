@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import io.getstream.chat.android.client.models.UserId
+import kotlinx.coroutines.channels.Channel
 
 class MatchActivity : AppCompatActivity() {
     private lateinit var linearLayout: LinearLayout
@@ -61,17 +62,19 @@ class MatchActivity : AppCompatActivity() {
             // Makes a new channel with a given person, say Pierre
             // Takes you to the chat of this person
             // aka ChannelActivity.newIntent(this, channel)
-            /*
+
             val binding = ActivityChatBinding.inflate(layoutInflater)
             setContentView(binding.root)
-
-            /* When a channel is clicked, the user is taken to the channel. */
+//binding.channelListView.
+            // get the createDemo.... to return a channel
+            //
+            /*/* When a channel is clicked, the user is taken to the channel. */
             binding.channelListView.setChannelItemClickListener { channel ->
                 startActivity(ChannelActivity.newIntent(this, channel))
             }
            */
-            val intent = Intent(this, ChatActivity::class.java)
-            startActivity(intent)
+            // make an intentval intent = Intent(ChannelActivity::class.java)
+            // startActivity()
         }
     }
 

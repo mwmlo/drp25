@@ -32,6 +32,8 @@ class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
 
+    lateinit var client: ChatClient
+
     // Get match for demo
     private val NAMES = listOf<String>("Pierre", "Kevin", "Martha", "India", "Jerry", "Simon")
     private var i = 0
@@ -42,27 +44,29 @@ class ChatActivity : AppCompatActivity() {
     }
     val matchesRef = FirebaseDatabase.getInstance().getReference().child("matches")
 
-    private fun createDemoChannel(client: ChatClient, user: User) {
+    private fun createDemoChannel(client: ChatClient, user: User, id: String) {
         // Create a fake demo channel for the user
         client.createChannel(
             channelType = "messaging",
-            channelId = "124",
+            channelId = id,
             memberIds = listOf(user.id),
             extraData = emptyMap()
         ).enqueue { result ->
             if (result.isSuccess) {
-                Log.e("createChannel", "success")
+                Log.e("createChannel"+id, "success")
             } else {
-                Log.e("createChannel", "fail")
-                Log.e("createChannel", result.toString())
+                Log.e("createChannel1", "fail")
+                Log.e("createChannel1", result.toString())
             }
         }
     }
-    fun createDemoFriends(client: ChatClient, user: User) {
+    fun createDemoFriends(client: ChatClient, user: User, id: String) {
         // Create friends and channels
-        createDemoChannel(client, user)
+        // supplying a new id creates a channel, these persist after reloading the site
+        // createDemoChannel(client, user, id)
         Backend.createFriend("friend-1", client)
-
+  //      Backend.createFriend("friend-21", client)
+//        Backend.createFriend("friend-321", client)
     }
 
 
@@ -92,7 +96,7 @@ class ChatActivity : AppCompatActivity() {
         )
 
         // Step 2 - Set up the client for API calls with the plugin for offline storage
-        val client = ChatClient.Builder("4tm42krd5mvf", applicationContext)
+        client = ChatClient.Builder("4tm42krd5mvf", applicationContext)
             .withPlugin(offlinePluginFactory)
             .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
             .build()
@@ -108,12 +112,12 @@ class ChatActivity : AppCompatActivity() {
                 client.createChannel(
                     channelType = "messaging",
                     channelId = "123",
-                    memberIds = listOf(user.id, "tim"),
+                    memberIds = listOf(user.id),
                     extraData = emptyMap()
                 ).enqueue { result ->
                     if (result.isSuccess) {
                         Log.e("createChannel", "success")
-                        createDemoFriends(client, user)
+                        createDemoFriends(client, user, "243")
                     } else {
                         Log.e("createChannel", "fail")
                         Log.e("createChannel", result.toString())
