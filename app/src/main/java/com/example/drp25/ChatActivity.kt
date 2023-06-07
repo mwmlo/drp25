@@ -1,11 +1,13 @@
 package com.example.drp25
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.size
 import com.example.drp25.databinding.ActivityChatBinding
+import com.google.firebase.database.FirebaseDatabase
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.api.models.querysort.QuerySortByField
 import io.getstream.chat.android.client.logger.ChatLogLevel
@@ -22,10 +24,23 @@ import io.getstream.chat.android.ui.channel.list.viewmodel.ChannelListViewModel
 import io.getstream.chat.android.ui.channel.list.viewmodel.bindView
 import io.getstream.chat.android.ui.channel.list.viewmodel.factory.ChannelListViewModelFactory
 
+// our logged in user
+val UNI_ID = "imperialId"
+val USER_ID = "-NXGEo30rzoWUgTYoYi_"
 
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
+
+    // Get match for demo
+    private val NAMES = listOf<String>("Pierre", "Kevin", "Martha", "India", "Jerry", "Simon")
+    private var i = 0
+    private fun getMatch(): String {
+        val match = NAMES.get(i)
+        i = (i+1)%(NAMES.size)
+        return match
+    }
+    val matchesRef = FirebaseDatabase.getInstance().getReference().child("matches")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,7 +100,7 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
-        // Create views for the list of channels
+        /* Create views for the list of channels */
         val channelListHeaderViewModel: ChannelListHeaderViewModel by viewModels()
         val channelListFactory: ChannelListViewModelFactory = ChannelListViewModelFactory(
             filter = Filters.and(
@@ -100,9 +115,18 @@ class ChatActivity : AppCompatActivity() {
         channelListHeaderViewModel.bindView(binding.channelListHeaderView, this)
         channelListViewModel.bindView(binding.channelListView, this)
 
+        /* When a channel is clicked, the user is taken to the channel. */
         binding.channelListView.setChannelItemClickListener { channel ->
             startActivity(ChannelActivity.newIntent(this, channel))
         }
 
+        /* Functionality of "Meet Someone New" button -> takes user to match page. */
+        binding.homeMatchButton.setOnClickListener { _ ->
+            val intent = Intent(this, MatchActivity::class.java)
+            startActivity(intent)
+        }
+
+        // indicates this is the person logged in (currently Kevin)
+        listenToUser(UNI_ID, USER_ID)
     }
 }

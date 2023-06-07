@@ -52,6 +52,7 @@ class MatchActivity : AppCompatActivity() {
         linearLayout = findViewById(R.id.match_matches)
         addMatchObserver(observer)
 
+        /* Functionality for SEND button -> takes user to chat page. */
         val sendBtn = findViewById<Button>(R.id.match_send_button)
         sendBtn.setOnClickListener { view ->
             val intent = Intent(this, ChatActivity::class.java)
