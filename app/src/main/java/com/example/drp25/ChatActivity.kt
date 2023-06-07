@@ -42,6 +42,28 @@ class ChatActivity : AppCompatActivity() {
     }
     val matchesRef = FirebaseDatabase.getInstance().getReference().child("matches")
 
+    private fun createDemoChannel(client: ChatClient, user: User) {
+        // Create a fake demo channel for the user
+        client.createChannel(
+            channelType = "messaging",
+            channelId = "124",
+            memberIds = listOf(user.id, "friend-1"),
+            extraData = emptyMap()
+        ).enqueue { result ->
+            if (result.isSuccess) {
+                Log.e("createChannel", "success")
+            } else {
+                Log.e("createChannel", "fail")
+                Log.e("createChannel", result.toString())
+            }
+        }
+    }
+    fun createDemoFriends(client: ChatClient, user: User) {
+        // Create friends and channels
+        Backend.createFriend("friend-1")
+        createDemoChannel(client, user)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.drp25.databinding.ActivityChatBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -56,7 +57,20 @@ class MatchActivity : AppCompatActivity() {
         /* Functionality for SEND button -> takes user to chat page. */
         val sendBtn = findViewById<Button>(R.id.match_send_button)
         sendBtn.setOnClickListener { view ->
-            val intent = Intent(this, ChannelActivity::class.java)
+            TODO()
+            // Makes a new channel with a given person, say Pierre
+            // Takes you to the chat of this person
+            // aka ChannelActivity.newIntent(this, channel)
+            /*
+            val binding = ActivityChatBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+
+            /* When a channel is clicked, the user is taken to the channel. */
+            binding.channelListView.setChannelItemClickListener { channel ->
+                startActivity(ChannelActivity.newIntent(this, channel))
+            }
+           */
+            val intent = Intent(this, ChatActivity::class.java)
             startActivity(intent)
         }
     }
