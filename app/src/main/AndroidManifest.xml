@@ -19,14 +19,14 @@
             android:name=".ChannelActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatActivity"
-            android:exported="true"
-            android:label="@string/title_activity_chat"
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:exported="false"
             android:theme="@style/Theme.DRP25" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".ChatActivity"
+            android:label="@string/title_activity_chat"
             android:exported="true"
-            android:label="@string/title_activity_home"
             android:theme="@style/Theme.DRP25">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
