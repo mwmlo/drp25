@@ -22,33 +22,50 @@ import io.getstream.chat.android.client.models.UserId
 import kotlinx.coroutines.channels.Channel
 
 class MatchActivity : AppCompatActivity() {
-    private lateinit var linearLayout: LinearLayout
+    private lateinit var parentLayout: LinearLayout
     private lateinit var context: Context
     private val observer = object : Observer {
         override fun notify(matchIds: List<String>) {
-            linearLayout.removeAllViews()
-
+            parentLayout.removeAllViews()
             for (matchId in matchIds) {
-                val nameRef = FirebaseDatabase.getInstance().reference.child("universities")
-                    .child(UNI_ID).child("users").child(matchId).child("name")
-                nameRef.addListenerForSingleValueEvent(object: ValueEventListener {
+                val linearLayout = LinearLayout(context)
+                linearLayout.orientation = LinearLayout.VERTICAL
+                linearLayout.setPadding(30, 30, 30, 30)
+                val matchRef = FirebaseDatabase.getInstance().reference.child("universities")
+                    .child(UNI_ID).child("users").child(matchId)
+                // NAME
+                matchRef.child("name").addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        // update view
-                        val entry = TextView(context)
-                        val text = snapshot.getValue(String::class.java)
-                        entry.text = text
-                        entry.setPadding(128, 16, 128, 16)
-                        entry.textSize = 48f
-                        linearLayout.addView(entry)
+                        snapshot.getValue(String::class.java)?.let { addText(linearLayout, it) }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
                         TODO("Not yet implemented")
                     }
-
                 })
+                // INTERESTS
+                matchRef.child("interests").addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for (child in snapshot.children) {
+                            child.key?.let { addText(linearLayout, it) }
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
+                parentLayout.addView(linearLayout)
             }
         }
+    }
+
+    private fun addText(linearLayout: LinearLayout, text: String) {
+        val entry = TextView(context)
+        entry.text = text
+        entry.setPadding(16, 16, 16, 16)
+        entry.textSize = 48f
+        linearLayout.addView(entry)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +73,7 @@ class MatchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_match)
 
         context = this
-        linearLayout = findViewById(R.id.match_matches)
+        parentLayout = findViewById(R.id.match_matches)
         addMatchObserver(observer)
 
         /* Functionality for SEND button -> takes user to chat page. */
