@@ -1,5 +1,6 @@
-package com.example.drp25
+package com.example.drp25.matchers
 
+import com.example.drp25.Matcher
 import com.google.firebase.database.DataSnapshot
 
 class BasicMatcher : Matcher {

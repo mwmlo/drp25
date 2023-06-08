@@ -13,24 +13,32 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class MatchActivity : AppCompatActivity() {
-    private lateinit var linearLayout: LinearLayout
+    private lateinit var parentLayout: LinearLayout
     private lateinit var context: Context
     private val observer = object : Observer {
-        override fun notify(matchIds: List<String>) {
-            linearLayout.removeAllViews()
-
+        override fun notify(matchIds: Set<String>) {
+            parentLayout.removeAllViews()
             for (matchId in matchIds) {
-                val nameRef = FirebaseDatabase.getInstance().reference.child("universities")
-                    .child("imperialId").child("users").child(matchId).child("name")
-                nameRef.addListenerForSingleValueEvent(object: ValueEventListener {
+                val linearLayout = LinearLayout(context)
+                linearLayout.orientation = LinearLayout.VERTICAL
+                linearLayout.setPadding(30, 30, 30, 30)
+                parentLayout.addView(linearLayout)
+                val matchRef = FirebaseDatabase.getInstance().reference.child("universities")
+                    .child(UNI_ID).child("users").child(matchId)
+                matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        // update view
-                        val entry = TextView(context)
-                        val text = snapshot.getValue(String::class.java)
-                        entry.text = text
-                        entry.setPadding(128, 16, 128, 16)
-                        entry.textSize = 48f
-                        linearLayout.addView(entry)
+                        snapshot.child("name").getValue(String::class.java)
+                            ?.let { addText(linearLayout, "Name: $it") }
+                        snapshot.child("nationality").getValue(String::class.java)
+                            ?.let { addText(linearLayout, "Nationality: $it") }
+                        snapshot.child("course").getValue(String::class.java)
+                            ?.let { addText(linearLayout, "Course: $it") }
+                        snapshot.child("year").getValue(String::class.java)
+                            ?.let { addText(linearLayout, "Year: $it") }
+                        addText(linearLayout, "Interests:")
+                        for (interest in snapshot.child("interests").children) {
+                            addText(linearLayout, interest.key + " (" + interest.value + " stars)")
+                        }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -42,12 +50,20 @@ class MatchActivity : AppCompatActivity() {
         }
     }
 
+    private fun addText(linearLayout: LinearLayout, text: String) {
+        val entry = TextView(context)
+        entry.text = text
+        entry.setPadding(16, 16, 16, 16)
+        entry.textSize = 20f
+        linearLayout.addView(entry)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_match)
 
         context = this
-        linearLayout = findViewById(R.id.match_matches)
+        parentLayout = findViewById(R.id.match_matches)
         addMatchObserver(observer)
 
         /* Functionality for SEND button -> takes user to chat page. */

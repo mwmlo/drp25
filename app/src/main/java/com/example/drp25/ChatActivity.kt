@@ -143,8 +143,5 @@ class ChatActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // indicates this is the person logged in (currently Kevin)
-        listenToUser(com.example.drp25.UNI_ID, com.example.drp25.USER_ID)
-
     }
 }
