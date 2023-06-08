@@ -23,36 +23,35 @@ const val USER_ID = "-NXPnWryIGR2S5aJmSGH"
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
-    private lateinit var channelGlob: Channel
 
     val pierre = User(
-        id = "pierre",
+        id = "Pierre",
         name = "Pierre",
         image = "upload.wikimedia.org/wikipedia/commons/6/62/Flag_of_France.png"
     )
     val kevin = User(
-        id = "kevin",
+        id = "Kevin",
         name = "Kevin",
         image = "cdn.countryflags.com/thumbs/china/flag-round-250.png"
     )
-    val martha = User(
-        id = "martha",
-        name = "Martha",
+    val max = User(
+        id = "Max",
+        name = "Max",
         image = "img.freepik.com/premium-vector/german-flag-vector_230920-1254.jpg"
     )
-    val jerry = User(
-        id = "jerry",
-        name = "Jerry",
+    val sasha = User(
+        id = "Sasha",
+        name = "Sasha",
         image = "upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_India.png/800px-Flag_of_India.png"
     )
-    val simon = User(
-        id = "simon",
-        name = "Simon",
+    val david = User(
+        id = "David",
+        name = "David",
         image = "img.freepik.com/premium-vector/german-flag-vector_230920-1254.jpg"
     )
 
     // Get match for demo
-    private val people = listOf(pierre, kevin, martha, jerry, simon)
+    private val people = listOf(pierre, kevin, max, sasha, david)
     private var i = 0
 
     private fun getMatch(): String {
@@ -83,9 +82,9 @@ class ChatActivity : AppCompatActivity() {
             Backend.serverInit()
             Backend.createFriend(pierre.id, pierre.name)
             Backend.createFriend(kevin.id, kevin.name)
-            Backend.createFriend(martha.id, martha.name)
-            Backend.createFriend(jerry.id, jerry.name)
-            Backend.createFriend(simon.id, simon.name)
+            Backend.createFriend(max.id, max.name)
+            Backend.createFriend(sasha.id, sasha.name)
+            Backend.createFriend(david.id, david.name)
 
             clientService.connectCurrentUser(user).enqueue { result ->
                 if (result.isSuccess) {
@@ -99,15 +98,14 @@ class ChatActivity : AppCompatActivity() {
 
         // Create new channel if meeting new friend
         val fromMatch = intent.getBooleanExtra("fromMatch", false)
-        if (fromMatch) {
-            val matchUserId = getMatch()
-            val cid = buildChannelId(user.id, matchUserId)
-            clientService.createChannel(cid, user.id, matchUserId)
+        if (fromMatch && intent.hasExtra("matchedName")) {
+            val matchUserName: String = intent.getStringExtra("matchedName")!!
+            val cid = buildChannelId(user.id, matchUserName)
+            clientService.createChannel(cid, user.id, matchUserName)
         }
 
         // Step 0 - inflate binding
         binding = ActivityChatBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         val channelListHeaderViewModel: ChannelListHeaderViewModel by viewModels()
         val channelListFactory = ChannelListViewModelFactory(
@@ -133,6 +131,8 @@ class ChatActivity : AppCompatActivity() {
             val intent = Intent(this, MatchActivity::class.java)
             startActivity(intent)
         }
+
+        setContentView(binding.root)
 
     }
 }

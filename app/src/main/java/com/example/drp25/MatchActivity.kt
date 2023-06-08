@@ -15,7 +15,7 @@ import com.google.firebase.database.ValueEventListener
 class MatchActivity : AppCompatActivity() {
     private lateinit var parentLayout: LinearLayout
     private lateinit var context: Context
-    private var selectedMatchId: String? = null
+    private var selectedMatchName: String? = null
 
     private val observer = object : Observer {
         override fun notify(matchIds: Set<String>) {
@@ -29,7 +29,7 @@ class MatchActivity : AppCompatActivity() {
                     .child(UNI_ID).child("users").child(matchId)
                 matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        val name = snapshot.child("name").value
+                        val name: String = snapshot.child("name").value as String
                         val nationality = snapshot.child("nationality").value
                         val course = snapshot.child("course").value
                         val year = snapshot.child("year").value
@@ -47,7 +47,7 @@ class MatchActivity : AppCompatActivity() {
                         val button = getButton(linearLayout, "Match with $name")
                         linearLayout.addView(button)
                         button.setOnClickListener {
-                            selectedMatchId = matchId
+                            selectedMatchName = name
                         }
                     }
 
@@ -89,6 +89,7 @@ class MatchActivity : AppCompatActivity() {
         sendBtn.setOnClickListener { view ->
             val intent = Intent(this, ChatActivity::class.java)
             intent.putExtra("fromMatch", true)
+            intent.putExtra("matchedName", selectedMatchName)
             startActivity(intent)
         }
     }
