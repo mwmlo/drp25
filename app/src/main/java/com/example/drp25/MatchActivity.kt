@@ -24,6 +24,8 @@ import kotlinx.coroutines.channels.Channel
 class MatchActivity : AppCompatActivity() {
     private lateinit var parentLayout: LinearLayout
     private lateinit var context: Context
+    private var selectedMatchId: String? = null
+
     private val observer = object : Observer {
         override fun notify(matchIds: Set<String>) {
             parentLayout.removeAllViews()
@@ -50,6 +52,12 @@ class MatchActivity : AppCompatActivity() {
                         for (interest in snapshot.child("interests").children) {
                             addText(linearLayout, interest.key + " (" + interest.value + " stars)")
                         }
+
+                        val button = getButton(linearLayout, "Match with $name")
+                        linearLayout.addView(button)
+                        button.setOnClickListener{
+                            selectedMatchId = matchId
+                        }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -67,6 +75,14 @@ class MatchActivity : AppCompatActivity() {
         entry.setPadding(16, 16, 16, 16)
         entry.textSize = 20f
         linearLayout.addView(entry)
+    }
+
+    private fun getButton(linearLayout: LinearLayout, text: String): Button {
+        val btn = Button(context)
+        btn.text = text
+        btn.setPadding(16, 16, 16, 16)
+        btn.textSize = 20f
+        return btn
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
