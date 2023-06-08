@@ -55,7 +55,7 @@ class MatchActivity : AppCompatActivity() {
 
                         val button = getButton(linearLayout, "Match with $name")
                         linearLayout.addView(button)
-                        button.setOnClickListener{
+                        button.setOnClickListener {
                             selectedMatchId = matchId
                         }
                     }
