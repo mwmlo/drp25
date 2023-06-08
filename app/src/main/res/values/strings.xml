@@ -11,13 +11,15 @@
     <string name="match_caption">Swipe to see your matches.</string>
     <string name="match_prompt">Send a stamp to start a chat!</string>
     <string name="match_send_button">send</string>
+    <!-- Necessary Content Description(s) -->
+    <string name="matches_descr">matches display</string>
 
     <!-- Profile Page -->
     <string name="personal_info">Personal Info</string>
     <string name="interests">Interests</string>
     <string name="stamps">Stamps</string>
     <string name="stamps_prompt">You don\'t have any stamps yet. Meet new friends to collect stamps.</string>
-    <!-- Necessary Content Descriptions -->
+    <!-- Necessary Content Description(s) -->
     <string name="profile_picture_descr">profile picture placeholder</string>
     <string name="rating_descr">interest level rating</string>
     <!-- Hardcoded Kevin Example -->
