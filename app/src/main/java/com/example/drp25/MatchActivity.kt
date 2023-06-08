@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.RatingBar
+import android.widget.ScrollView
 import android.widget.TextView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,10 +23,13 @@ class MatchActivity : AppCompatActivity() {
         override fun notify(matchIds: Set<String>) {
             parentLayout.removeAllViews()
             for (matchId in matchIds) {
+                val scrollView = ScrollView(context)
+                parentLayout.addView(scrollView)
                 val linearLayout = LinearLayout(context)
                 linearLayout.orientation = LinearLayout.VERTICAL
                 linearLayout.setPadding(30, 30, 30, 30)
-                parentLayout.addView(linearLayout)
+//                parentLayout.addView(linearLayout)
+                scrollView.addView(linearLayout)
                 val matchRef = FirebaseDatabase.getInstance().reference.child("universities")
                     .child(UNI_ID).child("users").child(matchId)
                 matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
@@ -42,6 +47,18 @@ class MatchActivity : AppCompatActivity() {
                         addText(linearLayout, "Interests:")
                         for (interest in snapshot.child("interests").children) {
                             addText(linearLayout, interest.key + " (" + interest.value + " stars)")
+
+                            val ratingBar = RatingBar(context)
+                            ratingBar.layoutParams = LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                            )
+                            ratingBar.numStars = 5
+                            ratingBar.rating = interest.getValue(Float::class.java)!!
+                            ratingBar.setIsIndicator(true)
+
+                            linearLayout.addView(ratingBar)
+
                         }
 
                         val button = getButton(linearLayout, "Match with $name")
