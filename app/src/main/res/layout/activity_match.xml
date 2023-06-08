@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@id/matched" />
 
     <HorizontalScrollView
-        android:id="@+id/scrollView"
+        android:id="@+id/matches_scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/matches_descr"
@@ -55,6 +55,24 @@
 
     </HorizontalScrollView>
 
+<!--    <ImageButton-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/stream_ui_arrow_left"-->
+<!--        android:scaleX="2"-->
+<!--        android:scaleY="2"-->
+<!--        app:layout_constraintTop_toTopOf="@id/matches_scroll_view"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/matches_scroll_view"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/matches_scroll_view"/>-->
+
+<!--    <ImageButton-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/stream_ui_ic_filled_right_arrow"-->
+<!--        app:layout_constraintTop_toTopOf="@id/matches_scroll_view"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/matches_scroll_view"-->
+<!--        app:layout_constraintStart_toEndOf="@id/matches_scroll_view" />-->
+
     <TextView
         android:id="@+id/match_prompt"
         android:layout_width="match_parent"
@@ -63,7 +81,7 @@
         android:textAlignment="center"
         android:textSize="24sp"
         android:layout_margin="@dimen/text_margin_32"
-        app:layout_constraintTop_toBottomOf="@id/scrollView" />
+        app:layout_constraintTop_toBottomOf="@id/matches_scroll_view" />
 
     <!-- Stamp Display -->
 
