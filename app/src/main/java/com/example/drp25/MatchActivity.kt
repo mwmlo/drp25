@@ -9,11 +9,15 @@ import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.drp25.ChatClient.client
 import com.example.drp25.databinding.ActivityChatBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import io.getstream.chat.android.client.ChatClient
+import io.getstream.chat.android.client.logger.ChatLogLevel
 import io.getstream.chat.android.client.models.UserId
 import kotlinx.coroutines.channels.Channel
 
@@ -58,13 +62,25 @@ class MatchActivity : AppCompatActivity() {
         /* Functionality for SEND button -> takes user to chat page. */
         val sendBtn = findViewById<Button>(R.id.match_send_button)
         sendBtn.setOnClickListener { view ->
-            TODO()
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("user", "Pierre")
+            intent.putExtra("fromMatch", true)
+            startActivity(intent)
+
             // Makes a new channel with a given person, say Pierre
             // Takes you to the chat of this person
             // aka ChannelActivity.newIntent(this, channel)
 
-            val binding = ActivityChatBinding.inflate(layoutInflater)
-            setContentView(binding.root)
+//            val binding = ActivityChatBinding.inflate(layoutInflater)
+//            setContentView(binding.root)
+
+         //   client = com.example.drp25.ChatClient.client
+
+//            client = ChatClient.Builder("4tm42krd5mvf", applicationContext)
+//                .withPlugin(offlinePluginFactory)
+//                .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
+//                .build()
+
 //binding.channelListView.
             // get the createDemo.... to return a channel
             //

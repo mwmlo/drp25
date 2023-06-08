@@ -1,11 +1,12 @@
 package com.example.drp25
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.size
+
 import com.example.drp25.databinding.ActivityChatBinding
 import com.google.firebase.database.FirebaseDatabase
 import io.getstream.chat.android.client.ChatClient
@@ -32,8 +33,6 @@ class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
 
-    lateinit var client: ChatClient
-
     // Get match for demo
     private val NAMES = listOf<String>("Pierre", "Kevin", "Martha", "India", "Jerry", "Simon")
     private var i = 0
@@ -44,21 +43,30 @@ class ChatActivity : AppCompatActivity() {
     }
     val matchesRef = FirebaseDatabase.getInstance().getReference().child("matches")
 
-    private fun createDemoChannel(client: ChatClient, user: User, id: String) {
+    private fun createDemoChannel(client: ChatClient, user: User, id: String): Channel {
         // Create a fake demo channel for the user
-        client.createChannel(
+        var channelCall = client.createChannel(
             channelType = "messaging",
             channelId = id,
-            memberIds = listOf(user.id),
+            memberIds = listOf(user.id), // modify this as appropriate
             extraData = emptyMap()
-        ).enqueue { result ->
+        )
+        channelCall.enqueue { result ->
             if (result.isSuccess) {
                 Log.e("createChannel"+id, "success")
             } else {
-                Log.e("createChannel1", "fail")
-                Log.e("createChannel1", result.toString())
+                Log.e("createChannel"+id, "fail")
+                Log.e("createChannel"+id, result.toString())
             }
         }
+        return channelCall.execute().data()
+    }
+
+    private fun createAndRunChannel(client: ChatClient, user: User) {
+        // randomly generate id please
+        TODO() //Make a new user and add them to channel list
+        startActivity(ChannelActivity.newIntent(this, createDemoChannel(client, user, "155")))
+
     }
     fun createDemoFriends(client: ChatClient, user: User, id: String) {
         // Create friends and channels
@@ -73,6 +81,7 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         // MVP: Create a demo user who is logged in
         val user = User(
             id = "demo-user",
@@ -82,7 +91,6 @@ class ChatActivity : AppCompatActivity() {
 
         // Step 0 - inflate binding
         binding = ActivityChatBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         // Step 1 - Set up the OfflinePlugin for offline storage
         val offlinePluginFactory = StreamOfflinePluginFactory(
@@ -95,12 +103,15 @@ class ChatActivity : AppCompatActivity() {
             appContext = applicationContext,
         )
 
+
         // Step 2 - Set up the client for API calls with the plugin for offline storage
-        client = ChatClient.Builder("4tm42krd5mvf", applicationContext)
+        var client = ChatClient.Builder("4tm42krd5mvf", applicationContext)
             .withPlugin(offlinePluginFactory)
             .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
             .build()
 
+
+//        var client = com.example.drp25.ChatClient.client
         // Step 3 - Authenticate and connect the user (MVP)
         client.connectUser(
             user = user,
@@ -155,7 +166,22 @@ class ChatActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // indicates this is the person logged in (currently Kevin)
-        listenToUser(UNI_ID, USER_ID)
+        // Only allows the binding to be visible if the page is not opened from a match activity
+        if (intent.hasExtra("fromMatch") && intent.getBooleanExtra("fromMatch", true) == true) {
+
+        } else {
+            // indicates this is the person logged in (currently Kevin)
+            listenToUser(UNI_ID, USER_ID)
+            setContentView(binding.root)
+
+
+        }
+
+    }
+
+    companion object {
+        // Cannot access the application context of original chat activity
+        private var instance: ChatActivity? = null
+        fun getContext(): Context = instance!!.applicationContext
     }
 }
