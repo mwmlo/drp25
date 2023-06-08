@@ -11,6 +11,7 @@ import com.example.drp25.databinding.ActivityChatBinding
 import com.google.firebase.database.FirebaseDatabase
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.api.models.querysort.QuerySortByField
+import io.getstream.chat.android.client.call.Call
 import io.getstream.chat.android.client.logger.ChatLogLevel
 import io.getstream.chat.android.client.models.Channel
 import io.getstream.chat.android.client.models.Filters
@@ -32,10 +33,12 @@ val USER_ID = "-NXGEo30rzoWUgTYoYi_"
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
+    private lateinit var channelGlob: Call<Channel>
 
     // Get match for demo
     private val NAMES = listOf<String>("Pierre", "Kevin", "Martha", "India", "Jerry", "Simon")
     private var i = 0
+
     private fun getMatch(): String {
         val match = NAMES.get(i)
         i = (i+1)%(NAMES.size)
@@ -43,7 +46,7 @@ class ChatActivity : AppCompatActivity() {
     }
     val matchesRef = FirebaseDatabase.getInstance().getReference().child("matches")
 
-    private fun createDemoChannel(client: ChatClient, user: User, id: String): Channel {
+    private fun createDemoChannel(client: ChatClient, user: User, id: String) {
         // Create a fake demo channel for the user
         var channelCall = client.createChannel(
             channelType = "messaging",
@@ -59,13 +62,34 @@ class ChatActivity : AppCompatActivity() {
                 Log.e("createChannel"+id, result.toString())
             }
         }
-        return channelCall.execute().data()
+     // client.channel("155").//.execute().data()
     }
 
     private fun createAndRunChannel(client: ChatClient, user: User) {
+        Log.e("Creating channel", "success")
+        var id = "1554"
+        //setContentView(binding.root)
+      // startActivity(ChannelActivity.newIntent(this, channelGlob))
         // randomly generate id please
-        TODO() //Make a new user and add them to channel list
-        startActivity(ChannelActivity.newIntent(this, createDemoChannel(client, user, "155")))
+        // Create a fake demo channel for the user
+            var channelCall = client.createChannel(
+                channelType = "messaging",
+                channelId = id,
+                memberIds = listOf(user.id), // modify this as appropriate
+                extraData = emptyMap()
+            )
+            channelCall.enqueue { result ->
+                if (result.isSuccess) {
+                    Log.e("createChannel"+id, "success")
+                } else {
+                    Log.e("createChannel"+id, "fail")
+                    Log.e("createChannel"+id, result.toString())
+                }
+            }
+           // channelGlob = channelCall.execute().data()
+        //TODO() Make a new user and add them to channel list
+       // val ch = createDemoChannel(client, user, "155")
+      //  startActivity(ChannelActivity.newIntent(this, ch))
 
     }
     fun createDemoFriends(client: ChatClient, user: User, id: String) {
@@ -97,6 +121,7 @@ class ChatActivity : AppCompatActivity() {
             config = Config(
                 backgroundSyncEnabled = true,
                 userPresence = true,
+
                 persistenceEnabled = true,
                 uploadAttachmentsNetworkType = UploadAttachmentsNetworkType.NOT_ROAMING,
             ),
@@ -110,8 +135,6 @@ class ChatActivity : AppCompatActivity() {
             .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
             .build()
 
-
-//        var client = com.example.drp25.ChatClient.client
         // Step 3 - Authenticate and connect the user (MVP)
         client.connectUser(
             user = user,
@@ -120,15 +143,17 @@ class ChatActivity : AppCompatActivity() {
             if (connectResult.isSuccess) {
                 Log.e("connectUser", "success")
                 // Create a fake demo channel for the user
-                client.createChannel(
+                var ch = client.createChannel(
                     channelType = "messaging",
                     channelId = "123",
                     memberIds = listOf(user.id),
                     extraData = emptyMap()
-                ).enqueue { result ->
+                )
+                ch.enqueue { result ->
                     if (result.isSuccess) {
                         Log.e("createChannel", "success")
                         createDemoFriends(client, user, "243")
+                        channelGlob = ch//.execute().data()
                     } else {
                         Log.e("createChannel", "fail")
                         Log.e("createChannel", result.toString())
@@ -139,6 +164,18 @@ class ChatActivity : AppCompatActivity() {
                 Log.e("connectUser", connectResult.toString())
             }
         }
+
+        // Only allows the binding to be visible if the page is not opened from a match activity
+        if (intent.hasExtra("fromMatch") && intent.getBooleanExtra("fromMatch", true) == true) {
+            createAndRunChannel(client, user)
+        } else {
+            setContentView(binding.root)
+            // Note this channel is not showing up
+            createDemoChannel(client, user, "14355")
+            // seems to be something wrong with channel.execute.data, causing issues
+            // startActivity(ChannelActivity.newIntent(this, ch))
+        }
+
 
         /* Create views for the list of channels */
         val channelListHeaderViewModel: ChannelListHeaderViewModel by viewModels()
@@ -166,16 +203,9 @@ class ChatActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Only allows the binding to be visible if the page is not opened from a match activity
-        if (intent.hasExtra("fromMatch") && intent.getBooleanExtra("fromMatch", true) == true) {
+        // indicates this is the person logged in (currently Kevin)
+        listenToUser(UNI_ID, USER_ID)
 
-        } else {
-            // indicates this is the person logged in (currently Kevin)
-            listenToUser(UNI_ID, USER_ID)
-            setContentView(binding.root)
-
-
-        }
 
     }
 
@@ -185,3 +215,15 @@ class ChatActivity : AppCompatActivity() {
         fun getContext(): Context = instance!!.applicationContext
     }
 }
+
+// Add members with ids "thierry" and "josh"
+/*
+channelClient.addMembers(Arrays.asList("thierry", "josh"), null).enqueue(result -> {
+    if (result.isSuccess()) {
+        Channel channel = result.data();
+    } else {
+       // Handle result.error()
+   }
+});
+
+*/

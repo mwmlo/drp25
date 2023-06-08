@@ -84,8 +84,12 @@ class MatchActivity : AppCompatActivity() {
 //binding.channelListView.
             // get the createDemo.... to return a channel
             //
+
             /*/* When a channel is clicked, the user is taken to the channel. */
             binding.channelListView.setChannelItemClickListener { channel ->
+              if (channel.id = "150") {
+              channelGlob = channel
+
                 startActivity(ChannelActivity.newIntent(this, channel))
             }
            */
