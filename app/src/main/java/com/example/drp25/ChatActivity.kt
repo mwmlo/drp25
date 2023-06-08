@@ -57,7 +57,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun getMatch(): String {
         val match = people[i]
-        i = (i + 1) % (people.size)
+        i++
         return match.id
     }
 
@@ -97,26 +97,17 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
-        // Step 0 - inflate binding
-        binding = ActivityChatBinding.inflate(layoutInflater)
-
-        // Only allows the binding to be visible if the page is not opened from a match activity
-        if (intent.hasExtra("fromMatch") && intent.getBooleanExtra("fromMatch", true)) {
-            Log.e("LOCATED","Have found a channel with the correct id")
+        // Create new channel if meeting new friend
+        val fromMatch = intent.getBooleanExtra("fromMatch", false)
+        if (fromMatch) {
             val matchUserId = getMatch()
             val cid = buildChannelId(user.id, matchUserId)
             clientService.createChannel(cid, user.id, matchUserId)
-            binding.channelListView.setChannelItemClickListener { channel ->
-                if (channel.id == cid) {
-                    Log.e("IDENTIFIED","Have found a channel with the correct id")
-                    channelGlob = channel
-                }
-                startActivity(ChannelActivity.newIntent(this, channel))
-            }
-        } else {
-            Log.e("NOTLOCATED","Have found a channel with the correct id")
-            setContentView(binding.root)
         }
+
+        // Step 0 - inflate binding
+        binding = ActivityChatBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val channelListHeaderViewModel: ChannelListHeaderViewModel by viewModels()
         val channelListFactory = ChannelListViewModelFactory(

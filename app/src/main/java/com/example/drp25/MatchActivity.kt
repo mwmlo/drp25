@@ -72,35 +72,6 @@ class MatchActivity : AppCompatActivity() {
             val intent = Intent(this, ChatActivity::class.java)
             intent.putExtra("fromMatch", true)
             startActivity(intent)
-
-            // Makes a new channel with a given person, say Pierre
-            // Takes you to the chat of this person
-            // aka ChannelActivity.newIntent(this, channel)
-
-//            val binding = ActivityChatBinding.inflate(layoutInflater)
-//            setContentView(binding.root)
-
-         //   client = com.example.drp25.ChatClient.client
-
-//            client = ChatClient.Builder("4tm42krd5mvf", applicationContext)
-//                .withPlugin(offlinePluginFactory)
-//                .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
-//                .build()
-
-//binding.channelListView.
-            // get the createDemo.... to return a channel
-            //
-
-            /*/* When a channel is clicked, the user is taken to the channel. */
-            binding.channelListView.setChannelItemClickListener { channel ->
-              if (channel.id = "150") {
-              channelGlob = channel
-
-                startActivity(ChannelActivity.newIntent(this, channel))
-            }
-           */
-            // make an intentval intent = Intent(ChannelActivity::class.java)
-            // startActivity()
         }
     }
 
