@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 
 import com.example.drp25.databinding.ActivityChatBinding
-import com.google.firebase.database.FirebaseDatabase
 import io.getstream.chat.android.client.api.models.querysort.QuerySortByField
 import io.getstream.chat.android.client.models.Channel
 import io.getstream.chat.android.client.models.Filters
@@ -77,7 +76,7 @@ class ChatActivity : AppCompatActivity() {
         val user = User(
             id = "demo-user",
             name = "Max",
-            image = "https://upload.wikimedia.org/wikipedia/commons/4/42/Flag_of_the_United_Kingdom.png"
+            image = "upload.wikimedia.org/wikipedia/commons/4/42/Flag_of_the_United_Kingdom.png"
         )
 
         if (savedInstanceState == null) {
