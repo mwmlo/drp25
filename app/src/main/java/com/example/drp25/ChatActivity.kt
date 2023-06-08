@@ -2,6 +2,7 @@ package com.example.drp25
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 
@@ -69,9 +70,20 @@ class ChatActivity : AppCompatActivity() {
 
         // Only allows the binding to be visible if the page is not opened from a match activity
         if (intent.hasExtra("fromMatch") && intent.getBooleanExtra("fromMatch", true)) {
+            Log.e("LOCATED","Have found a channel with the correct id")
             clientService.createChannel("1234", user.id, friend2.id)
+            binding.channelListView.setChannelItemClickListener { channel ->
+                if (channel.id == "1234") {
+                    Log.e("IDENTIFIED","Have found a channel with the correct id")
+                    channelGlob = channel
+                }
+                startActivity(ChannelActivity.newIntent(this, channel))
+            }
+            //startActivity(ChannelActivity.newIntent(this, channelGlob))
+
 //            createAndRunChannel(client, user)
         } else {
+            Log.e("NOTLOCATED","Have found a channel with the correct id")
             setContentView(binding.root)
             clientService.createChannel("14355", user.id, friend1.id)
             // Note this channel is not showing up
