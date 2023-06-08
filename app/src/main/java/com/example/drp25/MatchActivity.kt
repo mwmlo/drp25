@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.drp25.ChatClient.client
@@ -51,6 +52,18 @@ class MatchActivity : AppCompatActivity() {
                         addText(linearLayout, "Interests:")
                         for (interest in snapshot.child("interests").children) {
                             addText(linearLayout, interest.key + " (" + interest.value + " stars)")
+
+                            val ratingBar = RatingBar(context)
+                            ratingBar.layoutParams = LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                            )
+                            ratingBar.numStars = 5
+                            ratingBar.rating = interest.getValue(Float::class.java)!!
+                            ratingBar.setIsIndicator(true)
+
+                            linearLayout.addView(ratingBar)
+
                         }
 
                         val button = getButton(linearLayout, "Match with $name")
