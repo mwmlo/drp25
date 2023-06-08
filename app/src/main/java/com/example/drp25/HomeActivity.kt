@@ -52,7 +52,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
 //        binding.chatButton.setOnClickListener { _ ->
-//            val intent = Intent(this, ChatActivity::class.java)
+//            val intent = Intent(this, ChatActivity.kt::class.java)
 //            startActivity(intent)
 //        }
     }

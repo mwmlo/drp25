@@ -4,27 +4,18 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
-import com.example.drp25.ChatClient.client
-import com.example.drp25.databinding.ActivityChatBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import io.getstream.chat.android.client.ChatClient
-import io.getstream.chat.android.client.logger.ChatLogLevel
-import io.getstream.chat.android.client.models.UserId
-import kotlinx.coroutines.channels.Channel
 
 class MatchActivity : AppCompatActivity() {
     private lateinit var parentLayout: LinearLayout
     private lateinit var context: Context
-    private var selectedMatchId: String? = null
+    private var selectedMatchName: String? = null
 
     private val observer = object : Observer {
         override fun notify(matchIds: Set<String>) {
@@ -38,7 +29,7 @@ class MatchActivity : AppCompatActivity() {
                     .child(UNI_ID).child("users").child(matchId)
                 matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        val name = snapshot.child("name").value
+                        val name: String = snapshot.child("name").value as String
                         val nationality = snapshot.child("nationality").value
                         val course = snapshot.child("course").value
                         val year = snapshot.child("year").value
@@ -56,7 +47,7 @@ class MatchActivity : AppCompatActivity() {
                         val button = getButton(linearLayout, "Match with $name")
                         linearLayout.addView(button)
                         button.setOnClickListener {
-                            selectedMatchId = matchId
+                            selectedMatchName = name
                         }
                     }
 
@@ -97,34 +88,9 @@ class MatchActivity : AppCompatActivity() {
         val sendBtn = findViewById<Button>(R.id.match_send_button)
         sendBtn.setOnClickListener { view ->
             val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("user", "Pierre")
             intent.putExtra("fromMatch", true)
+            intent.putExtra("matchedName", selectedMatchName)
             startActivity(intent)
-
-            // Makes a new channel with a given person, say Pierre
-            // Takes you to the chat of this person
-            // aka ChannelActivity.newIntent(this, channel)
-
-//            val binding = ActivityChatBinding.inflate(layoutInflater)
-//            setContentView(binding.root)
-
-         //   client = com.example.drp25.ChatClient.client
-
-//            client = ChatClient.Builder("4tm42krd5mvf", applicationContext)
-//                .withPlugin(offlinePluginFactory)
-//                .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
-//                .build()
-
-//binding.channelListView.
-            // get the createDemo.... to return a channel
-            //
-            /*/* When a channel is clicked, the user is taken to the channel. */
-            binding.channelListView.setChannelItemClickListener { channel ->
-                startActivity(ChannelActivity.newIntent(this, channel))
-            }
-           */
-            // make an intentval intent = Intent(ChannelActivity::class.java)
-            // startActivity()
         }
     }
 

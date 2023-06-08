@@ -7,10 +7,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 
-// our logged in user
-val UNI_ID = "imperialId"
-val USER_ID = "-NXPnWryIGR2S5aJmSGH"
-
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
 private val matcher: Matcher = RatingMatcherWithNationality()
 val matches = mutableSetOf<String>()
