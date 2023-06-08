@@ -108,6 +108,7 @@
                         android:text="@string/kevin_interest_1"
                         android:textSize="20sp"/>
                     <RatingBar
+                        android:contentDescription="@string/rating_descr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minHeight="20dp"
@@ -125,6 +126,7 @@
                         android:text="@string/kevin_interest_2"
                         android:textSize="20sp"/>
                     <RatingBar
+                        android:contentDescription="@string/rating_descr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minHeight="20dp"
@@ -141,6 +143,7 @@
                         android:text="@string/kevin_interest_3"
                         android:textSize="20sp"/>
                     <RatingBar
+                        android:contentDescription="@string/rating_descr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minHeight="20dp"

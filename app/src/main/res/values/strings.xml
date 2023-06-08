@@ -13,11 +13,13 @@
     <string name="match_send_button">send</string>
 
     <!-- Profile Page -->
-    <string name="profile_picture_descr">profile picture placeholder</string>
     <string name="personal_info">Personal Info</string>
     <string name="interests">Interests</string>
     <string name="stamps">Stamps</string>
     <string name="stamps_prompt">You don\'t have any stamps yet. Meet new friends to collect stamps.</string>
+    <!-- Necessary Content Descriptions -->
+    <string name="profile_picture_descr">profile picture placeholder</string>
+    <string name="rating_descr">interest level rating</string>
     <!-- Hardcoded Kevin Example -->
     <string name="kevin">Kevin</string>
     <string name="kevin_info">Year 1  |  Physics  |  Imperial College</string>
