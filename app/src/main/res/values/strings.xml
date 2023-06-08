@@ -2,14 +2,26 @@
     <string name="app_name">DRP25</string>
     <string name="title_activity_home">HomeActivity</string>
 
-    <!-- Home Page -->
-    <string name="home_match_button">meet someone new!</string>
+    <!-- Multi-Use -->
+    <string name="meet_someone_button">meet someone new!</string>
+    <string name="back_button">back</string>
 
     <!-- Match Page -->
     <string name="match_matched">matched!</string>
     <string name="match_caption">Swipe to see your matches.</string>
     <string name="match_prompt">Send a stamp to start a chat!</string>
     <string name="match_send_button">send</string>
+
+    <!-- Profile Page -->
+    <string name="profile_picture_descr">profile picture placeholder</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="interests">Interests</string>
+    <string name="stamps">Stamps</string>
+    <string name="stamps_prompt">You don\'t have any stamps yet. Meet new friends to collect stamps.</string>
+    <!-- Hardcoded Kevin Example -->
+    <string name="kevin">Kevin</string>
+    <string name="kevin_info">Year 1  |  Physics  |  Imperial College</string>
+    <string name="kevin_interests">Ballet  |  Cooking  |  Football</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
