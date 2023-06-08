@@ -33,7 +33,7 @@ val USER_ID = "-NXGEo30rzoWUgTYoYi_"
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
-    private lateinit var channelGlob: Call<Channel>
+    private lateinit var channelGlob: Channel
 
     // Get match for demo
     private val NAMES = listOf<String>("Pierre", "Kevin", "Martha", "India", "Jerry", "Simon")
@@ -66,29 +66,21 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun createAndRunChannel(client: ChatClient, user: User) {
-        Log.e("Creating channel", "success")
-        var id = "1554"
-        //setContentView(binding.root)
-      // startActivity(ChannelActivity.newIntent(this, channelGlob))
-        // randomly generate id please
-        // Create a fake demo channel for the user
-            var channelCall = client.createChannel(
-                channelType = "messaging",
-                channelId = id,
-                memberIds = listOf(user.id), // modify this as appropriate
-                extraData = emptyMap()
-            )
-            channelCall.enqueue { result ->
-                if (result.isSuccess) {
-                    Log.e("createChannel"+id, "success")
-                } else {
-                    Log.e("createChannel"+id, "fail")
-                    Log.e("createChannel"+id, result.toString())
-                }
+        Log.e("NEW CHANNEL", "success")
+       // var id = "155"
+        createDemoChannel(client, user, "155")
+        binding.channelListView.setChannelItemClickListener { channel ->
+            if (channel.id == "155" ) { //|| channel.cid == "155"
+                channelGlob = channel
             }
-           // channelGlob = channelCall.execute().data()
-        //TODO() Make a new user and add them to channel list
-       // val ch = createDemoChannel(client, user, "155")
+            startActivity(ChannelActivity.newIntent(this, channel))
+        }
+        val dog = "dog"
+        val chanstr = channelGlob.id
+        Log.e("NEW CHANNEL 2", dog)
+      // startActivity(ChannelActivity.newIntent(this, channelGlob))
+        //TODO randomly generate id please
+
       //  startActivity(ChannelActivity.newIntent(this, ch))
 
     }
@@ -97,8 +89,6 @@ class ChatActivity : AppCompatActivity() {
         // supplying a new id creates a channel, these persist after reloading the site
         // createDemoChannel(client, user, id)
         Backend.createFriend("friend-1", client)
-  //      Backend.createFriend("friend-21", client)
-//        Backend.createFriend("friend-321", client)
     }
 
 
@@ -115,6 +105,7 @@ class ChatActivity : AppCompatActivity() {
 
         // Step 0 - inflate binding
         binding = ActivityChatBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Step 1 - Set up the OfflinePlugin for offline storage
         val offlinePluginFactory = StreamOfflinePluginFactory(
@@ -153,7 +144,6 @@ class ChatActivity : AppCompatActivity() {
                     if (result.isSuccess) {
                         Log.e("createChannel", "success")
                         createDemoFriends(client, user, "243")
-                        channelGlob = ch//.execute().data()
                     } else {
                         Log.e("createChannel", "fail")
                         Log.e("createChannel", result.toString())
@@ -166,15 +156,18 @@ class ChatActivity : AppCompatActivity() {
         }
 
         // Only allows the binding to be visible if the page is not opened from a match activity
+        // Done before filtering such that the extra channel is created and will be displayed
         if (intent.hasExtra("fromMatch") && intent.getBooleanExtra("fromMatch", true) == true) {
+            print("Hello I am here")
             createAndRunChannel(client, user)
-        } else {
-            setContentView(binding.root)
-            // Note this channel is not showing up
-            createDemoChannel(client, user, "14355")
-            // seems to be something wrong with channel.execute.data, causing issues
-            // startActivity(ChannelActivity.newIntent(this, ch))
         }
+//        } else {
+//            setContentView(binding.root)
+//            // Note this channel is not showing up
+//            //createDemoChannel(client, user, "14355")
+//            // seems to be something wrong with channel.execute.data, causing issues
+//            // startActivity(ChannelActivity.newIntent(this, ch))
+//        }
 
 
         /* Create views for the list of channels */
