@@ -158,51 +158,17 @@ fun addUser(uniId: String, name: String, nationality: String): String? {
         val userRef = usersRef.child(userId)
         userRef.child("name").setValue(name)
         userRef.child("nationality").setValue(nationality)
-        userRef.child("interests").addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                Log.i("addUser", "calling update matches")
-                updateMatches(uniId, userId, snapshot)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
-        userRef.child("interests").setValue(gson.toJson(listOf<String>()))
         userRef.child("matches").setValue(gson.toJson(listOf<String>()))
     }
     return userId
 }
 
-fun addInterest(uniId: String, userId: String, newInterest: String) {
+fun putInterestRating(uniId: String, userId: String, interest: String, rating: Int) {
     val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
-    interestsRef.addListenerForSingleValueEvent(object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val value = dataSnapshot.getValue(String::class.java)
-            val interests = gson.fromJson(value, Array<String>::class.java).toMutableList()
-            interests.add(newInterest)
-            interestsRef.setValue(gson.toJson(interests))
-        }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-           //TODO
-        }
-    })
+    interestsRef.child(interest).setValue(rating)
 }
 
-fun removeInterest(uniId: String, userId: String, oldInterest: String) {
+fun removeInterest(uniId: String, userId: String, interest: String) {
     val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
-    interestsRef.addListenerForSingleValueEvent(object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val value = dataSnapshot.getValue(String::class.java)
-            val interests = gson.fromJson(value, Array<String>::class.java).toMutableList()
-            interests.remove(oldInterest)
-            interestsRef.setValue(gson.toJson(interests))
-        }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-            //TODO
-        }
-    })
+    interestsRef.child(interest).removeValue()
 }
