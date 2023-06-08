@@ -25,12 +25,13 @@ class MatchActivity : AppCompatActivity() {
     private lateinit var parentLayout: LinearLayout
     private lateinit var context: Context
     private val observer = object : Observer {
-        override fun notify(matchIds: List<String>) {
+        override fun notify(matchIds: Set<String>) {
             parentLayout.removeAllViews()
             for (matchId in matchIds) {
                 val linearLayout = LinearLayout(context)
                 linearLayout.orientation = LinearLayout.VERTICAL
                 linearLayout.setPadding(30, 30, 30, 30)
+                parentLayout.addView(linearLayout)
                 val matchRef = FirebaseDatabase.getInstance().reference.child("universities")
                     .child(UNI_ID).child("users").child(matchId)
                 matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
@@ -43,26 +44,16 @@ class MatchActivity : AppCompatActivity() {
                             ?.let { addText(linearLayout, "Course: $it") }
                         snapshot.child("year").getValue(String::class.java)
                             ?.let { addText(linearLayout, "Year: $it") }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
-                // INTERESTS
-                matchRef.child("interests").addListenerForSingleValueEvent(object: ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        for (child in snapshot.children) {
-                            child.key?.let { addText(linearLayout, it) }
+                        for (interest in snapshot.child("interests").children) {
+                            interest.key?.let { addText(linearLayout, it) }
                         }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
                         TODO("Not yet implemented")
                     }
+
                 })
-                parentLayout.addView(linearLayout)
             }
         }
     }
@@ -71,7 +62,7 @@ class MatchActivity : AppCompatActivity() {
         val entry = TextView(context)
         entry.text = text
         entry.setPadding(16, 16, 16, 16)
-        entry.textSize = 48f
+        entry.textSize = 20f
         linearLayout.addView(entry)
     }
 

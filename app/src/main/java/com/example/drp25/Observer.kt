@@ -1,5 +1,5 @@
 package com.example.drp25
 
 interface Observer {
-    fun notify(data: List<String>)
+    fun notify(data: Set<String>)
 }

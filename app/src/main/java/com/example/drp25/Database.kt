@@ -15,7 +15,7 @@ val USER_ID = "-NXPnWryIGR2S5aJmSGH"
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
 private val matcher: Matcher = BasicMatcher()
 val gson = Gson()
-var matches = listOf<String>()
+val matches = mutableSetOf<String>()
 val matchObservers = mutableListOf<Observer>()
 
 fun addMatchObserver(observer: Observer) {
@@ -35,90 +35,18 @@ fun listenToUser(uniId: String, userId: String) {
         }
 
     })
-    userRef.child("matches").addValueEventListener(object: ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-            val value = snapshot.getValue(String::class.java)
-            matches = gson.fromJson(value, Array<String>::class.java).toList()
-            matchObservers.forEach{observer -> observer.notify(matches)}
-        }
-
-        override fun onCancelled(error: DatabaseError) {
-            TODO("Not yet implemented")
-        }
-
-    })
 }
 
-private fun addMatch(uniId: String, user1Id: String, user2Id: String) {
-    val usersRef = unisRef.child(uniId).child("users")
-    val matches1Ref = usersRef.child(user1Id).child("matches")
-    val matches2Ref = usersRef.child(user2Id).child("matches")
-
-    matches1Ref.addListenerForSingleValueEvent(object : ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-            val value = snapshot.getValue(String::class.java)
-            val matches = gson.fromJson(value, Array<String>::class.java).toMutableList()
-            if (!matches.contains(user2Id)) {
-                matches.add(user2Id)
-                matches1Ref.setValue(gson.toJson(matches))
-            }
-        }
-
-        override fun onCancelled(error: DatabaseError) {
-            TODO("Not yet implemented")
-        }
-    })
-
-    matches2Ref.addListenerForSingleValueEvent(object : ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-            val value = snapshot.getValue(String::class.java)
-            val matches = gson.fromJson(value, Array<String>::class.java).toMutableList()
-            if (!matches.contains(user1Id)) {
-                matches.add(user1Id)
-                matches2Ref.setValue(gson.toJson(matches))
-            }
-        }
-
-        override fun onCancelled(error: DatabaseError) {
-            TODO("Not yet implemented")
-        }
-
-    })
+private fun addMatch(matchId: String) {
+    if (matches.add(matchId)) {
+        matchObservers.forEach{observer -> observer.notify(matches)}
+    }
 }
 
-private fun removeMatch(uniId: String, user1Id: String, user2Id: String) {
-    val usersRef = unisRef.child(uniId).child("users")
-    val matches1Ref = usersRef.child(user1Id).child("matches")
-    val matches2Ref = usersRef.child(user2Id).child("matches")
-
-    matches1Ref.addListenerForSingleValueEvent(object : ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-            val value = snapshot.getValue(String::class.java)
-            val matches = gson.fromJson(value, Array<String>::class.java).toMutableList()
-            if (matches.remove(user2Id)) {
-                matches1Ref.setValue(gson.toJson(matches))
-            }
-        }
-
-        override fun onCancelled(error: DatabaseError) {
-            TODO("Not yet implemented")
-        }
-    })
-
-    matches2Ref.addListenerForSingleValueEvent(object : ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-            val value = snapshot.getValue(String::class.java)
-            val matches = gson.fromJson(value, Array<String>::class.java).toMutableList()
-            if (matches.remove(user1Id)) {
-                matches2Ref.setValue(gson.toJson(matches))
-            }
-        }
-
-        override fun onCancelled(error: DatabaseError) {
-            TODO("Not yet implemented")
-        }
-
-    })
+private fun removeMatch(matchId: String) {
+    if (matches.remove(matchId)) {
+        matchObservers.forEach{observer -> observer.notify(matches)}
+    }
 }
 
 fun updateMatches(uniId: String, userId: String, snapshot: DataSnapshot) {
@@ -132,9 +60,9 @@ fun updateMatches(uniId: String, userId: String, snapshot: DataSnapshot) {
                         ?.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(otherSnapshot: DataSnapshot) {
                                 if (matcher.isMatch(snapshot, otherSnapshot)) {
-                                    addMatch(uniId, userId, otherId)
+                                    addMatch(otherId)
                                 } else {
-                                    removeMatch(uniId, userId, otherId)
+                                    removeMatch(otherId)
                                 }
                             }
 
