@@ -63,7 +63,7 @@ class ChatActivity : AppCompatActivity() {
 //    val matchesRef = FirebaseDatabase.getInstance().reference.child("matches")
 
     private fun buildChannelId(user1: String, user2: String): String {
-        return "${user1}${user2}"
+        return "${user1}${user2}".lowercase()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,24 +72,17 @@ class ChatActivity : AppCompatActivity() {
         val clientService = ChatClientService(applicationContext)
 
         // Authenticate and connect the user (MVP)
-        val user = User(
-            id = "demo-user",
-            name = "Max",
-            image = "upload.wikimedia.org/wikipedia/commons/4/42/Flag_of_the_United_Kingdom.png"
-        )
 
         if (savedInstanceState == null) {
             Backend.serverInit()
             Backend.createFriend(pierre.id, pierre.name)
-            Backend.createFriend(kevin.id, kevin.name)
             Backend.createFriend(max.id, max.name)
             Backend.createFriend(sasha.id, sasha.name)
             Backend.createFriend(david.id, david.name)
 
-            clientService.connectCurrentUser(user).enqueue { result ->
+            clientService.connectCurrentUser(kevin).enqueue { result ->
                 if (result.isSuccess) {
                     Log.e("connectUser", "success")
-                    clientService.createChannel(buildChannelId(user.id, kevin.id), user.id, kevin.id)
                 } else {
                     Log.e("connectUser", result.toString())
                 }
@@ -98,10 +91,11 @@ class ChatActivity : AppCompatActivity() {
 
         // Create new channel if meeting new friend
         val fromMatch = intent.getBooleanExtra("fromMatch", false)
-        if (fromMatch && intent.hasExtra("matchedName")) {
+        if (fromMatch) {
+            Log.e("main", "createChannel")
             val matchUserName: String = intent.getStringExtra("matchedName")!!
-            val cid = buildChannelId(user.id, matchUserName)
-            clientService.createChannel(cid, user.id, matchUserName)
+            val cid = buildChannelId(kevin.id, matchUserName)
+            clientService.createChannel(cid, kevin.id, matchUserName)
         }
 
         // Step 0 - inflate binding
@@ -111,7 +105,7 @@ class ChatActivity : AppCompatActivity() {
         val channelListFactory = ChannelListViewModelFactory(
             filter = Filters.and(
                 Filters.eq("type", "messaging"),
-                Filters.`in`("members", listOf(user.id)),
+                Filters.`in`("members", listOf(kevin.id)),
             ),
             sort = QuerySortByField.descByName("lastUpdated"),
             limit = 30,
