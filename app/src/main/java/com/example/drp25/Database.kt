@@ -1,5 +1,6 @@
 package com.example.drp25
 
+import com.example.drp25.matchers.RatingMatcher
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -11,7 +12,7 @@ val UNI_ID = "imperialId"
 val USER_ID = "-NXPnWryIGR2S5aJmSGH"
 
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
-private val matcher: Matcher = BasicMatcher()
+private val matcher: Matcher = RatingMatcher()
 val gson = Gson()
 var matches = listOf<String>()
 val matchObservers = mutableListOf<Observer>()
