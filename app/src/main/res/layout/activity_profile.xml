@@ -114,6 +114,7 @@
                         android:minHeight="20dp"
                         android:scaleX="0.5"
                         android:scaleY="0.5"
+                        android:isIndicator="true"
                         android:rating="4.5" />
                 </TableRow>
 
@@ -132,6 +133,7 @@
                         android:minHeight="20dp"
                         android:scaleX="0.5"
                         android:scaleY="0.5"
+                        android:isIndicator="true"
                         android:rating="3" />
                 </TableRow>
 
@@ -149,6 +151,7 @@
                         android:minHeight="20dp"
                         android:scaleX="0.5"
                         android:scaleY="0.5"
+                        android:isIndicator="true"
                         android:rating="2" />
                 </TableRow>
 
