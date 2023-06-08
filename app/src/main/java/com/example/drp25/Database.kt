@@ -1,17 +1,18 @@
 package com.example.drp25
 
-import android.app.Activity
-import android.content.Context
-import android.util.Log
+import com.example.drp25.matchers.RatingMatcher
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
-import okhttp3.internal.notify
+
+// our logged in user
+val UNI_ID = "imperialId"
+val USER_ID = "-NXPnWryIGR2S5aJmSGH"
 
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
-private val matcher: Matcher = BasicMatcher()
+private val matcher: Matcher = RatingMatcher()
 val gson = Gson()
 var matches = listOf<String>()
 val matchObservers = mutableListOf<Observer>()
@@ -151,7 +152,7 @@ fun updateMatches(uniId: String, userId: String, snapshot: DataSnapshot) {
 }
 
 // returns generated userId (or null if unsuccessful)
-fun addUser(uniId: String, name: String, nationality: String): String? {
+fun addUser(uniId: String, name: String, nationality: String, year: String, course: String): String? {
     val usersRef = unisRef.child(uniId).child("users")
     val userId = usersRef.push().key
     if (userId != null) {
@@ -159,6 +160,8 @@ fun addUser(uniId: String, name: String, nationality: String): String? {
         userRef.child("name").setValue(name)
         userRef.child("nationality").setValue(nationality)
         userRef.child("matches").setValue(gson.toJson(listOf<String>()))
+        userRef.child("year").setValue(year)
+        userRef.child("course").setValue(course)
     }
     return userId
 }
