@@ -25,10 +25,6 @@ import io.getstream.chat.android.ui.channel.list.viewmodel.ChannelListViewModel
 import io.getstream.chat.android.ui.channel.list.viewmodel.bindView
 import io.getstream.chat.android.ui.channel.list.viewmodel.factory.ChannelListViewModelFactory
 
-// our logged in user
-val UNI_ID = "imperialId"
-val USER_ID = "-NXPnWryIGR2S5aJmSGH"
-
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
@@ -176,11 +172,7 @@ class ChatActivity : AppCompatActivity() {
         if (intent.hasExtra("fromMatch") && intent.getBooleanExtra("fromMatch", true) == true) {
 
         } else {
-            // indicates this is the person logged in (currently Kevin)
-            listenToUser(UNI_ID, USER_ID)
             setContentView(binding.root)
-
-
         }
 
     }

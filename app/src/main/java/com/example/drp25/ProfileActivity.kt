@@ -15,6 +15,9 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+        // indicates this is the person logged in (currently Kevin)
+        listenToUser(UNI_ID, USER_ID)
+
         /* inflate binding */
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -1,14 +1,14 @@
 package com.example.drp25
 
-import android.app.Activity
-import android.content.Context
-import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
-import okhttp3.internal.notify
+
+// our logged in user
+val UNI_ID = "imperialId"
+val USER_ID = "-NXPnWryIGR2S5aJmSGH"
 
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
 private val matcher: Matcher = BasicMatcher()
