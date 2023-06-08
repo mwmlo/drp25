@@ -62,7 +62,7 @@ class ChatActivity : AppCompatActivity() {
         return match.id
     }
 
-    val matchesRef = FirebaseDatabase.getInstance().reference.child("matches")
+//    val matchesRef = FirebaseDatabase.getInstance().reference.child("matches")
 
     private fun buildChannelId(user1: String, user2: String): String {
         return "${user1}${user2}"
@@ -103,9 +103,19 @@ class ChatActivity : AppCompatActivity() {
 
         // Only allows the binding to be visible if the page is not opened from a match activity
         if (intent.hasExtra("fromMatch") && intent.getBooleanExtra("fromMatch", true)) {
+            Log.e("LOCATED","Have found a channel with the correct id")
             val matchUserId = getMatch()
-            clientService.createChannel(buildChannelId(user.id, matchUserId), user.id, matchUserId)
+            val cid = buildChannelId(user.id, matchUserId)
+            clientService.createChannel(cid, user.id, matchUserId)
+            binding.channelListView.setChannelItemClickListener { channel ->
+                if (channel.id == cid) {
+                    Log.e("IDENTIFIED","Have found a channel with the correct id")
+                    channelGlob = channel
+                }
+                startActivity(ChannelActivity.newIntent(this, channel))
+            }
         } else {
+            Log.e("NOTLOCATED","Have found a channel with the correct id")
             setContentView(binding.root)
         }
 
