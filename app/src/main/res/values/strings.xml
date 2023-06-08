@@ -21,7 +21,13 @@
     <!-- Hardcoded Kevin Example -->
     <string name="kevin">Kevin</string>
     <string name="kevin_info">Year 1  |  Physics  |  Imperial College</string>
+    <string name="kevin_info_year">Year 1</string>
+    <string name="kevin_info_course">Physics</string>
+    <string name="kevin_info_uni">Imperial College</string>
     <string name="kevin_interests">Ballet  |  Cooking  |  Football</string>
+    <string name="kevin_interest_1">Ballet</string>
+    <string name="kevin_interest_2">Cooking</string>
+    <string name="kevin_interest_3">Football</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

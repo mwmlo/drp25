@@ -39,8 +39,7 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,12 +49,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toStartOf="parent">
 
             <!-- Determined by user profile. -->
             <ImageView
@@ -99,7 +98,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/text_margin_32"
                 android:layout_marginRight="@dimen/text_margin_32"
-                android:text="@string/kevin_interests"
+                android:layout_marginBottom="@dimen/text_margin_16"
+                android:text="@string/kevin_interest_1"
+                android:textSize="20sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin_32"
+                android:layout_marginRight="@dimen/text_margin_32"
+                android:layout_marginBottom="@dimen/text_margin_16"
+                android:text="@string/kevin_interest_2"
+                android:textSize="20sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin_32"
+                android:layout_marginRight="@dimen/text_margin_32"
+                android:text="@string/kevin_interest_3"
                 android:textSize="20sp"/>
 
             <TextView
@@ -113,6 +128,7 @@
 
             <!-- Determined by user profile. -->
             <TextView
+                android:id="@+id/no_stamps_prompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/text_margin_32"
@@ -121,19 +137,17 @@
                 android:textSize="20sp"
                 android:textAlignment="center" />
 
+            <Button
+                android:id="@+id/profile_match_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin_32"
+                android:layout_gravity="center"
+                android:text="@string/meet_someone_button"
+                android:textSize="24sp" />
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/profile_match_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/button_send"
-            android:text="@string/meet_someone_button"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
