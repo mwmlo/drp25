@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.RatingBar
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.drp25.ChatClient.client
@@ -31,10 +32,13 @@ class MatchActivity : AppCompatActivity() {
         override fun notify(matchIds: Set<String>) {
             parentLayout.removeAllViews()
             for (matchId in matchIds) {
+                val scrollView = ScrollView(context)
+                parentLayout.addView(scrollView)
                 val linearLayout = LinearLayout(context)
                 linearLayout.orientation = LinearLayout.VERTICAL
                 linearLayout.setPadding(30, 30, 30, 30)
-                parentLayout.addView(linearLayout)
+//                parentLayout.addView(linearLayout)
+                scrollView.addView(linearLayout)
                 val matchRef = FirebaseDatabase.getInstance().reference.child("universities")
                     .child(UNI_ID).child("users").child(matchId)
                 matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
