@@ -9,6 +9,7 @@ import com.example.drp25.databinding.ActivityChatBinding
 import com.google.firebase.database.FirebaseDatabase
 //import com.google.firebase.database.FirebaseDatabase
 import io.getstream.chat.android.client.api.models.querysort.QuerySortByField
+import io.getstream.chat.android.client.models.Channel
 import io.getstream.chat.android.client.models.Filters
 import io.getstream.chat.android.client.models.User
 import io.getstream.chat.android.ui.channel.list.header.viewmodel.ChannelListHeaderViewModel
