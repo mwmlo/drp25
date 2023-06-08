@@ -15,6 +15,8 @@ import com.google.firebase.database.ValueEventListener
 class MatchActivity : AppCompatActivity() {
     private lateinit var parentLayout: LinearLayout
     private lateinit var context: Context
+    private var selectedMatchId: String? = null
+
     private val observer = object : Observer {
         override fun notify(matchIds: Set<String>) {
             parentLayout.removeAllViews()
@@ -27,17 +29,25 @@ class MatchActivity : AppCompatActivity() {
                     .child(UNI_ID).child("users").child(matchId)
                 matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        snapshot.child("name").getValue(String::class.java)
-                            ?.let { addText(linearLayout, "Name: $it") }
-                        snapshot.child("nationality").getValue(String::class.java)
-                            ?.let { addText(linearLayout, "Nationality: $it") }
-                        snapshot.child("course").getValue(String::class.java)
-                            ?.let { addText(linearLayout, "Course: $it") }
-                        snapshot.child("year").getValue(String::class.java)
-                            ?.let { addText(linearLayout, "Year: $it") }
+                        val name = snapshot.child("name").value
+                        val nationality = snapshot.child("nationality").value
+                        val course = snapshot.child("course").value
+                        val year = snapshot.child("year").value
+
+                        addText(linearLayout, "Name: $name")
+                        addText(linearLayout, "Nationality: $nationality")
+                        addText(linearLayout, "Course: $course")
+                        addText(linearLayout, "Year: $year")
+
                         addText(linearLayout, "Interests:")
                         for (interest in snapshot.child("interests").children) {
                             addText(linearLayout, interest.key + " (" + interest.value + " stars)")
+                        }
+
+                        val button = getButton(linearLayout, "Match with $name")
+                        linearLayout.addView(button)
+                        button.setOnClickListener {
+                            selectedMatchId = matchId
                         }
                     }
 
@@ -56,6 +66,14 @@ class MatchActivity : AppCompatActivity() {
         entry.setPadding(16, 16, 16, 16)
         entry.textSize = 20f
         linearLayout.addView(entry)
+    }
+
+    private fun getButton(linearLayout: LinearLayout, text: String): Button {
+        val btn = Button(context)
+        btn.text = text
+        btn.setPadding(16, 16, 16, 16)
+        btn.textSize = 20f
+        return btn
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
