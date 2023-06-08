@@ -36,14 +36,16 @@ class MatchActivity : AppCompatActivity() {
                     .child(UNI_ID).child("users").child(matchId)
                 matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        snapshot.child("name").getValue(String::class.java)
-                            ?.let { addText(linearLayout, "Name: $it") }
-                        snapshot.child("nationality").getValue(String::class.java)
-                            ?.let { addText(linearLayout, "Nationality: $it") }
-                        snapshot.child("course").getValue(String::class.java)
-                            ?.let { addText(linearLayout, "Course: $it") }
-                        snapshot.child("year").getValue(String::class.java)
-                            ?.let { addText(linearLayout, "Year: $it") }
+                        val name = snapshot.child("name").value
+                        val nationality = snapshot.child("nationality").value
+                        val course = snapshot.child("course").value
+                        val year = snapshot.child("year").value
+
+                        addText(linearLayout, "Name: $name")
+                        addText(linearLayout, "Nationality: $nationality")
+                        addText(linearLayout, "Course: $course")
+                        addText(linearLayout, "Year: $year")
+
                         addText(linearLayout, "Interests:")
                         for (interest in snapshot.child("interests").children) {
                             addText(linearLayout, interest.key + " (" + interest.value + " stars)")
