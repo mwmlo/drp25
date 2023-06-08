@@ -33,15 +33,22 @@ class MatchActivity : AppCompatActivity() {
                 linearLayout.setPadding(30, 30, 30, 30)
                 val matchRef = FirebaseDatabase.getInstance().reference.child("universities")
                     .child(UNI_ID).child("users").child(matchId)
-                // NAME
-                matchRef.child("name").addListenerForSingleValueEvent(object: ValueEventListener {
+                matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        snapshot.getValue(String::class.java)?.let { addText(linearLayout, it) }
+                        snapshot.child("name").getValue(String::class.java)
+                            ?.let { addText(linearLayout, it) }
+                        snapshot.child("nationality").getValue(String::class.java)
+                            ?.let { addText(linearLayout, "Nationality: $it") }
+                        snapshot.child("course").getValue(String::class.java)
+                            ?.let { addText(linearLayout, "Course: $it") }
+                        snapshot.child("year").getValue(String::class.java)
+                            ?.let { addText(linearLayout, "Year: $it") }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
                         TODO("Not yet implemented")
                     }
+
                 })
                 // INTERESTS
                 matchRef.child("interests").addListenerForSingleValueEvent(object: ValueEventListener {
