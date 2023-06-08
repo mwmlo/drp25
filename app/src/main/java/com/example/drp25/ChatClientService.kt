@@ -33,9 +33,8 @@ class ChatClientService(applicationContext: Context) {
     fun connectCurrentUser(user: io.getstream.chat.android.client.models.User) {
         client.connectUser(
             user = user,
-            token = generateUserToken(user.id)
+            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGVtby11c2VyIn0.WX_Ovhfcj7wXRFdRd2uu9rqHK8shSNwI9jD6x-Tdl7A"
         ).enqueue()
-        // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGVtby11c2VyIn0.WX_Ovhfcj7wXRFdRd2uu9rqHK8shSNwI9jD6x-Tdl7A"
     }
 
     fun createChannel(channelId: String, firstUserId: String, secondUserId: String) {

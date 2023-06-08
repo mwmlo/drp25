@@ -7,9 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 
 import com.example.drp25.databinding.ActivityChatBinding
 import com.google.firebase.database.FirebaseDatabase
+//import com.google.firebase.database.FirebaseDatabase
 import io.getstream.chat.android.client.api.models.querysort.QuerySortByField
-import io.getstream.chat.android.client.call.Call
-import io.getstream.chat.android.client.models.Channel
 import io.getstream.chat.android.client.models.Filters
 import io.getstream.chat.android.client.models.User
 import io.getstream.chat.android.ui.channel.list.header.viewmodel.ChannelListHeaderViewModel
@@ -19,23 +18,24 @@ import io.getstream.chat.android.ui.channel.list.viewmodel.bindView
 import io.getstream.chat.android.ui.channel.list.viewmodel.factory.ChannelListViewModelFactory
 
 // our logged in user
-val UNI_ID = "imperialId"
-val USER_ID = "-NXGEo30rzoWUgTYoYi_"
+const val UNI_ID = "imperialId"
+const val USER_ID = "-NXPnWryIGR2S5aJmSGH"
 
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
-    private lateinit var channelGlob: Call<Channel>
+//    private var channelGlob: Call<Channel>
 
     // Get match for demo
-    private val NAMES = listOf<String>("Pierre", "Kevin", "Martha", "India", "Jerry", "Simon")
+    private val names = listOf("Pierre", "Kevin", "Martha", "India", "Jerry", "Simon")
     private var i = 0
 
     private fun getMatch(): String {
-        val match = NAMES.get(i)
-        i = (i+1)%(NAMES.size)
+        val match = names[i]
+        i = (i + 1) % (names.size)
         return match
     }
+
     val matchesRef = FirebaseDatabase.getInstance().reference.child("matches")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,19 +54,25 @@ class ChatActivity : AppCompatActivity() {
         )
         clientService.connectCurrentUser(user)
 
-        val friend = User(
-            id = "friend",
-            name = "Friend",
+        val friend1 = User(
+            id = "friend-1",
+            name = "Friend 1",
+            image = "https://bit.ly/2TIt8NR"
+        )
+
+        val friend2 = User(
+            id = "friend-2",
+            name = "Friend 2",
             image = "https://bit.ly/2TIt8NR"
         )
 
         // Only allows the binding to be visible if the page is not opened from a match activity
         if (intent.hasExtra("fromMatch") && intent.getBooleanExtra("fromMatch", true)) {
-            clientService.createChannel("1234", user.id, friend.id)
+            clientService.createChannel("1234", user.id, friend2.id)
 //            createAndRunChannel(client, user)
         } else {
             setContentView(binding.root)
-            clientService.createChannel("5678", user.id, friend.id)
+            clientService.createChannel("14355", user.id, friend1.id)
             // Note this channel is not showing up
 //            createDemoChannel(client, user, "14355")
             // seems to be something wrong with channel.execute.data, causing issues
@@ -74,7 +80,7 @@ class ChatActivity : AppCompatActivity() {
         }
 
         val channelListHeaderViewModel: ChannelListHeaderViewModel by viewModels()
-        val channelListFactory: ChannelListViewModelFactory = ChannelListViewModelFactory(
+        val channelListFactory = ChannelListViewModelFactory(
             filter = Filters.and(
                 Filters.eq("type", "messaging"),
                 Filters.`in`("members", listOf(user.id)),
@@ -99,7 +105,7 @@ class ChatActivity : AppCompatActivity() {
         }
 
         /* Functionality of "Meet Someone New" button -> takes user to match page. */
-        binding.homeMatchButton.setOnClickListener { _ ->
+        binding.homeMatchButton.setOnClickListener {
             val intent = Intent(this, MatchActivity::class.java)
             startActivity(intent)
         }
@@ -108,22 +114,4 @@ class ChatActivity : AppCompatActivity() {
         listenToUser(UNI_ID, USER_ID)
 
     }
-
-//    companion object {
-//        // Cannot access the application context of original chat activity
-//        private var instance: ChatActivity? = null
-//        fun getContext(): Context = instance!!.applicationContext
-//    }
 }
-
-// Add members with ids "thierry" and "josh"
-/*
-channelClient.addMembers(Arrays.asList("thierry", "josh"), null).enqueue(result -> {
-    if (result.isSuccess()) {
-        Channel channel = result.data();
-    } else {
-       // Handle result.error()
-   }
-});
-
-*/
