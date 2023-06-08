@@ -21,7 +21,7 @@ class MatchActivity : AppCompatActivity() {
 
             for (matchId in matchIds) {
                 val nameRef = FirebaseDatabase.getInstance().reference.child("universities")
-                    .child(UNI_ID).child("users").child(matchId).child("name")
+                    .child(com.example.drp25.UNI_ID).child("users").child(matchId).child("name")
                 nameRef.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         // update view
@@ -54,7 +54,6 @@ class MatchActivity : AppCompatActivity() {
         val sendBtn = findViewById<Button>(R.id.match_send_button)
         sendBtn.setOnClickListener { view ->
             val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("user", "Pierre")
             intent.putExtra("fromMatch", true)
             startActivity(intent)
 

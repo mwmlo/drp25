@@ -29,7 +29,6 @@ class ChatClientService(applicationContext: Context) {
         .withPlugin(offlinePluginFactory)
         .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
         .build()
-
     fun connectCurrentUser(user: User): Call<ConnectionData> {
         val token = Backend.generateUserToken(user.id)
         Log.e("connect", token)
@@ -48,21 +47,6 @@ class ChatClientService(applicationContext: Context) {
                 // Handle result.error()
             }
         }
-
-//        val channelCall = client.createChannel(
-//            channelType = "messaging",
-//            channelId = channelId,
-//            memberIds = listOf(firstUserId, secondUserId),
-//            extraData = emptyMap()
-//        )
-//        channelCall.enqueue { result ->
-//            if (result.isSuccess) {
-//                Log.e("createChannel$channelId", "success")
-//            } else {
-//                Log.e("createChannel$channelId", "fail")
-//                Log.e("createChannel$channelId", result.toString())
-//            }
-//        }
     }
 
 

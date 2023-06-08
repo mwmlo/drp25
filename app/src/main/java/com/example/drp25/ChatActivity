@@ -21,65 +21,90 @@ import io.getstream.chat.android.ui.channel.list.viewmodel.factory.ChannelListVi
 // our logged in user
 const val UNI_ID = "imperialId"
 const val USER_ID = "-NXPnWryIGR2S5aJmSGH"
-
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
     private lateinit var channelGlob: Channel
 
+    val pierre = User(
+        id = "pierre",
+        name = "Pierre",
+        image = "upload.wikimedia.org/wikipedia/commons/6/62/Flag_of_France.png"
+    )
+    val kevin = User(
+        id = "kevin",
+        name = "Kevin",
+        image = "cdn.countryflags.com/thumbs/china/flag-round-250.png"
+    )
+    val martha = User(
+        id = "martha",
+        name = "Martha",
+        image = "img.freepik.com/premium-vector/german-flag-vector_230920-1254.jpg"
+    )
+    val jerry = User(
+        id = "jerry",
+        name = "Jerry",
+        image = "upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_India.png/800px-Flag_of_India.png"
+    )
+    val simon = User(
+        id = "simon",
+        name = "Simon",
+        image = "img.freepik.com/premium-vector/german-flag-vector_230920-1254.jpg"
+    )
+
     // Get match for demo
-    private val names = listOf("Pierre", "Kevin", "Martha", "India", "Jerry", "Simon")
+    private val people = listOf(pierre, kevin, martha, jerry, simon)
     private var i = 0
 
     private fun getMatch(): String {
-        val match = names[i]
-        i = (i + 1) % (names.size)
-        return match
+        val match = people[i]
+        i = (i + 1) % (people.size)
+        return match.id
     }
 
     val matchesRef = FirebaseDatabase.getInstance().reference.child("matches")
+
+    private fun buildChannelId(user1: String, user2: String): String {
+        return "${user1}${user2}"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val clientService = ChatClientService(applicationContext)
-        Backend.serverInit()
+
+        // Authenticate and connect the user (MVP)
+        val user = User(
+            id = "demo-user",
+            name = "Max",
+            image = "https://upload.wikimedia.org/wikipedia/commons/4/42/Flag_of_the_United_Kingdom.png"
+        )
+
+        if (savedInstanceState == null) {
+            Backend.serverInit()
+            Backend.createFriend(pierre.id, pierre.name)
+            Backend.createFriend(kevin.id, kevin.name)
+            Backend.createFriend(martha.id, martha.name)
+            Backend.createFriend(jerry.id, jerry.name)
+            Backend.createFriend(simon.id, simon.name)
+
+            clientService.connectCurrentUser(user).enqueue { result ->
+                if (result.isSuccess) {
+                    Log.e("connectUser", "success")
+                    clientService.createChannel(buildChannelId(user.id, kevin.id), user.id, kevin.id)
+                } else {
+                    Log.e("connectUser", result.toString())
+                }
+            }
+        }
 
         // Step 0 - inflate binding
         binding = ActivityChatBinding.inflate(layoutInflater)
 
-        // Step 3 - Authenticate and connect the user (MVP)
-        val user = User(
-            id = "demo-user",
-            name = "Name",
-            image = "https://bit.ly/2TIt8NR"
-        )
-        val friend1 = User(
-            id = "friend-1",
-            name = "Friend 1",
-            image = "https://bit.ly/2TIt8NR"
-        )
-        val friend2 = User(
-            id = "friend-2",
-            name = "Friend 2",
-            image = "https://bit.ly/2TIt8NR"
-        )
-
-        clientService.connectCurrentUser(user).enqueue { result ->
-            if (result.isSuccess) {
-                Log.e("connectUser", "success")
-                Backend.createFriend(friend1.id, friend1.name)
-                Backend.createFriend(friend2.id, friend2.name)
-                clientService.createChannel("14355", user.id, friend1.id)
-            } else {
-                Log.e("connectUser", result.toString())
-            }
-        }
-
         // Only allows the binding to be visible if the page is not opened from a match activity
         if (intent.hasExtra("fromMatch") && intent.getBooleanExtra("fromMatch", true)) {
-            clientService.createChannel("1234", user.id, friend2.id)
-//            createAndRunChannel(client, user)
+            val matchUserId = getMatch()
+            clientService.createChannel(buildChannelId(user.id, matchUserId), user.id, matchUserId)
         } else {
             setContentView(binding.root)
         }
@@ -110,7 +135,7 @@ class ChatActivity : AppCompatActivity() {
         }
 
         // indicates this is the person logged in (currently Kevin)
-        listenToUser(UNI_ID, USER_ID)
+        listenToUser(com.example.drp25.UNI_ID, com.example.drp25.USER_ID)
 
     }
 }
