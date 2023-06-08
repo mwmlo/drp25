@@ -8,9 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 
 import com.example.drp25.databinding.ActivityChatBinding
 import com.google.firebase.database.FirebaseDatabase
-//import com.google.firebase.database.FirebaseDatabase
 import io.getstream.chat.android.client.api.models.querysort.QuerySortByField
-import io.getstream.chat.android.client.call.enqueue
+import io.getstream.chat.android.client.models.Channel
 import io.getstream.chat.android.client.models.Filters
 import io.getstream.chat.android.client.models.User
 import io.getstream.chat.android.ui.channel.list.header.viewmodel.ChannelListHeaderViewModel
@@ -26,7 +25,7 @@ const val USER_ID = "-NXPnWryIGR2S5aJmSGH"
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
-//    private var channelGlob: Call<Channel>
+    private lateinit var channelGlob: Channel
 
     // Get match for demo
     private val names = listOf("Pierre", "Kevin", "Martha", "India", "Jerry", "Simon")
@@ -98,12 +97,6 @@ class ChatActivity : AppCompatActivity() {
 
         channelListHeaderViewModel.bindView(binding.channelListHeaderView, this)
         channelListViewModel.bindView(binding.channelListView, this)
-
-        /* When the user avatar is clicked, the user is taken to their profile page. */
-        binding.channelListHeaderView.setOnUserAvatarClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
-            startActivity(intent)
-        }
 
         /* When a channel is clicked, the user is taken to the channel. */
         binding.channelListView.setChannelItemClickListener { channel ->

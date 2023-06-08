@@ -151,7 +151,7 @@ fun updateMatches(uniId: String, userId: String, snapshot: DataSnapshot) {
 }
 
 // returns generated userId (or null if unsuccessful)
-fun addUser(uniId: String, name: String, nationality: String): String? {
+fun addUser(uniId: String, name: String, nationality: String, year: String, course: String): String? {
     val usersRef = unisRef.child(uniId).child("users")
     val userId = usersRef.push().key
     if (userId != null) {
@@ -159,6 +159,8 @@ fun addUser(uniId: String, name: String, nationality: String): String? {
         userRef.child("name").setValue(name)
         userRef.child("nationality").setValue(nationality)
         userRef.child("matches").setValue(gson.toJson(listOf<String>()))
+        userRef.child("year").setValue(year)
+        userRef.child("course").setValue(course)
     }
     return userId
 }
