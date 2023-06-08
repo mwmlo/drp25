@@ -87,7 +87,7 @@ class ChannelActivity : AppCompatActivity() {
 
         fun newIntent(context: Context, channel: Channel): Intent =
             Intent(context, ChannelActivity::class.java).putExtra(CID_KEY, channel.cid)
-    }
 
+    }
 
 }
