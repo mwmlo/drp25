@@ -28,7 +28,7 @@ import io.getstream.chat.android.ui.channel.list.viewmodel.factory.ChannelListVi
 
 // our logged in user
 val UNI_ID = "imperialId"
-val USER_ID = "-NXGEo30rzoWUgTYoYi_"
+val USER_ID = "-NXPnWrylGR2S5aJmSGH"
 
 class ChatActivity : AppCompatActivity() {
 
@@ -45,7 +45,6 @@ class ChatActivity : AppCompatActivity() {
         return match
     }
     val matchesRef = FirebaseDatabase.getInstance().getReference().child("matches")
-
     private fun createDemoChannel(client: ChatClient, user: User, id: String) {
         // Create a fake demo channel for the user
         var channelCall = client.createChannel(
@@ -62,7 +61,6 @@ class ChatActivity : AppCompatActivity() {
                 Log.e("createChannel"+id, result.toString())
             }
         }
-     // client.channel("155").//.execute().data()
     }
 
     private fun createAndRunChannel(client: ChatClient, user: User) {
@@ -78,23 +76,19 @@ class ChatActivity : AppCompatActivity() {
         val dog = "dog"
         val chanstr = channelGlob.id
         Log.e("NEW CHANNEL 2", dog)
-      // startActivity(ChannelActivity.newIntent(this, channelGlob))
+        // startActivity(ChannelActivity.newIntent(this, channelGlob))
         //TODO randomly generate id please
 
-      //  startActivity(ChannelActivity.newIntent(this, ch))
+        //  startActivity(ChannelActivity.newIntent(this, ch))
 
     }
     fun createDemoFriends(client: ChatClient, user: User, id: String) {
-        // Create friends and channels
-        // supplying a new id creates a channel, these persist after reloading the site
         // createDemoChannel(client, user, id)
         Backend.createFriend("friend-1", client)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         // MVP: Create a demo user who is logged in
         val user = User(
@@ -112,13 +106,12 @@ class ChatActivity : AppCompatActivity() {
             config = Config(
                 backgroundSyncEnabled = true,
                 userPresence = true,
-
+// was this always blank?
                 persistenceEnabled = true,
                 uploadAttachmentsNetworkType = UploadAttachmentsNetworkType.NOT_ROAMING,
             ),
             appContext = applicationContext,
         )
-
 
         // Step 2 - Set up the client for API calls with the plugin for offline storage
         var client = ChatClient.Builder("4tm42krd5mvf", applicationContext)
@@ -157,18 +150,12 @@ class ChatActivity : AppCompatActivity() {
 
         // Only allows the binding to be visible if the page is not opened from a match activity
         // Done before filtering such that the extra channel is created and will be displayed
-        if (intent.hasExtra("fromMatch") && intent.getBooleanExtra("fromMatch", true) == true) {
-            print("Hello I am here")
-            createAndRunChannel(client, user)
-        }
+//        if (intent.hasExtra("fromMatch") && intent.getBooleanExtra("fromMatch", true) == true) {
+//            print("Hello I am here")
+//            createAndRunChannel(client, user)
 //        } else {
 //            setContentView(binding.root)
-//            // Note this channel is not showing up
-//            //createDemoChannel(client, user, "14355")
-//            // seems to be something wrong with channel.execute.data, causing issues
-//            // startActivity(ChannelActivity.newIntent(this, ch))
 //        }
-
 
         /* Create views for the list of channels */
         val channelListHeaderViewModel: ChannelListHeaderViewModel by viewModels()
@@ -199,14 +186,8 @@ class ChatActivity : AppCompatActivity() {
         // indicates this is the person logged in (currently Kevin)
         listenToUser(UNI_ID, USER_ID)
 
-
     }
 
-    companion object {
-        // Cannot access the application context of original chat activity
-        private var instance: ChatActivity? = null
-        fun getContext(): Context = instance!!.applicationContext
-    }
 }
 
 // Add members with ids "thierry" and "josh"
