@@ -27,7 +27,7 @@ import io.getstream.chat.android.ui.channel.list.viewmodel.factory.ChannelListVi
 
 // our logged in user
 val UNI_ID = "imperialId"
-val USER_ID = "-NXGEo30rzoWUgTYoYi_"
+val USER_ID = "-NXPnWryIGR2S5aJmSGH"
 
 class ChatActivity : AppCompatActivity() {
 
