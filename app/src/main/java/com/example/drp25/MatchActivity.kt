@@ -13,6 +13,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.selects.select
 
 class MatchActivity : AppCompatActivity() {
     private lateinit var parentLayout: LinearLayout
@@ -65,6 +66,9 @@ class MatchActivity : AppCompatActivity() {
                         linearLayout.addView(button)
                         button.setOnClickListener {
                             selectedMatchName = name
+                            val intent = Intent(this@MatchActivity, StampActivity::class.java)
+                            intent.putExtra("selectedMatchName", selectedMatchName)
+                            startActivity(intent)
                         }
                     }
 
@@ -101,14 +105,14 @@ class MatchActivity : AppCompatActivity() {
         parentLayout = findViewById(R.id.match_matches)
         addMatchObserver(observer)
 
-        /* Functionality for SEND button -> takes user to chat page. */
-        val sendBtn = findViewById<Button>(R.id.match_send_button)
-        sendBtn.setOnClickListener { view ->
-            val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("fromMatch", true)
-            intent.putExtra("matchedName", selectedMatchName)
-            startActivity(intent)
-        }
+//        /* Functionality for SEND button -> takes user to chat page. */
+//        val sendBtn = findViewById<Button>(R.id.match_send_button)
+//        sendBtn.setOnClickListener { view ->
+//            val intent = Intent(this, ChatActivity::class.java)
+//            intent.putExtra("fromMatch", true)
+//            intent.putExtra("matchedName", selectedMatchName)
+//            startActivity(intent)
+//        }
     }
 
 }
