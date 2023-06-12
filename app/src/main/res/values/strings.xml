@@ -14,6 +14,9 @@
     <!-- Necessary Content Description(s) -->
     <string name="matches_descr">matches display</string>
 
+    <!--Interest selection page-->
+    <string name="interest_prompt">Enter new interest</string>
+
     <!-- Profile Page -->
     <string name="personal_info">Personal Info</string>
     <string name="interests">Interests</string>
@@ -70,4 +73,17 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="title_activity_chat">ChatActivity</string>
+    <string name="input_box_for_interest">Input box for interest</string>
+    <string name="select_interest_s">Select interest(s)</string>
+    <string name="update">Update</string>
+    <string-array name="interest_array">
+        <item>Football</item>
+        <item>Ballet</item>
+        <item>Cooking</item>
+        <item>Science Fiction and Fantasy</item>
+        <item>Archery</item>
+        <item>Art</item>
+        <item>Chess</item>
+        <item>Gardening</item>
+    </string-array>
 </resources>
