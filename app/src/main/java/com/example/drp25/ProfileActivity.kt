@@ -47,9 +47,9 @@ class ProfileActivity : AppCompatActivity() {
 
                 binding.nameText.text = name
 
-                uniRef.addListenerForSingleValueEvent(object: ValueEventListener{
+                uniRef.child("name").addValueEventListener(object: ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        val uniName = snapshot.child("name").value as String
+                        val uniName = snapshot.value as String
                         binding.personalInfoText.text = "Year $year | $course | $uniName"
                     }
 
