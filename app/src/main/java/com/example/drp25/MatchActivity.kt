@@ -2,6 +2,7 @@ package com.example.drp25
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -14,6 +15,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.selects.select
+import org.w3c.dom.Text
 
 class MatchActivity : AppCompatActivity() {
     private lateinit var parentLayout: LinearLayout
@@ -40,36 +42,38 @@ class MatchActivity : AppCompatActivity() {
                         val course = snapshot.child("course").value
                         val year = snapshot.child("year").value
 
-                        addText(linearLayout, "Name: $name")
-                        addText(linearLayout, "Nationality: $nationality")
-                        addText(linearLayout, "Course: $course")
-                        addText(linearLayout, "Year: $year")
+//                        addText(linearLayout, "Name: $name")
+//                        addText(linearLayout, "Nationality: $nationality")
+//                        addText(linearLayout, "Course: $course")
+//                        addText(linearLayout, "Year: $year")
+
+                        val nameView = TextView(context)
+                        nameView.text = name
+                        nameView.textSize = 24f
+                        nameView.setTypeface(null, Typeface.BOLD)
+                        linearLayout.addView(nameView)
+
+//                        addText(linearLayout, name)
+                        addText(linearLayout, "$nationality")
+                        addText(linearLayout, "$course")
+                        addText(linearLayout, "Year $year")
 
                         addText(linearLayout, "Interests:")
                         for (interest in snapshot.child("interests").children) {
-                            addText(linearLayout, interest.key + " (" + interest.value + " stars)")
-
-                            val ratingBar = RatingBar(context)
-                            ratingBar.layoutParams = LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.WRAP_CONTENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT
-                            )
-                            ratingBar.numStars = 5
-                            ratingBar.rating = interest.getValue(Float::class.java)!!
-                            ratingBar.setIsIndicator(true)
-
-                            linearLayout.addView(ratingBar)
-
+//                            addText(linearLayout, interest.key + " (" + interest.value + " stars)")
+                            addText(linearLayout, interest.key + "")
+                            linearLayout.addView(setRatingBar(interest))
                         }
 
+                        /* "Match with _" Button */
                         val button = getButton(linearLayout, "Match with $name")
-                        linearLayout.addView(button)
                         button.setOnClickListener {
                             selectedMatchName = name
                             val intent = Intent(this@MatchActivity, StampActivity::class.java)
                             intent.putExtra("selectedMatchName", selectedMatchName)
                             startActivity(intent)
                         }
+                        linearLayout.addView(button)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -85,7 +89,7 @@ class MatchActivity : AppCompatActivity() {
         val entry = TextView(context)
         entry.text = text
         entry.setPadding(16, 16, 16, 16)
-        entry.textSize = 20f
+        entry.textSize = 16f
         linearLayout.addView(entry)
     }
 
@@ -95,6 +99,19 @@ class MatchActivity : AppCompatActivity() {
         btn.setPadding(16, 16, 16, 16)
         btn.textSize = 20f
         return btn
+    }
+
+    /* Sets and returns a ratingBar with the value associated with the given interest. */
+    private fun setRatingBar(interest : DataSnapshot) : RatingBar {
+        val ratingBar = RatingBar(context)
+        ratingBar.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        ratingBar.numStars = 5
+        ratingBar.rating = interest.getValue(Float::class.java)!!
+        ratingBar.setIsIndicator(true)
+        return ratingBar
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
