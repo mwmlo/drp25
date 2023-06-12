@@ -19,7 +19,7 @@ import io.getstream.chat.android.ui.channel.list.viewmodel.factory.ChannelListVi
 
 // our logged in user
 const val UNI_ID = "imperialId"
-const val USER_ID = "-NXPnWryIGR2S5aJmSGH"
+const val USER_ID = "-NXPnWs-phdiaSN_S87V"
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
