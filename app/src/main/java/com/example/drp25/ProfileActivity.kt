@@ -86,5 +86,10 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, MatchActivity::class.java)
             startActivity(intent)
         }
+
+        binding.updateInterestsButton.setOnClickListener {
+            val intent = Intent(this, InterestActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
