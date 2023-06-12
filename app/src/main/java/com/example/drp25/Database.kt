@@ -1,5 +1,7 @@
 package com.example.drp25
 
+import android.widget.LinearLayout
+import android.widget.RatingBar
 import com.example.drp25.matchers.RatingMatcherWithNationality
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -91,6 +93,11 @@ fun addUser(uniId: String, name: String, nationality: String, year: String, cour
 fun putInterestRating(uniId: String, userId: String, interest: String, rating: Int) {
     val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
     interestsRef.child(interest).setValue(rating)
+}
+
+fun clearInterests(uniId: String, userId: String) {
+    val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
+    interestsRef.removeValue()
 }
 
 fun removeInterest(uniId: String, userId: String, interest: String) {
