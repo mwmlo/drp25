@@ -81,7 +81,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/text_margin_32"
                 android:layout_marginRight="@dimen/text_margin_32"
-                android:text="@string/kevin_info"
                 android:textSize="20sp"/>
 
             <TextView

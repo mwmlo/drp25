@@ -33,18 +33,34 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // set up views
-        val userRef = FirebaseDatabase.getInstance().reference.child("universities")
-            .child(UNI_ID).child("users").child(USER_ID)
+        val uniRef = FirebaseDatabase.getInstance().reference.child("universities")
+            .child(UNI_ID)
+        val userRef = uniRef.child("users").child(USER_ID)
 
         userRef.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                binding.nameText.text = snapshot.child("name").value as String
+                val name: String = snapshot.child("name").value as String
+                val course = snapshot.child("course").value
+                val year = snapshot.child("year").value
+
+                binding.nameText.text = name
+
+                uniRef.addListenerForSingleValueEvent(object: ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val uniName = snapshot.child("name").value as String
+                        binding.personalInfoText.text = "Year $year | $course | $uniName"
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
+
             }
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
 
         /* Functionality of "Back" button -> takes user back to homepage. */
