@@ -95,6 +95,11 @@ fun putInterestRating(uniId: String, userId: String, interest: String, rating: I
     interestsRef.child(interest).setValue(rating)
 }
 
+fun clearInterests(uniId: String, userId: String) {
+    val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
+    interestsRef.removeValue()
+}
+
 fun removeInterest(uniId: String, userId: String, interest: String) {
     val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
     interestsRef.child(interest).removeValue()

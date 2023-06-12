@@ -41,15 +41,28 @@ class InterestActivity : AppCompatActivity() {
 
         val selectInterestButton = findViewById<Button>(R.id.selectInterestButton)
         selectInterestButton.setOnClickListener {
-            // TODO: Update database
+            // Update database
+            addSelectedInterestsToDatabase(interestsChipGroup)
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
 
     }
 
+    private fun addSelectedInterestsToDatabase(pChipGroup: ChipGroup) {
+        // Reset all interests
+        clearInterests(UNI_ID, USER_ID)
+        // Add all interests
+        for (i in 0 until pChipGroup.childCount) {
+            val chip = pChipGroup.getChildAt(i)
+            if (chip is Chip) {
+                val interest = chip.text.toString()
+                putInterestRating(UNI_ID, USER_ID, interest, 3)
+            }
+        }
+    }
+
     private fun displayExistingInterests(pChipGroup: ChipGroup) {
-        val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
         val matchRef = FirebaseDatabase.getInstance().reference.child("universities")
             .child(UNI_ID).child("users").child(USER_ID)
         matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
