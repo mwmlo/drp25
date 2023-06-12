@@ -39,7 +39,7 @@ class ProfileActivity : AppCompatActivity() {
             .child(UNI_ID)
         val userRef = uniRef.child("users").child(USER_ID)
 
-        userRef.addListenerForSingleValueEvent(object: ValueEventListener{
+        userRef.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val name: String = snapshot.child("name").value as String
                 val course = snapshot.child("course").value
