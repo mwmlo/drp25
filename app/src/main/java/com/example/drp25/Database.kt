@@ -1,5 +1,7 @@
 package com.example.drp25
 
+import android.widget.LinearLayout
+import android.widget.RatingBar
 import com.example.drp25.matchers.RatingMatcherWithNationality
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

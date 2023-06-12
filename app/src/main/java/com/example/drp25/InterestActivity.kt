@@ -10,6 +10,10 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class InterestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +31,8 @@ class InterestActivity : AppCompatActivity() {
 
         // Display list of selected interests
         val interestsChipGroup = findViewById<ChipGroup>(R.id.interests_group)
+        displayExistingInterests(interestsChipGroup)
+
         // Add new interest to list of selected interests
         interestSelectTextView.setOnItemClickListener { adapterView, view, pos, id ->
             val selectedInterest = adapterView.getItemAtPosition(pos).toString()
@@ -42,7 +48,28 @@ class InterestActivity : AppCompatActivity() {
 
     }
 
-    fun addChipIfNotExist(pItem: String, pChipGroup: ChipGroup) {
+    private fun displayExistingInterests(pChipGroup: ChipGroup) {
+        val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
+        val matchRef = FirebaseDatabase.getInstance().reference.child("universities")
+            .child(UNI_ID).child("users").child(USER_ID)
+        matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (interest in snapshot.child("interests").children) {
+                    val interestName = interest.key
+                    // TODO: Account for interest ratings
+                    val interestRating = interest.value
+                    if (interestName != null) {
+                        addChipIfNotExist(interestName, pChipGroup)
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    private fun addChipIfNotExist(pItem: String, pChipGroup: ChipGroup) {
         var chipAlreadyExists = false
 
         for (i in 0 until pChipGroup.childCount) {
