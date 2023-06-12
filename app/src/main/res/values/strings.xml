@@ -76,6 +76,7 @@
     <string name="input_box_for_interest">Input box for interest</string>
     <string name="select_interest_s">Select interest(s)</string>
     <string name="update">Update</string>
+    <string name="add_new_interest">Add new interest</string>
     <string-array name="interest_array">
         <item>Football</item>
         <item>Ballet</item>
