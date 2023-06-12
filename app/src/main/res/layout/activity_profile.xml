@@ -29,11 +29,11 @@
 
         <!-- Determined by user profile. -->
         <TextView
+            android:id="@+id/name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/text_margin_16"
-            android:text="@string/kevin"
             android:textSize="24sp"
             android:textColor="@color/white"/>
 
@@ -76,11 +76,11 @@
 
             <!-- Determined by user profile. -->
             <TextView
+                android:id="@+id/personal_info_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/text_margin_32"
                 android:layout_marginRight="@dimen/text_margin_32"
-                android:text="@string/kevin_info"
                 android:textSize="20sp"/>
 
             <TextView
@@ -95,65 +95,11 @@
             <!-- Determined by user profile. -->
 
             <TableLayout
+                android:id="@+id/interests_table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/text_margin_32"
                 android:layout_marginRight="@dimen/text_margin_32">
-
-                <TableRow>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/kevin_interest_1"
-                        android:textSize="20sp"/>
-                    <RatingBar
-                        android:contentDescription="@string/rating_descr"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:minHeight="20dp"
-                        android:scaleX="0.5"
-                        android:scaleY="0.5"
-                        android:isIndicator="true"
-                        android:rating="4.5" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/kevin_interest_2"
-                        android:textSize="20sp"/>
-                    <RatingBar
-                        android:contentDescription="@string/rating_descr"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:minHeight="20dp"
-                        android:scaleX="0.5"
-                        android:scaleY="0.5"
-                        android:isIndicator="true"
-                        android:rating="3" />
-                </TableRow>
-
-                <TableRow>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/kevin_interest_3"
-                        android:textSize="20sp"/>
-                    <RatingBar
-                        android:contentDescription="@string/rating_descr"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:minHeight="20dp"
-                        android:scaleX="0.5"
-                        android:scaleY="0.5"
-                        android:isIndicator="true"
-                        android:rating="2" />
-                </TableRow>
-
             </TableLayout>
 
             <TextView
