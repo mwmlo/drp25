@@ -1,0 +1,9 @@
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="125dp"
+    android:layout_height="125dp"
+    android:scaleType="centerCrop"
+    android:layout_margin="@dimen/margin_16"
+    android:contentDescription="stamp image view"
+    android:scaleX="0.75"
+    android:scaleY="0.75"
+/>
