@@ -11,10 +11,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class StampActivity : AppCompatActivity() {
+    private var selectedStampId: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stamp)
 
+        val selectedMatchId:String? = intent.getStringExtra("selectedMatchId")
         val selectedMatchName:String? = intent.getStringExtra("selectedMatchName")
 
         /* Functionality for SEND button -> takes user to chat page. */
@@ -23,6 +26,12 @@ class StampActivity : AppCompatActivity() {
             val intent = Intent(this, ChatActivity::class.java)
             intent.putExtra("fromMatch", true)
             intent.putExtra("matchedName", selectedMatchName)
+
+            // send the stamp
+            if (selectedMatchId != null && selectedStampId != null) {
+                sendStamp(UNI_ID, selectedMatchId!!, selectedStampId!!)
+            }
+
             startActivity(intent)
         }
 
@@ -34,17 +43,35 @@ class StampActivity : AppCompatActivity() {
         val nationalityRef = FirebaseDatabase.getInstance().reference.child("universities")
             .child(UNI_ID).child("users").child(USER_ID).child("nationality")
 
-        nationalityRef.addValueEventListener(object: ValueEventListener {
+        nationalityRef.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val nationality = snapshot.value as String
+                var img1: Int? = null
+                var img2: Int? = null
+                var img3: Int? = null
+
                 if (nationality == "Chinese") {
-                    stamp1.setImageResource(R.drawable.china_flag_stamp)
-                    stamp2.setImageResource(R.drawable.china_tourist_stamp)
-                    stamp3.setImageResource(R.drawable.china_food_stamp)
-                } else if (nationality == "British") {
-                    stamp1.setImageResource(R.drawable.britain_flag_stamp)
-                    stamp2.setImageResource(R.drawable.britain_tourist_stamp)
-                    stamp3.setImageResource(R.drawable.britain_food_stamp)
+                    img1 = R.drawable.china_flag_stamp
+                    img2 = R.drawable.china_tourist_stamp
+                    img3 = R.drawable.china_food_stamp
+                } else {
+                    img1 = R.drawable.britain_flag_stamp
+                    img2 = R.drawable.britain_tourist_stamp
+                    img3 = R.drawable.britain_food_stamp
+                }
+
+                stamp1.setImageResource(img1)
+                stamp2.setImageResource(img2)
+                stamp3.setImageResource(img3)
+
+                stamp1.setOnClickListener{
+                    selectedStampId = img1
+                }
+                stamp2.setOnClickListener{
+                    selectedStampId = img2
+                }
+                stamp3.setOnClickListener{
+                    selectedStampId = img3
                 }
             }
 
