@@ -18,8 +18,9 @@ import com.google.firebase.database.ValueEventListener
 class MatchActivity : AppCompatActivity() {
     private lateinit var parentLayout: LinearLayout
     private lateinit var context: Context
+    private var selectedMatchId: String? = null
     private var selectedMatchName: String? = null
-    private var selectedStampNumber: Int? = null
+    private var selectedStampId: Int? = null
 
     private val observer = object : Observer {
         override fun notify(matchIds: Set<String>) {
@@ -66,6 +67,7 @@ class MatchActivity : AppCompatActivity() {
                         val button = getButton(linearLayout, "Match with $name")
                         linearLayout.addView(button)
                         button.setOnClickListener {
+                            selectedMatchId = matchId
                             selectedMatchName = name
                         }
                     }
@@ -111,26 +113,17 @@ class MatchActivity : AppCompatActivity() {
             intent.putExtra("matchedName", selectedMatchName)
 
             // send the stamp
-
+            if (selectedMatchId != null && selectedStampId != null) {
+                sendStamp(UNI_ID, selectedMatchId!!, selectedStampId!!)
+            }
 
             startActivity(intent)
         }
 
         // Set up stamps
         val stamp1 = findViewById<ImageView>(R.id.stamp_option_1)
-        stamp1.setOnClickListener{
-            selectedStampNumber = 1
-        }
-
         val stamp2 = findViewById<ImageView>(R.id.stamp_option_2)
-        stamp2.setOnClickListener{
-            selectedStampNumber = 2
-        }
-
         val stamp3 = findViewById<ImageView>(R.id.stamp_option_3)
-        stamp3.setOnClickListener{
-            selectedStampNumber = 3
-        }
 
         val nationalityRef = FirebaseDatabase.getInstance().reference.child("universities")
             .child(UNI_ID).child("users").child(USER_ID).child("nationality")
@@ -138,14 +131,32 @@ class MatchActivity : AppCompatActivity() {
         nationalityRef.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val nationality = snapshot.value as String
+                var img1: Int? = null
+                var img2: Int? = null
+                var img3: Int? = null
+
                 if (nationality == "Chinese") {
-                    stamp1.setImageResource(R.drawable.china_flag_stamp)
-                    stamp2.setImageResource(R.drawable.china_tourist_stamp)
-                    stamp3.setImageResource(R.drawable.china_food_stamp)
-                } else if (nationality == "British") {
-                    stamp1.setImageResource(R.drawable.britain_flag_stamp)
-                    stamp2.setImageResource(R.drawable.britain_tourist_stamp)
-                    stamp3.setImageResource(R.drawable.britain_food_stamp)
+                    img1 = R.drawable.china_flag_stamp
+                    img2 = R.drawable.china_tourist_stamp
+                    img3 = R.drawable.china_food_stamp
+                } else {
+                    img1 = R.drawable.britain_flag_stamp
+                    img2 = R.drawable.britain_tourist_stamp
+                    img3 = R.drawable.britain_food_stamp
+                }
+
+                stamp1.setImageResource(img1)
+                stamp2.setImageResource(img2)
+                stamp3.setImageResource(img3)
+
+                stamp1.setOnClickListener{
+                    selectedStampId = img1
+                }
+                stamp2.setOnClickListener{
+                    selectedStampId = img2
+                }
+                stamp3.setOnClickListener{
+                    selectedStampId = img3
                 }
             }
 
