@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.ScrollView
@@ -109,6 +110,14 @@ class MatchActivity : AppCompatActivity() {
             intent.putExtra("matchedName", selectedMatchName)
             startActivity(intent)
         }
+
+        // Set up stamps
+        val stamp1 = findViewById<ImageView>(R.id.stamp_option_1)
+        stamp1.setImageResource(R.drawable.china_flag_stamp)
+        val stamp2 = findViewById<ImageView>(R.id.stamp_option_2)
+        stamp2.setImageResource(R.drawable.china_tourist_stamp)
+        val stamp3 = findViewById<ImageView>(R.id.stamp_option_3)
+        stamp3.setImageResource(R.drawable.china_food_stamp)
     }
 
 }
