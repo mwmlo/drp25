@@ -102,9 +102,14 @@ class ChatActivity : AppCompatActivity() {
         val fromMatch = intent.getBooleanExtra("fromMatch", false)
         if (fromMatch) {
             Log.e("main", "createChannel")
-            val matchUserName: String = intent.getStringExtra("matchedName")!!
-            val cid = buildChannelId(currentUser.id, matchUserName)
-            clientService.createChannel(cid, currentUser.id, matchUserName)
+            val matchUserName: String? = intent.getStringExtra("matchedName")
+            if (matchUserName != null) {
+                val cid = buildChannelId(currentUser.id, matchUserName)
+                clientService.createChannel(cid, currentUser.id, matchUserName)
+                Log.e("match", "created channel")
+                val intent = Intent(this, SplashScreenActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         // Step 0 - inflate binding
@@ -140,6 +145,8 @@ class ChatActivity : AppCompatActivity() {
             startActivity(intent)
         }
         setContentView(binding.root)
+
+        binding.channelListHeaderView.setOnlineTitle("Globe Chatter")
 
     }
 }
