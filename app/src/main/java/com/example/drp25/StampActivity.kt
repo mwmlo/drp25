@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class StampActivity : AppCompatActivity() {
-    private var selectedStampId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,17 +20,18 @@ class StampActivity : AppCompatActivity() {
         val selectedMatchId:String? = intent.getStringExtra("selectedMatchId")
         val selectedMatchName:String? = intent.getStringExtra("selectedMatchName")
 
-        /* Functionality for SEND button -> takes user to chat page. */
-        val sendBtn = findViewById<Button>(R.id.match_send_button)
-        sendBtn.setOnClickListener { view ->
+        /* Functionality for SEND -> takes user to chat page. */
+        fun send(selectedStampId: Int) {
             val intent = Intent(this, ChatActivity::class.java)
             intent.putExtra("fromMatch", true)
             intent.putExtra("matchedName", selectedMatchName)
 
             // send the stamp
-            if (selectedMatchId != null && selectedStampId != null) {
-                sendStamp(UNI_ID, selectedMatchId!!, selectedStampId!!)
+            if (selectedMatchId != null) {
+                sendStamp(UNI_ID, selectedMatchId, selectedStampId)
             }
+
+            Toast.makeText(this, "Stamp sent!", Toast.LENGTH_SHORT).show()
 
             startActivity(intent)
         }
@@ -65,13 +66,13 @@ class StampActivity : AppCompatActivity() {
                 stamp3.setImageResource(img3)
 
                 stamp1.setOnClickListener{
-                    selectedStampId = img1
+                    send(img1)
                 }
                 stamp2.setOnClickListener{
-                    selectedStampId = img2
+                    send(img2)
                 }
                 stamp3.setOnClickListener{
-                    selectedStampId = img3
+                    send(img3)
                 }
             }
 
