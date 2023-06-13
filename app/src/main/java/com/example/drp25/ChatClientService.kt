@@ -39,8 +39,7 @@ class ChatClientService(applicationContext: Context) {
     }
 
     fun createChannel(channelId: String, firstUserId: String, secondUserId: String) {
-        val sUserId = secondUserId.plus("hellodfrdgsdgd")
-        val channelClient = client.channel(channelType = "messaging", channelId = sUserId)
+        val channelClient = client.channel(channelType = "messaging", channelId = channelId)
        channelClient.create(listOf(firstUserId, secondUserId), emptyMap()).enqueue{
                 result ->
             if (result.isSuccess) {
