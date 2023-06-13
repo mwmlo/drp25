@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.ScrollView
@@ -17,6 +18,7 @@ import com.google.firebase.database.ValueEventListener
 class MatchActivity : AppCompatActivity() {
     private lateinit var parentLayout: LinearLayout
     private lateinit var context: Context
+    private var selectedMatchId: String? = null
     private var selectedMatchName: String? = null
 
     private val observer = object : Observer {
@@ -62,10 +64,15 @@ class MatchActivity : AppCompatActivity() {
                         }
 
                         val button = getButton(linearLayout, "Match with $name")
-                        linearLayout.addView(button)
                         button.setOnClickListener {
+                            selectedMatchId = matchId
                             selectedMatchName = name
+                            val intent = Intent(this@MatchActivity, StampActivity::class.java)
+                            intent.putExtra("selectedMatchId", selectedMatchId)
+                            intent.putExtra("selectedMatchName", selectedMatchName)
+                            startActivity(intent)
                         }
+                        linearLayout.addView(button)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -100,15 +107,6 @@ class MatchActivity : AppCompatActivity() {
         context = this
         parentLayout = findViewById(R.id.match_matches)
         addMatchObserver(observer)
-
-        /* Functionality for SEND button -> takes user to chat page. */
-        val sendBtn = findViewById<Button>(R.id.match_send_button)
-        sendBtn.setOnClickListener { view ->
-            val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("fromMatch", true)
-            intent.putExtra("matchedName", selectedMatchName)
-            startActivity(intent)
-        }
     }
 
 }

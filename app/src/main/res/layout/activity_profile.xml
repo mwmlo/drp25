@@ -130,7 +130,8 @@
                 android:text="@string/stamps"
                 android:textSize="28sp"/>
 
-            <!-- Determined by user profile. -->
+            <!-- Determined by user stamps. -->
+
             <TextView
                 android:id="@+id/no_stamps_prompt"
                 android:layout_width="wrap_content"
@@ -139,7 +140,17 @@
                 android:layout_marginRight="@dimen/text_margin_32"
                 android:text="@string/stamps_prompt"
                 android:textSize="20sp"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/stamp_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin_32"
+                android:layout_marginRight="@dimen/text_margin_32"
+                android:orientation="horizontal"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/profile_match_button"
