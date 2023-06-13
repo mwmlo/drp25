@@ -19,6 +19,7 @@ class MatchActivity : AppCompatActivity() {
     private lateinit var parentLayout: LinearLayout
     private lateinit var context: Context
     private var selectedMatchName: String? = null
+    private var selectedStampNumber: Int? = null
 
     private val observer = object : Observer {
         override fun notify(matchIds: Set<String>) {
@@ -108,13 +109,28 @@ class MatchActivity : AppCompatActivity() {
             val intent = Intent(this, ChatActivity::class.java)
             intent.putExtra("fromMatch", true)
             intent.putExtra("matchedName", selectedMatchName)
+
+            // send the stamp
+
+
             startActivity(intent)
         }
 
         // Set up stamps
         val stamp1 = findViewById<ImageView>(R.id.stamp_option_1)
+        stamp1.setOnClickListener{
+            selectedStampNumber = 1
+        }
+
         val stamp2 = findViewById<ImageView>(R.id.stamp_option_2)
+        stamp2.setOnClickListener{
+            selectedStampNumber = 2
+        }
+
         val stamp3 = findViewById<ImageView>(R.id.stamp_option_3)
+        stamp3.setOnClickListener{
+            selectedStampNumber = 3
+        }
 
         val nationalityRef = FirebaseDatabase.getInstance().reference.child("universities")
             .child(UNI_ID).child("users").child(USER_ID).child("nationality")

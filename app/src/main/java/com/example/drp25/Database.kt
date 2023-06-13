@@ -14,6 +14,10 @@ private val matcher: Matcher = RatingMatcherWithNationality()
 val matches = mutableSetOf<String>()
 val matchObservers = mutableListOf<Observer>()
 
+fun sendStamp(nationality: String, recipientId: String) {
+    val stampsRef = unisRef.child(UNI_ID).child("users").child(recipientId).child("stamps")
+}
+
 fun addMatchObserver(observer: Observer) {
     matchObservers.add(observer)
     observer.notify(matches)
