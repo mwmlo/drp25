@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.ScrollView
@@ -109,6 +110,34 @@ class MatchActivity : AppCompatActivity() {
             intent.putExtra("matchedName", selectedMatchName)
             startActivity(intent)
         }
+
+        // Set up stamps
+        val stamp1 = findViewById<ImageView>(R.id.stamp_option_1)
+        val stamp2 = findViewById<ImageView>(R.id.stamp_option_2)
+        val stamp3 = findViewById<ImageView>(R.id.stamp_option_3)
+
+        val nationalityRef = FirebaseDatabase.getInstance().reference.child("universities")
+            .child(UNI_ID).child("users").child(USER_ID).child("nationality")
+
+        nationalityRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val nationality = snapshot.value as String
+                if (nationality == "Chinese") {
+                    stamp1.setImageResource(R.drawable.china_flag_stamp)
+                    stamp2.setImageResource(R.drawable.china_tourist_stamp)
+                    stamp3.setImageResource(R.drawable.china_food_stamp)
+                } else if (nationality == "British") {
+                    stamp1.setImageResource(R.drawable.britain_flag_stamp)
+                    stamp2.setImageResource(R.drawable.britain_tourist_stamp)
+                    stamp3.setImageResource(R.drawable.britain_food_stamp)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
 }

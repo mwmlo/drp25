@@ -87,8 +87,9 @@
 
     <ImageView
         android:id="@+id/stamp_option_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:scaleType="centerCrop"
         android:layout_margin="@dimen/margin_16"
         android:contentDescription="@string/profile_picture_descr"
         android:scaleX="0.75"
@@ -100,8 +101,9 @@
 
     <ImageView
         android:id="@+id/stamp_option_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:scaleType="centerCrop"
         android:layout_margin="@dimen/margin_16"
         android:contentDescription="@string/profile_picture_descr"
         android:scaleX="0.75"
@@ -114,8 +116,9 @@
 
     <ImageView
         android:id="@+id/stamp_option_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:scaleType="centerCrop"
         android:layout_margin="@dimen/margin_16"
         android:contentDescription="@string/profile_picture_descr"
         android:scaleX="0.75"
