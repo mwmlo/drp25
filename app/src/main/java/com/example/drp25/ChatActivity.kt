@@ -15,6 +15,7 @@ import io.getstream.chat.android.ui.channel.list.header.viewmodel.bindView
 import io.getstream.chat.android.ui.channel.list.viewmodel.ChannelListViewModel
 import io.getstream.chat.android.ui.channel.list.viewmodel.bindView
 import io.getstream.chat.android.ui.channel.list.viewmodel.factory.ChannelListViewModelFactory
+import kotlin.random.Random
 
 class ChatActivity : AppCompatActivity() {
 
@@ -71,8 +72,12 @@ class ChatActivity : AppCompatActivity() {
 
 //    val matchesRef = FirebaseDatabase.getInstance().reference.child("matches")
 
+    // Must be randomly generated to ensure chats aren't recreated post deletion
     private fun buildChannelId(user1: String, user2: String): String {
-        return "${user1}${user2}".lowercase()
+        val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+        return (1..20)
+            .map { Random.nextInt(0, charPool.size).let { charPool[it] } }
+            .joinToString("")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -143,6 +148,11 @@ class ChatActivity : AppCompatActivity() {
         binding.channelListHeaderView.setOnUserAvatarClickListener{
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+        }
+
+        // To test the club interest activity
+        binding.channelListHeaderView.setOnActionButtonClickListener{
+            startActivity(Intent(this, ClubInterestActivity::class.java))
         }
         setContentView(binding.root)
 
