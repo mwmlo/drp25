@@ -1,11 +1,14 @@
 package com.example.drp25
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.ScrollView
@@ -22,7 +25,10 @@ import com.google.firebase.database.ValueEventListener
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
+    private lateinit var stampLayout: LinearLayout
+    private lateinit var noStampsTextView: TextView
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -33,6 +39,9 @@ class ProfileActivity : AppCompatActivity() {
         /* inflate binding */
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        stampLayout = findViewById(R.id.stamp_layout)
+        noStampsTextView = findViewById(R.id.no_stamps_prompt)
 
         // set up views
         val uniRef = FirebaseDatabase.getInstance().reference.child("universities")
@@ -66,6 +75,22 @@ class ProfileActivity : AppCompatActivity() {
                     interestNameView.text = interest.key
                     interestRatingBar.rating = interest.getValue(Float::class.java)!!
                     binding.interestsTable.addView(rowView)
+                }
+
+                stampLayout.removeAllViews()
+                if (snapshot.child("stamps").hasChildren()){
+                    noStampsTextView.visibility = View.GONE
+                    stampLayout.visibility = View.VISIBLE
+
+                    for (stamp in snapshot.child("stamps").children) {
+                        val inflater = LayoutInflater.from(this@ProfileActivity)
+                        val imgView = inflater.inflate(R.layout.stamp_view, stampLayout, false) as ImageView
+                        stamp.getValue(Int::class.java)?.let { imgView.setImageResource(it) }
+                        stampLayout.addView(imgView)
+                    }
+                } else {
+                    stampLayout.visibility = View.GONE
+                    noStampsTextView.visibility = View.VISIBLE
                 }
 
             }
