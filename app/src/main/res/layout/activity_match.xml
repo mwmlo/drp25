@@ -37,11 +37,11 @@
         android:contentDescription="@string/matches_descr"
         app:layout_constraintTop_toBottomOf="@id/match_caption"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.4"
-        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHeight_percent="0.65"
+        app:layout_constraintVertical_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.6">
+        app:layout_constraintWidth_percent="0.65">
 
         <LinearLayout
             android:id="@+id/match_matches"
@@ -72,73 +72,5 @@
 <!--        app:layout_constraintTop_toTopOf="@id/matches_scroll_view"-->
 <!--        app:layout_constraintBottom_toBottomOf="@id/matches_scroll_view"-->
 <!--        app:layout_constraintStart_toEndOf="@id/matches_scroll_view" />-->
-
-    <TextView
-        android:id="@+id/match_prompt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/match_prompt"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:layout_margin="@dimen/text_margin_32"
-        app:layout_constraintTop_toBottomOf="@id/matches_scroll_view" />
-
-    <!-- Stamp Display -->
-
-    <ImageView
-        android:id="@+id/stamp_option_1"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:scaleType="centerCrop"
-        android:layout_margin="@dimen/margin_16"
-        android:contentDescription="@string/profile_picture_descr"
-        android:scaleX="0.75"
-        android:scaleY="0.75"
-        android:src="@drawable/stream_ui_picture_placeholder"
-        app:layout_constraintTop_toBottomOf="@id/match_prompt"
-        app:layout_constraintBottom_toTopOf="@+id/match_send_button"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <ImageView
-        android:id="@+id/stamp_option_2"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:scaleType="centerCrop"
-        android:layout_margin="@dimen/margin_16"
-        android:contentDescription="@string/profile_picture_descr"
-        android:scaleX="0.75"
-        android:scaleY="0.75"
-        android:src="@drawable/stream_ui_picture_placeholder"
-        app:layout_constraintTop_toBottomOf="@id/match_prompt"
-        app:layout_constraintBottom_toTopOf="@id/match_send_button"
-        app:layout_constraintStart_toEndOf="@id/stamp_option_1"
-        app:layout_constraintEnd_toStartOf="@id/stamp_option_3"/>
-
-    <ImageView
-        android:id="@+id/stamp_option_3"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:scaleType="centerCrop"
-        android:layout_margin="@dimen/margin_16"
-        android:contentDescription="@string/profile_picture_descr"
-        android:scaleX="0.75"
-        android:scaleY="0.75"
-        android:src="@drawable/stream_ui_picture_placeholder"
-        app:layout_constraintTop_toBottomOf="@id/match_prompt"
-        app:layout_constraintBottom_toTopOf="@id/match_send_button"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Send Button -->
-
-    <Button
-        android:id="@+id/match_send_button"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_margin="@dimen/button_send"
-        android:text="@string/match_send_button"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
