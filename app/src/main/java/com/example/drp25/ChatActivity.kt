@@ -139,6 +139,11 @@ class ChatActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
+
+        // To test the club interest activity
+        binding.channelListHeaderView.setOnActionButtonClickListener{
+            startActivity(Intent(this, ClubInterestActivity::class.java))
+        }
         setContentView(binding.root)
 
     }
