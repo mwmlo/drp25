@@ -152,7 +152,7 @@ class ChatActivity : AppCompatActivity() {
 
         // To test the club interest activity
         binding.channelListHeaderView.setOnActionButtonClickListener{
-            startActivity(Intent(this, ClubInterestActivity::class.java))
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
         setContentView(binding.root)
 
