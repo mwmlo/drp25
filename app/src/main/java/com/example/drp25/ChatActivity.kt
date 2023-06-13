@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 
 import com.example.drp25.databinding.ActivityChatBinding
 import io.getstream.chat.android.client.api.models.querysort.QuerySortByField
-import io.getstream.chat.android.client.models.Channel
 import io.getstream.chat.android.client.models.Filters
 import io.getstream.chat.android.client.models.User
 import io.getstream.chat.android.ui.channel.list.header.viewmodel.ChannelListHeaderViewModel
@@ -17,48 +16,58 @@ import io.getstream.chat.android.ui.channel.list.viewmodel.ChannelListViewModel
 import io.getstream.chat.android.ui.channel.list.viewmodel.bindView
 import io.getstream.chat.android.ui.channel.list.viewmodel.factory.ChannelListViewModelFactory
 
-// our logged in user
-const val UNI_ID = "imperialId"
-const val USER_ID = "-NXPnWryIGR2S5aJmSGH"
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
 
-    val pierre = User(
-        id = "Pierre",
-        name = "Pierre",
-        image = "upload.wikimedia.org/wikipedia/commons/6/62/Flag_of_France.png"
-    )
-    val kevin = User(
-        id = "Kevin",
-        name = "Kevin",
-        image = "cdn.countryflags.com/thumbs/china/flag-round-250.png"
-    )
-    val max = User(
-        id = "Max",
-        name = "Max",
-        image = "img.freepik.com/premium-vector/german-flag-vector_230920-1254.jpg"
-    )
-    val sasha = User(
-        id = "Sasha",
-        name = "Sasha",
-        image = "upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_India.png/800px-Flag_of_India.png"
-    )
-    val david = User(
-        id = "David",
-        name = "David",
-        image = "img.freepik.com/premium-vector/german-flag-vector_230920-1254.jpg"
-    )
+    companion object {
+        private val pierre = User(
+            id = "Pierre",
+            name = "Pierre",
+            image = "upload.wikimedia.org/wikipedia/commons/6/62/Flag_of_France.png"
+        )
+        private val kevin = User(
+            id = "Kevin",
+            name = "Kevin",
+            image = "cdn.countryflags.com/thumbs/china/flag-round-250.png"
+        )
+        private val max = User(
+            id = "Max",
+            name = "Max",
+            image = "img.freepik.com/premium-vector/german-flag-vector_230920-1254.jpg"
+        )
+        private val sasha = User(
+            id = "Sasha",
+            name = "Sasha",
+            image = "upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_India.png/800px-Flag_of_India.png"
+        )
+        private val david = User(
+            id = "David",
+            name = "David",
+            image = "img.freepik.com/premium-vector/german-flag-vector_230920-1254.jpg"
+        )
+
+        private var currentUser: User = kevin
+        private var potentialFriends: List<User> = listOf()
+        fun setCurrentUser(name: String) {
+            if (name == "kevin") {
+                currentUser = kevin
+                potentialFriends = listOf(pierre, max, sasha, david)
+            } else {
+                currentUser = max
+                potentialFriends = listOf(pierre, kevin, sasha, david)
+            }
+        }
+    }
 
     // Get match for demo
-    private val people = listOf(pierre, kevin, max, sasha, david)
-    private var i = 0
-
-    private fun getMatch(): String {
-        val match = people[i]
-        i++
-        return match.id
-    }
+//    private var i = 0
+//
+//    private fun getMatch(): String {
+//        val match = potentialFriends[i]
+//        i++
+//        return match.id
+//    }
 
 //    val matchesRef = FirebaseDatabase.getInstance().reference.child("matches")
 
@@ -75,12 +84,12 @@ class ChatActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             Backend.serverInit()
-            Backend.createFriend(pierre.id, pierre.name)
-            Backend.createFriend(max.id, max.name)
-            Backend.createFriend(sasha.id, sasha.name)
-            Backend.createFriend(david.id, david.name)
 
-            clientService.connectCurrentUser(kevin).enqueue { result ->
+            for (person in potentialFriends) {
+                Backend.createFriend(person.id, person.name)
+            }
+
+            clientService.connectCurrentUser(currentUser).enqueue { result ->
                 if (result.isSuccess) {
                     Log.e("connectUser", "success")
                 } else {
@@ -94,8 +103,8 @@ class ChatActivity : AppCompatActivity() {
         if (fromMatch) {
             Log.e("main", "createChannel")
             val matchUserName: String = intent.getStringExtra("matchedName")!!
-            val cid = buildChannelId(kevin.id, matchUserName)
-            clientService.createChannel(cid, kevin.id, matchUserName)
+            val cid = buildChannelId(currentUser.id, matchUserName)
+            clientService.createChannel(cid, currentUser.id, matchUserName)
         }
 
         // Step 0 - inflate binding
@@ -105,7 +114,7 @@ class ChatActivity : AppCompatActivity() {
         val channelListFactory = ChannelListViewModelFactory(
             filter = Filters.and(
                 Filters.eq("type", "messaging"),
-                Filters.`in`("members", listOf(kevin.id)),
+                Filters.`in`("members", listOf(currentUser.id)),
             ),
             sort = QuerySortByField.descByName("lastUpdated"),
             limit = 30,

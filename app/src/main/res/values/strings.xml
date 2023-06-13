@@ -77,6 +77,8 @@
     <string name="select_interest_s">Select interest(s)</string>
     <string name="update">Update</string>
     <string name="add_new_interest">Add new interest</string>
+    <string name="enter_as_max">Enter as MAX</string>
+    <string name="enter_as_kevin">Enter as KEVIN</string>
     <string-array name="interest_array">
         <item>Football</item>
         <item>Ballet</item>

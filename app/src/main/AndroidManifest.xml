@@ -15,16 +15,19 @@
         android:theme="@style/Theme.DRP25"
         tools:targetApi="31">
         <activity
+            android:name=".UserActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".InterestActivity"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
         <activity
             android:name=".MatchActivity"
@@ -32,11 +35,6 @@
         <activity
             android:name=".ChannelActivity"
             android:exported="false" />
-        <activity
-            android:name=".HomeActivity"
-            android:exported="false"
-            android:label="@string/title_activity_home"
-            android:theme="@style/Theme.DRP25" />
         <activity
             android:name=".ChatActivity"
             android:exported="false"
