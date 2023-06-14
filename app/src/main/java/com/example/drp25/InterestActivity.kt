@@ -1,5 +1,6 @@
 package com.example.drp25
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -44,6 +45,13 @@ class InterestActivity : AppCompatActivity() {
                 addInterest(UNI_ID, USER_ID, selectedInterest)
                 selectedInterest = ""
             }
+        }
+
+        // Back button returns to profile
+        val backButton = findViewById<Button>(R.id.back_button_interests)
+        backButton.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
         }
     }
 
