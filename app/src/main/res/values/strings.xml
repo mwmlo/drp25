@@ -18,12 +18,13 @@
     <string name="interest_prompt">Enter new interest</string>
 
     <!-- User Profile Page -->
-    <string name="profile_picture">Upload Profile Picture</string>
+    <string name="upload_profile_picture">Upload Profile Picture</string>
     <string name="personal_info">Personal Info</string>
     <string name="interests">Interests</string>
     <string name="stamps">Stamps</string>
     <string name="stamps_prompt">You don\'t have any stamps yet. Meet new friends to collect stamps.</string>
     <!-- Necessary Content Description(s) -->
+    <string name="back_to_chats">back to chat page</string>
     <string name="profile_picture_descr">profile picture placeholder</string>
     <string name="rating_descr">interest level rating</string>
 

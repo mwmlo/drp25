@@ -48,19 +48,7 @@ class MatchActivity : AppCompatActivity() {
 
                         addText(linearLayout, "Interests:")
                         for (interest in snapshot.child("interests").children) {
-                            addText(linearLayout, interest.key + " (" + interest.value + " stars)")
-
-                            val ratingBar = RatingBar(context)
-                            ratingBar.layoutParams = LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.WRAP_CONTENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT
-                            )
-                            ratingBar.numStars = 5
-                            ratingBar.rating = interest.getValue(Float::class.java)!!
-                            ratingBar.setIsIndicator(true)
-
-                            linearLayout.addView(ratingBar)
-
+                            addText(linearLayout, interest.key.toString())
                         }
 
                         val button = getButton(linearLayout, "Match with $name")
