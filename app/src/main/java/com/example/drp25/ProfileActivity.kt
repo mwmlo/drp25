@@ -2,20 +2,16 @@ package com.example.drp25
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RatingBar
-import android.widget.ScrollView
 import android.widget.TableRow
 import android.widget.TextView
 import com.example.drp25.databinding.ActivityProfileBinding
@@ -88,9 +84,7 @@ class ProfileActivity : AppCompatActivity() {
                     val inflater = LayoutInflater.from(this@ProfileActivity)
                     val rowView = inflater.inflate(R.layout.profile_interest, binding.interestsTable, false) as TableRow
                     val interestNameView = rowView.findViewById<TextView>(R.id.interest_name)
-                    val interestRatingBar = rowView.findViewById<RatingBar>(R.id.interest_rating)
                     interestNameView.text = interest.key
-                    interestRatingBar.rating = interest.getValue(Float::class.java)!!
                     binding.interestsTable.addView(rowView)
                 }
 
@@ -141,6 +135,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {

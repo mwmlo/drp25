@@ -99,14 +99,14 @@ fun addUser(uniId: String, name: String, nationality: String, year: String, cour
     return userId
 }
 
-fun putInterestRating(uniId: String, userId: String, interest: String, rating: Int) {
-    val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
-    interestsRef.child(interest).setValue(rating)
-}
+//fun putInterestRating(uniId: String, userId: String, interest: String) {
+//    val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
+//    interestsRef.child(interest).setValue(null)
+//}
 
-fun clearInterests(uniId: String, userId: String) {
+fun addInterest(uniId: String, userId: String, interest: String) {
     val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
-    interestsRef.removeValue()
+    interestsRef.child(interest).setValue(5)
 }
 
 fun removeInterest(uniId: String, userId: String, interest: String) {

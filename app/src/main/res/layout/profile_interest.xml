@@ -5,13 +5,4 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:textSize="20sp"/>
-    <RatingBar
-        android:id="@+id/interest_rating"
-        android:contentDescription="@string/rating_descr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="20dp"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:isIndicator="true"/>
 </TableRow>
