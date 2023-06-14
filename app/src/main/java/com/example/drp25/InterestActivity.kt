@@ -16,6 +16,11 @@ import com.google.firebase.database.ValueEventListener
 
 class InterestActivity : AppCompatActivity() {
 
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        // Remove back press option, to prevent double updates to database
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_interest)
