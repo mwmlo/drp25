@@ -146,7 +146,7 @@ class ChatActivity : AppCompatActivity() {
         }
 
         binding.channelListHeaderView.setOnUserAvatarClickListener{
-            val intent = Intent(this, ProfileActivity::class.java)
+            val intent = Intent(this, UserProfileActivity::class.java)
             startActivity(intent)
         }
 

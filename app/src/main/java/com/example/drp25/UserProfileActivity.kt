@@ -14,7 +14,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TableRow
 import android.widget.TextView
-import com.example.drp25.databinding.ActivityProfileBinding
+import com.example.drp25.databinding.ActivityUserProfileBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -24,9 +24,9 @@ import java.io.FileOutputStream
 
 /** Retrieve user information using Stream SDK to personalise. */
 
-class ProfileActivity : AppCompatActivity() {
+class UserProfileActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityProfileBinding
+    private lateinit var binding: ActivityUserProfileBinding
     private lateinit var stampLayout: LinearLayout
     private lateinit var noStampsTextView: TextView
     private lateinit var imageFile: File
@@ -38,13 +38,13 @@ class ProfileActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.activity_user_profile)
 
         // indicates this is the person logged in (currently Kevin)
         listenToUser(UNI_ID, USER_ID)
 
         /* inflate binding */
-        binding = ActivityProfileBinding.inflate(layoutInflater)
+        binding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         stampLayout = findViewById(R.id.stamp_layout)
@@ -81,7 +81,7 @@ class ProfileActivity : AppCompatActivity() {
                 })
 
                 for (interest in snapshot.child("interests").children) {
-                    val inflater = LayoutInflater.from(this@ProfileActivity)
+                    val inflater = LayoutInflater.from(this@UserProfileActivity)
                     val rowView = inflater.inflate(R.layout.profile_interest, binding.interestsTable, false) as TableRow
                     val interestNameView = rowView.findViewById<TextView>(R.id.interest_name)
                     interestNameView.text = interest.key
@@ -94,7 +94,7 @@ class ProfileActivity : AppCompatActivity() {
                     stampLayout.visibility = View.VISIBLE
 
                     for (stamp in snapshot.child("stamps").children) {
-                        val inflater = LayoutInflater.from(this@ProfileActivity)
+                        val inflater = LayoutInflater.from(this@UserProfileActivity)
                         val imgView = inflater.inflate(R.layout.stamp_view, stampLayout, false) as ImageView
                         stamp.getValue(Int::class.java)?.let { imgView.setImageResource(it) }
                         stampLayout.addView(imgView)

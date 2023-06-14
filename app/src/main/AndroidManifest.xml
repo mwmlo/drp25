@@ -36,7 +36,7 @@
             android:name=".InterestActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".UserProfileActivity"
             android:exported="false" />
         <activity
             android:name=".MatchActivity"
