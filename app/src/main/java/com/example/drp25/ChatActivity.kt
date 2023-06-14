@@ -150,6 +150,10 @@ class ChatActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.channelListHeaderView.setOnTitleLongClickListener {
+            // Broadcast to all channels.
+            //val intent = Intent(this, )
+        }
         setContentView(binding.root)
 
         binding.channelListHeaderView.setOnlineTitle("Globe Chatter")
