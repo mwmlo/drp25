@@ -7,7 +7,7 @@
     tools:context=".CommitteeEventsActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/profile_toolbar"
+        android:id="@+id/committee_profile_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/stream_ui_literal_transparent"
@@ -22,20 +22,30 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="@dimen/margin_16"
-            android:background="@drawable/arrow_back"
-            android:contentDescription="@string/back_to_chats"
+            android:background="@drawable/stream_ui_icon_picture_placeholder"
+            android:contentDescription="@string/events_to_profile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Determined by user profile. -->
+        <!-- Determined by committee profile. -->
         <TextView
             android:id="@+id/name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="center"
             android:layout_marginEnd="@dimen/text_margin_16"
+            android:text="@string/events_page_title"
             android:textColor="@color/stream_ui_black"
             android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/new_event_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/margin_16"
+            android:layout_gravity="end"
+            android:background="@drawable/stream_ui_ic_pen"
+            android:contentDescription="@string/back_to_chats" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -45,7 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_toolbar">
+        app:layout_constraintTop_toBottomOf="@id/committee_profile_toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,6 +65,102 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginVertical="@dimen/margin_8" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/text_margin_32"
+                    android:orientation="vertical" >
+
+                    <!-- Event name and broadcast button. -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/text_margin_32"
+                            android:layout_marginTop="0dp"
+                            android:layout_centerVertical="true"
+                            android:text="@string/event_name"
+                            android:textColor="@color/black"
+                            android:textSize="24sp"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:backgroundTint="@color/stream_ui_blue_alice"
+                            android:text="@string/broadcast_event"
+                            android:textColor="@color/stream_ui_accent_blue"
+                            android:textSize="16sp"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/event_descr"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginVertical="@dimen/margin_8" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/text_margin_32"
+                    android:orientation="vertical" >
+
+                    <!-- Event name and broadcast button. -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/text_margin_32"
+                            android:layout_marginTop="0dp"
+                            android:layout_centerVertical="true"
+                            android:text="@string/event_name"
+                            android:textColor="@color/black"
+                            android:textSize="24sp"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:backgroundTint="@color/stream_ui_blue_alice"
+                            android:text="@string/broadcast_event"
+                            android:textColor="@color/stream_ui_accent_blue"
+                            android:textSize="16sp"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/event_descr"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
