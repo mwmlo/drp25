@@ -6,25 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".InterestActivity">
 
-    <AutoCompleteTextView
-        android:id="@+id/interestTextView"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
         android:layout_marginStart="56dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="56dp"
+        android:entries="@array/interest_array"
         android:hint="@string/interest_prompt"
-        android:imeOptions="actionSend"
         android:maxWidth="360dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+<!--    <AutoCompleteTextView-->
+<!--        android:id="@+id/interestTextView"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:layout_marginStart="56dp"-->
+<!--        android:layout_marginTop="48dp"-->
+<!--        android:layout_marginEnd="56dp"-->
+<!--        android:hint="@string/interest_prompt"-->
+<!--        android:imeOptions="actionSend"-->
+<!--        android:maxWidth="360dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/interests_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="48dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_new_interest_button">
@@ -35,10 +52,11 @@
         android:id="@+id/add_new_interest_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="#000000"
         android:text="@string/add_new_interest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/interestTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

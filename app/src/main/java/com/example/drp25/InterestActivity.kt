@@ -2,11 +2,10 @@ package com.example.drp25
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Button
+import android.widget.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.firebase.database.DataSnapshot
@@ -20,25 +19,25 @@ class InterestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_interest)
 
-        // Get a reference to the AutoCompleteTextView in the layout.
-        val interestSelectTextView = findViewById<AutoCompleteTextView>(R.id.interestTextView)
-        // Get the string array for list of autocomplete suggestions.
-        val interests: Array<out String> = resources.getStringArray(R.array.interest_array)
-        // Create the adapter and set it to the AutoCompleteTextView.
-        ArrayAdapter(this, android.R.layout.simple_list_item_1, interests).also { adapter ->
-            interestSelectTextView.setAdapter(adapter)
-        }
-
-        // Display list of selected interests
+        // Display chips of already selected interests
         val interestsChipGroup = findViewById<ChipGroup>(R.id.interests_group)
         displayExistingInterests(interestsChipGroup)
 
+        // Select interest from drop down list
+        val spinner: Spinner = findViewById(R.id.spinner)
+        var selectedInterest = ""
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedInterest = spinner.selectedItem as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle no selection
+            }
+        }
+
         // Add new interest to list of selected interests
         val addInterestButton = findViewById<Button>(R.id.add_new_interest_button)
-        var selectedInterest = ""
-        interestSelectTextView.setOnItemClickListener { adapterView, view, pos, id ->
-            selectedInterest = adapterView.getItemAtPosition(pos).toString()
-        }
         addInterestButton.setOnClickListener {
             if (selectedInterest.isNotEmpty()) {
                 addChipIfNotExist(selectedInterest, interestsChipGroup)
