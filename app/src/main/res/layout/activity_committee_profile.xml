@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CommitteeProfileActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/profile_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/profile_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/button_send"
+            android:text="@string/back_button"
+            android:textAlignment="viewStart"
+            android:outlineProvider="none"/>
+
+        <!-- Determined by user profile. -->
+        <TextView
+            android:id="@+id/name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/text_margin_16"
+            android:textSize="24sp"
+            android:textColor="@color/white"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="parent">
+
+            <!-- Determined by user profile. -->
+            <ImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/stream_ui_picture_placeholder"
+                android:contentDescription="@string/profile_picture_descr"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/text_margin_32"/>
+
+            <Button
+                android:id="@+id/uploadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_picture"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/text_margin_32"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/text_margin_32"
+                android:layout_marginTop="@dimen/text_margin_32"
+                android:layout_marginBottom="@dimen/text_margin_16"
+                android:text="@string/personal_info"
+                android:textSize="24sp"/>
+
+            <!-- Determined by user profile. -->
+            <TextView
+                android:id="@+id/personal_info_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin_32"
+                android:layout_marginRight="@dimen/text_margin_32"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/text_margin_32"
+                    android:layout_marginTop="@dimen/text_margin_32"
+                    android:layout_marginBottom="@dimen/text_margin_16"
+                    android:text="@string/interests"
+                    android:textSize="28sp"/>
+
+                <Button
+                    android:id="@+id/update_interests_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/text_margin_32"
+                    android:layout_marginHorizontal="@dimen/text_margin_32"
+                    android:layout_marginTop="@dimen/text_margin_32"
+                    android:layout_marginBottom="@dimen/text_margin_16"
+                    android:text="@string/update"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <!-- Determined by user profile. -->
+
+            <TableLayout
+                android:id="@+id/interests_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin_32"
+                android:layout_marginRight="@dimen/text_margin_32">
+            </TableLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/text_margin_32"
+                android:layout_marginTop="@dimen/text_margin_32"
+                android:layout_marginBottom="@dimen/text_margin_16"
+                android:text="@string/stamps"
+                android:textSize="28sp"/>
+
+            <!-- Determined by user stamps. -->
+
+            <TextView
+                android:id="@+id/no_stamps_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin_32"
+                android:layout_marginRight="@dimen/text_margin_32"
+                android:text="@string/stamps_prompt"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/stamp_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin_32"
+                android:layout_marginRight="@dimen/text_margin_32"
+                android:orientation="horizontal"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/profile_match_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin_32"
+                android:layout_gravity="center"
+                android:text="@string/meet_someone_button"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
