@@ -1,5 +1,5 @@
 <resources>
-    <dimen name="button_send">16dp</dimen>
+    <dimen name="button_send">24dp</dimen>
     <dimen name="margin_16">16dp</dimen>
     <dimen name="text_margin_16">16dp</dimen>
     <dimen name="text_margin_32">32dp</dimen>

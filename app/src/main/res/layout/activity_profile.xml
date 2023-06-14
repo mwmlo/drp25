@@ -11,7 +11,7 @@
         android:id="@+id/profile_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/stream_ui_literal_transparent"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,12 +20,12 @@
 
         <Button
             android:id="@+id/profile_back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/button_send"
-            android:text="@string/back_button"
-            android:textAlignment="viewStart"
-            android:outlineProvider="none"/>
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/margin_16"
+            android:background="@drawable/arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Determined by user profile. -->
         <TextView
@@ -34,8 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/text_margin_16"
-            android:textSize="24sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/stream_ui_black"
+            android:textSize="24sp" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -59,8 +59,8 @@
             <!-- Determined by user profile. -->
             <ImageView
                 android:id="@+id/profileImageView"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
+                android:layout_width="148dp"
+                android:layout_height="148dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/stream_ui_picture_placeholder"
                 android:contentDescription="@string/profile_picture_descr"
@@ -71,9 +71,10 @@
                 android:id="@+id/uploadButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Upload Profile Picture"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/text_margin_32"/>
+                android:backgroundTint="@color/stream_ui_blue_alice"
+                android:textColor="@color/stream_ui_accent_blue"
+                android:text="@string/upload_profile_picture"
+                android:layout_gravity="center" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,6 +83,7 @@
                 android:layout_marginTop="@dimen/text_margin_32"
                 android:layout_marginBottom="@dimen/text_margin_16"
                 android:text="@string/personal_info"
+                android:textColor="@color/black"
                 android:textSize="24sp"/>
 
             <!-- Determined by user profile. -->
@@ -96,27 +98,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/text_margin_32"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:gravity="center_vertical"
                     android:layout_marginHorizontal="@dimen/text_margin_32"
-                    android:layout_marginTop="@dimen/text_margin_32"
-                    android:layout_marginBottom="@dimen/text_margin_16"
+                    android:layout_marginTop="0dp"
                     android:text="@string/interests"
-                    android:textSize="28sp"/>
+                    android:textColor="@color/black"
+                    android:textSize="24sp"/>
 
                 <Button
                     android:id="@+id/update_interests_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/text_margin_32"
-                    android:layout_marginHorizontal="@dimen/text_margin_32"
-                    android:layout_marginTop="@dimen/text_margin_32"
-                    android:layout_marginBottom="@dimen/text_margin_16"
+                    android:layout_marginHorizontal="0dp"
+                    android:layout_marginTop="0dp"
                     android:text="@string/update"
+                    android:textColor="@color/stream_ui_accent_blue"
+                    android:backgroundTint="@color/stream_ui_blue_alice"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -137,8 +142,9 @@
                 android:layout_marginHorizontal="@dimen/text_margin_32"
                 android:layout_marginTop="@dimen/text_margin_32"
                 android:layout_marginBottom="@dimen/text_margin_16"
+                android:textColor="@color/black"
                 android:text="@string/stamps"
-                android:textSize="28sp"/>
+                android:textSize="24sp"/>
 
             <!-- Determined by user stamps. -->
 
@@ -166,10 +172,13 @@
                 android:id="@+id/profile_match_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin_32"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/text_margin_32"
+                android:backgroundTint="@color/stream_ui_blue_alice"
                 android:text="@string/meet_someone_button"
-                android:textSize="24sp" />
+                android:textColor="@color/stream_ui_accent_blue"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
