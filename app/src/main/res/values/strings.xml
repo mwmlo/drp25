@@ -36,6 +36,12 @@
     <string name="rating_descr">interest level rating</string>
 
     <!-- Committee Profile Page -->
+    <string name="media_instagram">Instagram</string>
+    <string name="media_email">Email</string>
+    <!-- Hardcoded Content -->
+    <string name="ballet_society">BalletSoc</string>
+    <string name="ballet_soc_insta">\@balletsoc</string>
+    <string name="ballet_soc_email">balletsoc\@outlook.com</string>
 
     <!-- Committee Events Page -->
     <string name="events_page_title">Upcoming Events</string>
@@ -46,7 +52,7 @@
     <!-- Hardcoded Content -->
     <string name="event_name">Event</string>
     <string name="event_descr">Description of the event.</string>
-    <string name="new_event_name">New Event</string>
+    <string name="new_event_name">This is a new event with a super long title!</string>
     <string name="new_event_descr">This is the description for the new event.</string>
 
     <string name="lorem_ipsum">
@@ -97,6 +103,7 @@
         <item>Astronomy</item>
         <item>Badminton</item>
         <item>Baking</item>
+        <item>Ballet</item>
         <item>Baseball and Softball</item>
         <item>Basketball</item>
         <item>Bridge</item>

@@ -24,6 +24,22 @@ class CommitteeEventsActivity : AppCompatActivity() {
 
         /* LinearLayout containing the content. */
         val eventsList = findViewById<LinearLayout>(R.id.committee_events)
+
+        /* Generate some static events. */
+        for (i in 1..2) {
+            val inflater = LayoutInflater.from(this)
+            val eventCard = inflater.inflate(
+                R.layout.committee_event_view, eventsList, false
+            ) as CardView
+            eventCard.findViewById<TextView>(R.id.new_event_title).text =
+                resources.getString(R.string.event_name)
+            eventCard.findViewById<TextView>(R.id.new_event_descr).text =
+                resources.getString(R.string.event_descr)
+            eventCard.findViewById<TextView>(R.id.new_event_date).text =
+                (14 + i * 5).toString() + "/06/23"
+            eventsList.addView(eventCard)
+        }
+
         /* Functionality for the New Event button. */
         val newEvent = findViewById<Button>(R.id.new_event_button)
         newEvent.setOnClickListener {
@@ -37,6 +53,7 @@ class CommitteeEventsActivity : AppCompatActivity() {
                 resources.getString(R.string.new_event_name)
             eventCard.findViewById<TextView>(R.id.new_event_descr).text =
                 resources.getString(R.string.new_event_descr)
+            eventCard.findViewById<TextView>(R.id.new_event_date).text = "29/06/23"
             eventsList.addView(eventCard)
         }
     }
