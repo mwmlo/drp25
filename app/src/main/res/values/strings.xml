@@ -18,6 +18,7 @@
     <string name="match_send_button">send</string>
     <!-- Necessary Content Description(s) -->
     <string name="matches_descr">matches display</string>
+    <string name="stamp_view_descr">stamp image view</string>
 
     <!--Interest selection page-->
     <string name="interest_prompt">Enter new interest</string>
@@ -45,6 +46,8 @@
     <!-- Hardcoded Content -->
     <string name="event_name">Event</string>
     <string name="event_descr">Description of the event.</string>
+    <string name="new_event_name">New Event</string>
+    <string name="new_event_descr">This is the description for the new event.</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

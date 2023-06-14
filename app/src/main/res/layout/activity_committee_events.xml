@@ -58,6 +58,7 @@
         app:layout_constraintTop_toBottomOf="@id/committee_profile_toolbar">
 
         <LinearLayout
+            android:id="@+id/committee_events"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -68,7 +69,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginVertical="@dimen/margin_8" >
 
@@ -81,7 +82,7 @@
                     <!-- Event name and broadcast button. -->
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <TextView
@@ -116,7 +117,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_16"
                 android:layout_marginVertical="@dimen/margin_8" >
 
@@ -129,7 +130,7 @@
                     <!-- Event name and broadcast button. -->
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <TextView
