@@ -58,10 +58,20 @@
 
             <!-- Determined by user profile. -->
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/profileImageView"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/stream_ui_picture_placeholder"
                 android:contentDescription="@string/profile_picture_descr"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/text_margin_32"/>
+
+            <Button
+                android:id="@+id/uploadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Profile Picture"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/text_margin_32"/>
 

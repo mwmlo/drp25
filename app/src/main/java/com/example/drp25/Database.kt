@@ -19,6 +19,10 @@ fun sendStamp(uniId: String, userId: String, imageId: Int) {
     stampsRef.push().setValue(imageId)
 }
 
+fun updatePfp(uniId: String, userId: String, filepath: String) {
+    unisRef.child(uniId).child("users").child(userId).child("pfp").setValue(filepath)
+}
+
 fun addMatchObserver(observer: Observer) {
     matchObservers.add(observer)
     observer.notify(matches)
