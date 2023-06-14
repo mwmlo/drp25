@@ -1,10 +1,13 @@
 package com.example.drp25
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -16,6 +19,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.io.File
+import java.io.FileOutputStream
 
 /** Retrieve user information using Stream SDK to personalise. */
 
@@ -24,6 +29,11 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     private lateinit var stampLayout: LinearLayout
     private lateinit var noStampsTextView: TextView
+    private lateinit var imageFile: File
+
+    companion object {
+        private const val PICK_IMAGE_REQUEST_CODE = 123
+    }
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +50,8 @@ class ProfileActivity : AppCompatActivity() {
         stampLayout = findViewById(R.id.stamp_layout)
         noStampsTextView = findViewById(R.id.no_stamps_prompt)
 
+        imageFile = File(filesDir, "pfp$UNI_ID$USER_ID.png")
+
         // set up views
         val uniRef = FirebaseDatabase.getInstance().reference.child("universities")
             .child(UNI_ID)
@@ -50,6 +62,10 @@ class ProfileActivity : AppCompatActivity() {
                 val name: String = snapshot.child("name").value as String
                 val course = snapshot.child("course").value
                 val year = snapshot.child("year").value
+                val pfpPath = snapshot.child("pfp").value
+                if (pfpPath != null) {
+                    displayImageFromFile(pfpPath as String)
+                }
 
                 binding.nameText.text = name
 
@@ -111,5 +127,40 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, InterestActivity::class.java)
             startActivity(intent)
         }
+
+        binding.uploadButton.setOnClickListener {
+            // Open the file picker or gallery when the button is clicked
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE)
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            val selectedImageUri: Uri? = data.data
+            saveImageToFile(selectedImageUri)
+        }
+    }
+
+    private fun saveImageToFile(imageUri: Uri?) {
+        imageUri?.let { uri ->
+            val inputStream = contentResolver.openInputStream(uri)
+            val outputStream = FileOutputStream(imageFile)
+
+            inputStream?.use { input ->
+                outputStream.use { output ->
+                    input.copyTo(output)
+                }
+            }
+        }
+        updatePfp(UNI_ID, USER_ID, imageFile.absolutePath)
+        displayImageFromFile(imageFile.absolutePath)
+    }
+
+    private fun displayImageFromFile(path: String) {
+        val imageBitmap = BitmapFactory.decodeFile(path)
+        binding.profileImageView.setImageBitmap(imageBitmap)
     }
 }

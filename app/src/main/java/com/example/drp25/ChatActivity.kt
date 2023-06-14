@@ -150,10 +150,6 @@ class ChatActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // To test the club interest activity
-        binding.channelListHeaderView.setOnActionButtonClickListener{
-            startActivity(Intent(this, ProfileActivity::class.java))
-        }
         setContentView(binding.root)
 
         binding.channelListHeaderView.setOnlineTitle("Globe Chatter")
