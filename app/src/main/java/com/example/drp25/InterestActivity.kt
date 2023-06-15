@@ -1,5 +1,6 @@
 package com.example.drp25
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,14 +14,97 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import okhttp3.internal.notify
 
 class InterestActivity : AppCompatActivity() {
+
+    val allInterests = arrayOf(
+        "Anime",
+        "Archery",
+        "Art",
+        "Astronomy",
+        "Badminton",
+        "Baking",
+        "Baseball and Softball",
+        "Basketball",
+        "Bridge",
+        "Caving",
+        "Charity and Volunteering",
+        "Choir and Chamber Music",
+        "Chess",
+        "Cycling",
+        "Dance",
+        "Dogs",
+        "Drama",
+        "Environmental",
+        "Football",
+        "Fencing",
+        "Films and Movies",
+        "Gaming and E-sports",
+        "Golf",
+        "Hip Hop",
+        "History",
+        "Hockey",
+        "Jazz, Soul and Funk",
+        "K-pop",
+        "Knitting",
+        "Lacrosse",
+        "Martial Arts",
+        "Model United Nations",
+        "Mountaineering",
+        "Musical Theatre",
+        "Netball",
+        "Orchestra",
+        "Photography",
+        "Poker",
+        "Pokemon",
+        "Radio",
+        "Rail and Transport",
+        "Robotics",
+        "Rugby",
+        "Science Fiction and Fantasy",
+        "Skating",
+        "Snooker and Pool",
+        "Squash",
+        "Tabletop Gaming",
+        "Tennis",
+        "Volleyball"
+    )
+
+    val sportInterests = arrayOf(
+        "Archery",
+        "Badminton",
+        "Baseball and Softball",
+        "Basketball",
+        "Caving",
+        "Chess",
+        "Cycling",
+        "Dance",
+        "Football",
+        "Fencing",
+        "Gaming and E-sports",
+        "Golf",
+        "Hockey",
+        "Lacrosse",
+        "Martial Arts",
+        "Mountaineering",
+        "Netball",
+        "Rugby",
+        "Skating",
+        "Snooker and Pool",
+        "Squash",
+        "Tennis",
+        "Volleyball"
+    )
+
+    val displayedEntries = ArrayList<String>()
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         // Remove back press option, to prevent double updates to database
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_interest)
@@ -30,11 +114,35 @@ class InterestActivity : AppCompatActivity() {
         displayExistingInterests(interestsChipGroup)
 
         // Select interest from drop down list
+        allInterests.forEach { displayedEntries.add(it) }
+
         val spinner: Spinner = findViewById(R.id.spinner)
         var selectedInterest = ""
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, displayedEntries)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 selectedInterest = spinner.selectedItem as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle no selection
+            }
+        }
+
+        val filterSpinner: Spinner = findViewById(R.id.filter_spinner)
+        filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val category = filterSpinner.selectedItem as String
+                displayedEntries.clear()
+                if (category == "None") {
+                    allInterests.forEach { displayedEntries.add(it) }
+                } else if (category == "Sport") {
+                    sportInterests.forEach { displayedEntries.add(it) }
+                }
+                adapter.notifyDataSetChanged()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

@@ -116,7 +116,7 @@
         <item>Musical Theatre</item>
         <item>Netball</item>
         <item>Orchestra</item>
-        <item>Photography</item>
+        <item>Ph otography</item>
         <item>Poker</item>
         <item>Pokemon</item>
         <item>Radio</item>
@@ -130,6 +130,10 @@
         <item>Tabletop Gaming</item>
         <item>Tennis</item>
         <item>Volleyball</item>
+    </string-array>
+    <string-array name="category_array">
+        <item>None</item>
+        <item>Sport</item>
     </string-array>
     <string name="title_activity_club_interest">ClubInterestActivity</string>
     <string name="large_text">
