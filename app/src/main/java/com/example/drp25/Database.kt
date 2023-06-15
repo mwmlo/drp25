@@ -24,6 +24,10 @@ fun updatePfp(uniId: String, userId: String, filepath: String) {
     unisRef.child(uniId).child("users").child(userId).child("pfp").setValue(filepath)
 }
 
+fun deletePfp(uniId: String, userId: String) {
+    unisRef.child(uniId).child("users").child(userId).child("pfp").removeValue()
+}
+
 fun addMatchObserver(observer: Observer) {
     matchObservers.add(observer)
     observer.notify(matches)

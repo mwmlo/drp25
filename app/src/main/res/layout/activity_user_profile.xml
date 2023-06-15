@@ -77,6 +77,15 @@
                 android:text="@string/upload_profile_picture"
                 android:layout_gravity="center" />
 
+            <Button
+                android:id="@+id/deletePfpButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/stream_ui_blue_alice"
+                android:textColor="@color/stream_ui_accent_blue"
+                android:text="Remove profile picture"
+                android:layout_gravity="center" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

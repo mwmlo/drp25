@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import io.getstream.chat.android.client.models.UserId
 import java.io.File
 import java.io.FileOutputStream
 
@@ -135,6 +136,11 @@ class UserProfileActivity : AppCompatActivity() {
             // Open the file picker or gallery when the button is clicked
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE)
+        }
+
+        binding.deletePfpButton.setOnClickListener {
+            deletePfp(UNI_ID, USER_ID)
+            binding.profileImageView.setImageResource(R.drawable.default_profile)
         }
     }
 
