@@ -54,11 +54,9 @@ class MatchActivity : AppCompatActivity() {
                         val course = snapshot.child("course").value
                         val year = snapshot.child("year").value
 
-                        val pfpUri = snapshot.child("pfp").value
-                        if (pfpUri != null) {
-                            Glide.with(this@MatchActivity)
-                                .load(pfpUri as String)
-                                .into(pfpImage)
+                        val hasPfp = snapshot.child("pfp").value as Boolean
+                        if (hasPfp) {
+                            displayPfp(UNI_ID, matchId, pfpImage)
                         } else {
                             pfpImage.setImageResource(R.drawable.default_profile)
                         }

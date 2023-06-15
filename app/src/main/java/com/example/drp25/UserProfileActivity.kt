@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 import io.getstream.chat.android.client.models.UserId
 import java.io.File
 import java.io.FileOutputStream
@@ -31,7 +32,6 @@ class UserProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserProfileBinding
     private lateinit var stampLayout: LinearLayout
     private lateinit var noStampsTextView: TextView
-    private lateinit var imageFile: File
 
     companion object {
         private const val PICK_IMAGE_REQUEST_CODE = 123
@@ -62,11 +62,9 @@ class UserProfileActivity : AppCompatActivity() {
                 val name: String = snapshot.child("name").value as String
                 val course = snapshot.child("course").value
                 val year = snapshot.child("year").value
-                val pfpUri = snapshot.child("pfp").value
-                if (pfpUri != null) {
-                    Glide.with(this@UserProfileActivity)
-                        .load(pfpUri as String)
-                        .into(binding.profileImageView)
+                val hasPfp = snapshot.child("pfp").value as Boolean
+                if (hasPfp) {
+                    displayPfp(UNI_ID, USER_ID, binding.profileImageView)
                 } else {
                     binding.profileImageView.setImageResource(R.drawable.default_profile)
                 }
@@ -150,7 +148,9 @@ class UserProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             val selectedImageUri: Uri? = data.data
-            updatePfp(UNI_ID, USER_ID, selectedImageUri.toString())
+            if (selectedImageUri != null) {
+                updatePfp(UNI_ID, USER_ID, selectedImageUri)
+            }
         }
     }
 
