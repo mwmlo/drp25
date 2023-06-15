@@ -57,6 +57,8 @@ class MatchActivity : AppCompatActivity() {
                         if (pfpPath != null) {
                             val imageBitmap = BitmapFactory.decodeFile(pfpPath as String)
                             pfpImage.setImageBitmap(imageBitmap)
+                        } else {
+                            pfpImage.setImageResource(R.drawable.default_profile)
                         }
 
                         nameText.text = name

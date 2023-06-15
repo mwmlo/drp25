@@ -65,6 +65,8 @@ class UserProfileActivity : AppCompatActivity() {
                 val pfpPath = snapshot.child("pfp").value
                 if (pfpPath != null) {
                     displayImageFromFile(pfpPath as String)
+                } else {
+                    binding.profileImageView.setImageResource(R.drawable.default_profile)
                 }
 
                 binding.nameText.text = name
