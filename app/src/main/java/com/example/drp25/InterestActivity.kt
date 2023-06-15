@@ -18,86 +18,68 @@ import okhttp3.internal.notify
 
 class InterestActivity : AppCompatActivity() {
 
-    val allInterests = arrayOf(
-        "Anime",
-        "Archery",
-        "Art",
-        "Astronomy",
-        "Badminton",
-        "Baking",
-        "Baseball and Softball",
-        "Basketball",
-        "Bridge",
-        "Caving",
-        "Charity and Volunteering",
-        "Choir and Chamber Music",
-        "Chess",
-        "Cycling",
-        "Dance",
-        "Dogs",
-        "Drama",
-        "Environmental",
-        "Football",
-        "Fencing",
-        "Films and Movies",
-        "Gaming and E-sports",
-        "Golf",
-        "Hip Hop",
-        "History",
-        "Hockey",
-        "Jazz, Soul and Funk",
-        "K-pop",
-        "Knitting",
-        "Lacrosse",
-        "Martial Arts",
-        "Model United Nations",
-        "Mountaineering",
-        "Musical Theatre",
-        "Netball",
-        "Orchestra",
-        "Photography",
-        "Poker",
-        "Pokemon",
-        "Radio",
-        "Rail and Transport",
-        "Robotics",
-        "Rugby",
-        "Science Fiction and Fantasy",
-        "Skating",
-        "Snooker and Pool",
-        "Squash",
-        "Tabletop Gaming",
-        "Tennis",
-        "Volleyball"
-    )
+    enum class HobbyCategory {
+        ACADEMIC_RELATED,
+        ARTS_ENTERTAINMENT,
+        CHARITABLE,
+        INDOOR,
+        OUTDOOR,
+        SOCIAL,
+        SPORTS
+    }
 
-    val sportInterests = arrayOf(
-        "Archery",
-        "Badminton",
-        "Baseball and Softball",
-        "Basketball",
-        "Caving",
-        "Chess",
-        "Cycling",
-        "Dance",
-        "Football",
-        "Fencing",
-        "Gaming and E-sports",
-        "Golf",
-        "Hockey",
-        "Lacrosse",
-        "Martial Arts",
-        "Mountaineering",
-        "Netball",
-        "Rugby",
-        "Skating",
-        "Snooker and Pool",
-        "Squash",
-        "Tennis",
-        "Volleyball"
+    val hobbiesCategoriesMap = mapOf(
+        "Anime" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Archery" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Art" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Astronomy" to listOf(HobbyCategory.ACADEMIC_RELATED),
+        "Badminton" to listOf(HobbyCategory.SPORTS, HobbyCategory.INDOOR),
+        "Baking" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Baseball and Softball" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Basketball" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Bridge" to listOf(HobbyCategory.SOCIAL),
+        "Caving" to listOf(HobbyCategory.OUTDOOR),
+        "Charity and Volunteering" to listOf(HobbyCategory.CHARITABLE, HobbyCategory.SOCIAL),
+        "Choir and Chamber Music" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Chess" to listOf(HobbyCategory.SOCIAL),
+        "Cycling" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Dance" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Dogs" to listOf(HobbyCategory.SOCIAL),
+        "Drama" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Environmental" to listOf(HobbyCategory.CHARITABLE),
+        "Football" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Fencing" to listOf(HobbyCategory.SPORTS),
+        "Films and Movies" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Gaming and E-sports" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Golf" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Hip Hop" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "History" to listOf(HobbyCategory.ACADEMIC_RELATED),
+        "Hockey" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Jazz, Soul and Funk" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "K-pop" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Knitting" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Lacrosse" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Martial Arts" to listOf(HobbyCategory.SPORTS),
+        "Model United Nations" to listOf(HobbyCategory.ACADEMIC_RELATED),
+        "Mountaineering" to listOf(HobbyCategory.OUTDOOR),
+        "Musical Theatre" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Netball" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Orchestra" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Photography" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Poker" to listOf(HobbyCategory.SOCIAL),
+        "Pokemon" to listOf(HobbyCategory.SOCIAL),
+        "Radio" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Rail and Transport" to listOf(HobbyCategory.SOCIAL),
+        "Robotics" to listOf(HobbyCategory.ACADEMIC_RELATED),
+        "Rugby" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Science Fiction and Fantasy" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Skating" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Snooker and Pool" to listOf(HobbyCategory.SPORTS),
+        "Squash" to listOf(HobbyCategory.SPORTS),
+        "Tabletop Gaming" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Tennis" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Volleyball" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR)
     )
-
-    val displayedEntries = ArrayList<String>()
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
@@ -114,11 +96,9 @@ class InterestActivity : AppCompatActivity() {
         displayExistingInterests(interestsChipGroup)
 
         // Select interest from drop down list
-        allInterests.forEach { displayedEntries.add(it) }
-
         val spinner: Spinner = findViewById(R.id.spinner)
         var selectedInterest = ""
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, displayedEntries)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, hobbiesCategoriesMap.keys.toList())
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
@@ -136,11 +116,38 @@ class InterestActivity : AppCompatActivity() {
         filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val category = filterSpinner.selectedItem as String
-                displayedEntries.clear()
                 if (category == "None") {
-                    allInterests.forEach { displayedEntries.add(it) }
-                } else if (category == "Sport") {
-                    sportInterests.forEach { displayedEntries.add(it) }
+                    val adapter = ArrayAdapter(this@InterestActivity, android.R.layout.simple_spinner_item, hobbiesCategoriesMap.keys.toList())
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinner.adapter = adapter
+                } else {
+                    var categoryToFilter: HobbyCategory? = null
+                    when (category) {
+                        "Academic related" -> {
+                            categoryToFilter = HobbyCategory.ACADEMIC_RELATED
+                        }
+                        "Arts & Entertainment" -> {
+                            categoryToFilter = HobbyCategory.ARTS_ENTERTAINMENT
+                        }
+                        "Charitable" -> {
+                            categoryToFilter = HobbyCategory.CHARITABLE
+                        }
+                        "Indoor" -> {
+                            categoryToFilter = HobbyCategory.INDOOR
+                        }
+                        "Outdoor" -> {
+                            categoryToFilter = HobbyCategory.OUTDOOR
+                        }
+                        "Social" -> {
+                            categoryToFilter = HobbyCategory.SOCIAL
+                        }
+                        "Sports" -> {
+                            categoryToFilter = HobbyCategory.SPORTS
+                        }
+                    }
+                    val adapter = ArrayAdapter(this@InterestActivity, android.R.layout.simple_spinner_item, hobbiesCategoriesMap.filter { it.value.contains(categoryToFilter) }.keys.toList())
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinner.adapter = adapter
                 }
                 adapter.notifyDataSetChanged()
             }

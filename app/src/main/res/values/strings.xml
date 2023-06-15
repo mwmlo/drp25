@@ -133,7 +133,13 @@
     </string-array>
     <string-array name="category_array">
         <item>None</item>
-        <item>Sport</item>
+        <item>Academic related</item>
+        <item>Arts &amp; Entertainment</item>
+        <item>Charitable</item>
+        <item>Indoor</item>
+        <item>Outdoor</item>
+        <item>Social</item>
+        <item>Sports</item>
     </string-array>
     <string name="title_activity_club_interest">ClubInterestActivity</string>
     <string name="large_text">
