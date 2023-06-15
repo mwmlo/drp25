@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".InterestActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin_32"
+        android:layout_marginHorizontal="56dp"
+        android:text="Select your interest!"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/back_button_interests"
+        app:layout_constraintBottom_toTopOf="@id/spinner"/>
+
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
@@ -19,6 +29,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/back_button_interests" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin_32"
+        android:layout_marginHorizontal="56dp"
+        android:text="Filter by..."
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/spinner"
+        app:layout_constraintBottom_toTopOf="@id/filter_spinner"/>
 
     <Spinner
         android:id="@+id/filter_spinner"
