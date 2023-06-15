@@ -32,7 +32,6 @@ class UserProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserProfileBinding
     private lateinit var stampLayout: LinearLayout
     private lateinit var noStampsTextView: TextView
-    private lateinit var imageFile: File
 
     companion object {
         private const val PICK_IMAGE_REQUEST_CODE = 123
