@@ -46,10 +46,6 @@ class CommitteeEventsActivity : AppCompatActivity() {
                     eventCard.findViewById<TextView>(R.id.new_event_title).text = name
                     eventCard.findViewById<TextView>(R.id.new_event_descr).text = desc
                     eventCard.findViewById<TextView>(R.id.new_event_date).text = date
-                    val broadcastBtn = eventCard.findViewById<Button>(R.id.broadcast_button)
-                    broadcastBtn.setOnClickListener {
-                        // TODO: broadcast message
-                    }
                     eventsList.addView(eventCard)
                 }
             }

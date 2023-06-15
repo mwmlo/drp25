@@ -20,22 +20,11 @@
                     android:id="@+id/new_event_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/text_margin_32"
-                    android:layout_marginTop="0dp"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@id/broadcast_button"
-                    android:textSize="20sp"/>
-
-                <Button
-                    android:id="@+id/broadcast_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:backgroundTint="@color/stream_ui_blue_alice"
-                    android:text="@string/broadcast_event"
-                    android:textColor="@color/stream_ui_accent_blue"
-                    android:textSize="16sp"/>
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="@dimen/text_margin_32"
+                    android:textSize="20sp" />
 
             </RelativeLayout>
 

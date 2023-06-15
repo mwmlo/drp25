@@ -247,4 +247,7 @@
     <string name="name">Name</string>
     <string name="event_date">Event Date</string>
     <string name="event_description">Event Description</string>
+    <string name="list_of_events">list of events</string>
+    <string name="recommended_events">Recommended Events</string>
+    <string name="upcoming_events_related_to_your_interests">Upcoming events</string>
 </resources>
