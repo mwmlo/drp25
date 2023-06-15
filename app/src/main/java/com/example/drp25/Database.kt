@@ -23,11 +23,9 @@ fun sendStamp(uniId: String, userId: String, stampName: String) {
     stampsRef.push().setValue(stampName)
 }
 
-fun updatePfp(uniId: String, userId: String, imgPath: String) {
-    //unisRef.child(uniId).child("users").child(userId).child("pfp").setValue(imgUri)
-    var file = Uri.fromFile(File(imgPath))
-    val riversRef = imageRef.child("pfp_${uniId}_${userId}.png")
-    val uploadTask = riversRef.putFile(file)
+fun updatePfp(uniId: String, userId: String, imgUri: Uri) {
+    val pfpRef = imageRef.child("pfp_${uniId}_${userId}.png")
+    val uploadTask = pfpRef.putFile(imgUri)
 
     // Register observers to listen for when the download is done or if it fails
     uploadTask.addOnFailureListener {

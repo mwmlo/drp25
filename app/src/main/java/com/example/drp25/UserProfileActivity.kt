@@ -149,33 +149,19 @@ class UserProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             val selectedImageUri: Uri? = data.data
-            saveImageToFile(selectedImageUri)
-        }
-    }
-
-    private fun saveImageToFile(imageUri: Uri?) {
-        val imageFile = File(filesDir, "temp.png")
-        imageUri?.let { uri ->
-            val inputStream = contentResolver.openInputStream(uri)
-            val outputStream = FileOutputStream(imageFile)
-
-            inputStream?.use { input ->
-                outputStream.use { output ->
-                    input.copyTo(output)
-                }
+            if (selectedImageUri != null) {
+                updatePfp(UNI_ID, USER_ID, selectedImageUri)
             }
         }
-        updatePfp(UNI_ID, USER_ID, imageFile.absolutePath)
     }
 
     private fun displayPfp() {
-        val pfpRef = storage.getReferenceFromUrl("gs://drp25-d1bbb.appspot.com/images/pfp_imperialId_-NXPnWryIGR2S5aJmSGH.png")
+        val pfpRef = imageRef.child("pfp_${UNI_ID}_${USER_ID}.png")
 
         pfpRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {imageData ->
             // Use the bytes to display the image
             // Convert the image data to a Bitmap
             val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
-
             // Set the Bitmap to your ImageView
             binding.profileImageView.setImageBitmap(bitmap)
         }.addOnFailureListener {
