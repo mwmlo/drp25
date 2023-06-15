@@ -52,7 +52,7 @@
                 android:minHeight="48dp"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/text_margin_32"
-                android:text="@string/interests"
+                android:text="Your shared interests"
                 android:textColor="@color/stream_ui_accent_red"
                 android:textSize="24sp"/>
 

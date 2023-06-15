@@ -29,37 +29,16 @@ fun addMatchObserver(observer: Observer) {
     observer.notify(matches)
 }
 
-fun addMatched(uniId: String, user1Id: String, user2Id: String) {
+fun addMatched(uniId: String, user1Id: String, user2Id: String, sharedInterests: List<String>) {
     val usersRef = unisRef.child(uniId).child("users")
     val key1 = usersRef.child(user1Id).child("matched").push()
     val key2 = usersRef.child(user2Id).child("matched").push()
     key1.child("matchId").setValue(user2Id)
     key2.child("matchId").setValue(user1Id)
-
-    usersRef.child(user1Id).child("interests").addListenerForSingleValueEvent(object: ValueEventListener {
-        override fun onDataChange(snapshot1: DataSnapshot) {
-            usersRef.child(user2Id).child("interests").addListenerForSingleValueEvent(object: ValueEventListener {
-                override fun onDataChange(snapshot2: DataSnapshot) {
-                    for (child in snapshot1.children) {
-                        if (child.key?.let { snapshot2.hasChild(it) } == true) {
-                            key1.child("sharedInterests").push().setValue(child.key)
-                            key2.child("sharedInterests").push().setValue(child.key)
-                        }
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-        }
-
-        override fun onCancelled(error: DatabaseError) {
-            TODO("Not yet implemented")
-        }
-
-    })
+    sharedInterests.forEach{
+        key1.child("sharedInterests").push().setValue(it)
+        key2.child("sharedInterests").push().setValue(it)
+    }
 }
 
 fun listenToUser(uniId: String, userId: String) {

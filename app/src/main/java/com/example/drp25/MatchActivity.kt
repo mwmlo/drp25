@@ -44,6 +44,8 @@ class MatchActivity : AppCompatActivity() {
 
                 val matchRef = FirebaseDatabase.getInstance().reference.child("universities")
                     .child(UNI_ID).child("users").child(matchId)
+                val usRef = FirebaseDatabase.getInstance().reference.child("universities")
+                    .child(UNI_ID).child("users").child(USER_ID)
                 matchRef.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val name: String = snapshot.child("name").value as String
@@ -61,26 +63,41 @@ class MatchActivity : AppCompatActivity() {
                         nationalityText.text = nationality.toString()
                         infoText.text = getString(R.string.entry_info, year, course)
 
-                        /* Generates TextViews for each interest. */
-                        for (interest in snapshot.child("interests").children) {
-                            val interestNameView = TextView(context)
-                            interestNameView.text = interest.key
-                            interestNameView.textAlignment = TEXT_ALIGNMENT_CENTER
-                            interestNameView.textSize = 20f
-                            interestsTable.addView(interestNameView)
-                        }
+                        usRef.child("interests").addListenerForSingleValueEvent(object: ValueEventListener {
+                            override fun onDataChange(usSnapshot: DataSnapshot) {
+                                val sharedInterests = mutableListOf<String>()
 
-                        matchWithBtn.text = getString(R.string.entry_match_with, name)
-                        matchWithBtn.setOnClickListener {
-                            selectedMatchId = matchId
-                            selectedMatchName = name
-                            addMatched(UNI_ID, USER_ID, selectedMatchId!!)
+                                /* Generates TextViews for each interest. */
+                                for (interest in snapshot.child("interests").children) {
+                                    if (interest.key?.let { usSnapshot.hasChild(it) } == true) {
+                                        // This interest is shared
+                                        sharedInterests.add(interest.key!!)
+                                        val interestNameView = TextView(context)
+                                        interestNameView.text = interest.key
+                                        interestNameView.textAlignment = TEXT_ALIGNMENT_CENTER
+                                        interestNameView.textSize = 20f
+                                        interestsTable.addView(interestNameView)
+                                    }
+                                }
 
-                            val intent = Intent(this@MatchActivity, StampActivity::class.java)
-                            intent.putExtra("selectedMatchId", selectedMatchId)
-                            intent.putExtra("selectedMatchName", selectedMatchName)
-                            startActivity(intent)
-                        }
+                                matchWithBtn.text = getString(R.string.entry_match_with, name)
+                                matchWithBtn.setOnClickListener {
+                                    selectedMatchId = matchId
+                                    selectedMatchName = name
+                                    addMatched(UNI_ID, USER_ID, selectedMatchId!!, sharedInterests)
+
+                                    val intent = Intent(this@MatchActivity, StampActivity::class.java)
+                                    intent.putExtra("selectedMatchId", selectedMatchId)
+                                    intent.putExtra("selectedMatchName", selectedMatchName)
+                                    startActivity(intent)
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+
+                        })
                     }
 
                     override fun onCancelled(error: DatabaseError) {
