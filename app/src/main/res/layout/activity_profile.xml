@@ -83,7 +83,7 @@
                 android:layout_marginTop="@dimen/text_margin_32"
                 android:layout_marginBottom="@dimen/text_margin_16"
                 android:text="@string/personal_info"
-                android:textColor="@color/black"
+                android:textColor="@color/stream_ui_accent_red"
                 android:textSize="24sp"/>
 
             <!-- Determined by user profile. -->
@@ -109,7 +109,7 @@
                     android:layout_marginHorizontal="@dimen/text_margin_32"
                     android:layout_marginTop="0dp"
                     android:text="@string/interests"
-                    android:textColor="@color/black"
+                    android:textColor="@color/stream_ui_accent_red"
                     android:textSize="24sp"/>
 
                 <Button
@@ -142,7 +142,7 @@
                 android:layout_marginHorizontal="@dimen/text_margin_32"
                 android:layout_marginTop="@dimen/text_margin_32"
                 android:layout_marginBottom="@dimen/text_margin_16"
-                android:textColor="@color/black"
+                android:textColor="@color/stream_ui_accent_red"
                 android:text="@string/stamps"
                 android:textSize="24sp"/>
 
