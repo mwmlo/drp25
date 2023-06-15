@@ -46,6 +46,10 @@ class CommitteeEventsActivity : AppCompatActivity() {
                     eventCard.findViewById<TextView>(R.id.new_event_title).text = name
                     eventCard.findViewById<TextView>(R.id.new_event_descr).text = desc
                     eventCard.findViewById<TextView>(R.id.new_event_date).text = date
+                    val broadcastBtn = eventCard.findViewById<Button>(R.id.broadcast_button)
+                    broadcastBtn.setOnClickListener {
+                        // TODO: broadcast message
+                    }
                     eventsList.addView(eventCard)
                 }
             }
@@ -58,7 +62,8 @@ class CommitteeEventsActivity : AppCompatActivity() {
         /* Functionality for the New Event button. */
         val newEvent = findViewById<Button>(R.id.new_event_button)
         newEvent.setOnClickListener {
-            addEvent(UNI_ID, "Example Event Name", "15/06/2023", "Example description")
+            val intent = Intent(this, NewEventActivity::class.java)
+            startActivity(intent)
         }
     }
 }
