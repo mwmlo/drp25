@@ -1,27 +1,44 @@
 package com.example.drp25
 
+import android.net.Uri
 import com.example.drp25.matchers.MyMatcher
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import java.io.File
 
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
 private val matcher: Matcher = MyMatcher()
 val matches = mutableSetOf<String>()
 val matchObservers = mutableListOf<Observer>()
 
+val storage = Firebase.storage
+val imageRef = storage.reference.child("images")
+
 fun sendStamp(uniId: String, userId: String, stampName: String) {
     val stampsRef = unisRef.child(uniId).child("users").child(userId).child("stamps")
     stampsRef.push().setValue(stampName)
 }
 
-fun updatePfp(uniId: String, userId: String, imgUri: String) {
-    unisRef.child(uniId).child("users").child(userId).child("pfp").setValue(imgUri)
+fun updatePfp(uniId: String, userId: String, imgPath: String) {
+    //unisRef.child(uniId).child("users").child(userId).child("pfp").setValue(imgUri)
+    var file = Uri.fromFile(File(imgPath))
+    val riversRef = imageRef.child("pfp_${uniId}_${userId}.png")
+    val uploadTask = riversRef.putFile(file)
+
+    // Register observers to listen for when the download is done or if it fails
+    uploadTask.addOnFailureListener {
+        // Handle unsuccessful uploads
+    }.addOnSuccessListener {
+        unisRef.child(uniId).child("users").child(userId).child("pfp").setValue(true)
+    }
 }
 
 fun deletePfp(uniId: String, userId: String) {
-    unisRef.child(uniId).child("users").child(userId).child("pfp").removeValue()
+    unisRef.child(uniId).child("users").child(userId).child("pfp").setValue(false)
 }
 
 fun addMatchObserver(observer: Observer) {
@@ -108,6 +125,7 @@ fun addUser(uniId: String, name: String, nationality: String, year: String, cour
         userRef.child("nationality").setValue(nationality)
         userRef.child("year").setValue(year)
         userRef.child("course").setValue(course)
+        userRef.child("pfp").setValue(false)
     }
     return userId
 }

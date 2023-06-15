@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 import io.getstream.chat.android.client.models.UserId
 import java.io.File
 import java.io.FileOutputStream
@@ -62,10 +63,10 @@ class UserProfileActivity : AppCompatActivity() {
                 val name: String = snapshot.child("name").value as String
                 val course = snapshot.child("course").value
                 val year = snapshot.child("year").value
-                val pfpUri = snapshot.child("pfp").value
-                if (pfpUri != null) {
+                val hasPfp = snapshot.child("pfp").value as Boolean
+                if (hasPfp) {
                     Glide.with(this@UserProfileActivity)
-                        .load(pfpUri as String)
+                        .load(imageRef.child("pfp_${UNI_ID}_${USER_ID}.png"))
                         .into(binding.profileImageView)
                 } else {
                     binding.profileImageView.setImageResource(R.drawable.default_profile)
@@ -150,7 +151,37 @@ class UserProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             val selectedImageUri: Uri? = data.data
-            updatePfp(UNI_ID, USER_ID, selectedImageUri.toString())
+            saveImageToFile(selectedImageUri)
+        }
+    }
+
+    private fun saveImageToFile(imageUri: Uri?) {
+        val imageFile = File(filesDir, "temp.png")
+        imageUri?.let { uri ->
+            val inputStream = contentResolver.openInputStream(uri)
+            val outputStream = FileOutputStream(imageFile)
+
+            inputStream?.use { input ->
+                outputStream.use { output ->
+                    input.copyTo(output)
+                }
+            }
+        }
+        updatePfp(UNI_ID, USER_ID, imageFile.absolutePath)
+        Glide.with(this@UserProfileActivity)
+            .load(imageRef.child("pfp_${UNI_ID}_${USER_ID}.png"))
+            .into(binding.profileImageView)
+    }
+
+    private fun getProfile() {
+        val pfpRef = imageRef.child("pfp_${UNI_ID}_${USER_ID}.png")
+
+        val imageFile = File(filesDir, "temp.png")
+
+        pfpRef.getFile(imageFile).addOnSuccessListener {
+            // Local temp file has been created
+        }.addOnFailureListener {
+            // Handle any errors
         }
     }
 
