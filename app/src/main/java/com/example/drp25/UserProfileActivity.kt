@@ -65,9 +65,7 @@ class UserProfileActivity : AppCompatActivity() {
                 val year = snapshot.child("year").value
                 val hasPfp = snapshot.child("pfp").value as Boolean
                 if (hasPfp) {
-                    Glide.with(this@UserProfileActivity)
-                        .load(imageRef.child("pfp_${UNI_ID}_${USER_ID}.png"))
-                        .into(binding.profileImageView)
+                    displayPfp()
                 } else {
                     binding.profileImageView.setImageResource(R.drawable.default_profile)
                 }
@@ -168,21 +166,25 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
         updatePfp(UNI_ID, USER_ID, imageFile.absolutePath)
-        Glide.with(this@UserProfileActivity)
-            .load(imageRef.child("pfp_${UNI_ID}_${USER_ID}.png"))
-            .into(binding.profileImageView)
     }
 
-    private fun getProfile() {
+    private fun displayPfp() {
         val pfpRef = imageRef.child("pfp_${UNI_ID}_${USER_ID}.png")
 
-        val imageFile = File(filesDir, "temp.png")
+        val ONE_MEGABYTE: Long = 1024 * 1024 // Maximum size of the image in bytes
 
-        pfpRef.getFile(imageFile).addOnSuccessListener {
-            // Local temp file has been created
-        }.addOnFailureListener {
-            // Handle any errors
-        }
+        pfpRef.getBytes(ONE_MEGABYTE)
+            .addOnSuccessListener { imageData ->
+                // Convert the image data to a Bitmap
+                val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
+
+                // Set the Bitmap to your ImageView
+                binding.profileImageView.setImageBitmap(bitmap)
+            }
+            .addOnFailureListener { exception ->
+                // Handle any errors that occurred while retrieving the image
+                // e.g., display a default image or show an error message
+            }
     }
 
 }
