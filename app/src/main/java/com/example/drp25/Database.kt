@@ -14,9 +14,9 @@ private val matcher: Matcher = RatingMatcherWithNationality()
 val matches = mutableSetOf<String>()
 val matchObservers = mutableListOf<Observer>()
 
-fun sendStamp(uniId: String, userId: String, imageId: Int) {
+fun sendStamp(uniId: String, userId: String, stampName: String) {
     val stampsRef = unisRef.child(uniId).child("users").child(userId).child("stamps")
-    stampsRef.push().setValue(imageId)
+    stampsRef.push().setValue(stampName)
 }
 
 fun updatePfp(uniId: String, userId: String, filepath: String) {

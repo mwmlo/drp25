@@ -96,7 +96,8 @@ class ProfileActivity : AppCompatActivity() {
                     for (stamp in snapshot.child("stamps").children) {
                         val inflater = LayoutInflater.from(this@ProfileActivity)
                         val imgView = inflater.inflate(R.layout.stamp_view, stampLayout, false) as ImageView
-                        stamp.getValue(Int::class.java)?.let { imgView.setImageResource(it) }
+                        val stampName = stamp.value as String
+                        imgView.setImageResource(resources.getIdentifier(stampName, "drawable", packageName))
                         stampLayout.addView(imgView)
                     }
                 } else {
