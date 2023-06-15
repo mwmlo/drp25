@@ -169,22 +169,18 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun displayPfp() {
-        val pfpRef = imageRef.child("pfp_${UNI_ID}_${USER_ID}.png")
+        val pfpRef = storage.getReferenceFromUrl("gs://drp25-d1bbb.appspot.com/images/pfp_imperialId_-NXPnWryIGR2S5aJmSGH.png")
 
-        val ONE_MEGABYTE: Long = 1024 * 1024 // Maximum size of the image in bytes
+        pfpRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {imageData ->
+            // Use the bytes to display the image
+            // Convert the image data to a Bitmap
+            val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
 
-        pfpRef.getBytes(ONE_MEGABYTE)
-            .addOnSuccessListener { imageData ->
-                // Convert the image data to a Bitmap
-                val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
-
-                // Set the Bitmap to your ImageView
-                binding.profileImageView.setImageBitmap(bitmap)
-            }
-            .addOnFailureListener { exception ->
-                // Handle any errors that occurred while retrieving the image
-                // e.g., display a default image or show an error message
-            }
+            // Set the Bitmap to your ImageView
+            binding.profileImageView.setImageBitmap(bitmap)
+        }.addOnFailureListener {
+            // Handle any errors
+        }
     }
 
 }
