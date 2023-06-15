@@ -55,10 +55,8 @@ class UserEventsActivity : AppCompatActivity() {
             userRef.addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (match in snapshot.child("matched").children) {
-                        Log.e("match", match.toString())
                         val sharedInterests = match.child("sharedInterests").children
                         for (interest in sharedInterests) {
-                            Log.e("interest", interest.toString())
                             if (society == interest.value.toString()) {
                                 friends.add(match.child("matchId").value.toString())
                             }
@@ -77,15 +75,15 @@ class UserEventsActivity : AppCompatActivity() {
             usersRef.addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (user in snapshot.children) {
-                        Log.e("user", user.toString())
                         if (friends.contains(user.key)) {
-                            Log.e("user key", user.key.toString())
-                            Log.e("user value", user.value.toString())
-                            Log.e("user child", user.child("name").value.toString())
                             names.add(user.child("name").value.toString())
-                            val friendPrompt = "$names might be interested."
+                            val namesString = names.toString()
+                                .replace(",", ", ")
+                                .replace("[", "")
+                                .replace("]", "")
+                                .trim()
+                            val friendPrompt = "$namesString might be interested."
                             view.findViewById<TextView>(R.id.friends_list).text = friendPrompt
-                            Log.e("names", names.toString())
                         }
 
                     }
@@ -94,10 +92,6 @@ class UserEventsActivity : AppCompatActivity() {
                     TODO("Not yet implemented")
                 }
             })
-
-//            val friendPrompt = "$names might be interested."
-//            view.findViewById<TextView>(R.id.friends_list).text = friendPrompt
-            Log.e("names", names.toString())
 
             // Create the pop-up window
             val popupWindow = PopupWindow(view,

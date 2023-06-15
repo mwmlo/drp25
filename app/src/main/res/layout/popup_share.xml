@@ -1,6 +1,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:backgroundTint="@color/stream_ui_blue_alice"
     android:layout_marginHorizontal="@dimen/margin_16"
     android:layout_marginVertical="@dimen/margin_8">
 
