@@ -1,5 +1,6 @@
 package com.example.drp25
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,14 +14,79 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import okhttp3.internal.notify
 
 class InterestActivity : AppCompatActivity() {
+
+    enum class HobbyCategory {
+        ACADEMIC_RELATED,
+        ARTS_ENTERTAINMENT,
+        CHARITABLE,
+        INDOOR,
+        OUTDOOR,
+        SOCIAL,
+        SPORTS
+    }
+
+    val hobbiesCategoriesMap = mapOf(
+        "Anime" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Archery" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Art" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Astronomy" to listOf(HobbyCategory.ACADEMIC_RELATED),
+        "Badminton" to listOf(HobbyCategory.SPORTS, HobbyCategory.INDOOR),
+        "Baking" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Baseball and Softball" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Basketball" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Bridge" to listOf(HobbyCategory.SOCIAL),
+        "Caving" to listOf(HobbyCategory.OUTDOOR),
+        "Charity and Volunteering" to listOf(HobbyCategory.CHARITABLE, HobbyCategory.SOCIAL),
+        "Choir and Chamber Music" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Chess" to listOf(HobbyCategory.SOCIAL),
+        "Cycling" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Dance" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Dogs" to listOf(HobbyCategory.SOCIAL),
+        "Drama" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Environmental" to listOf(HobbyCategory.CHARITABLE),
+        "Football" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Fencing" to listOf(HobbyCategory.SPORTS),
+        "Films and Movies" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Gaming and E-sports" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Golf" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Hip Hop" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "History" to listOf(HobbyCategory.ACADEMIC_RELATED),
+        "Hockey" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Jazz, Soul and Funk" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "K-pop" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Knitting" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Lacrosse" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Martial Arts" to listOf(HobbyCategory.SPORTS),
+        "Model United Nations" to listOf(HobbyCategory.ACADEMIC_RELATED),
+        "Mountaineering" to listOf(HobbyCategory.OUTDOOR),
+        "Musical Theatre" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Netball" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Orchestra" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Photography" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Poker" to listOf(HobbyCategory.SOCIAL),
+        "Pokemon" to listOf(HobbyCategory.SOCIAL),
+        "Radio" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Rail and Transport" to listOf(HobbyCategory.SOCIAL),
+        "Robotics" to listOf(HobbyCategory.ACADEMIC_RELATED),
+        "Rugby" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Science Fiction and Fantasy" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Skating" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Snooker and Pool" to listOf(HobbyCategory.SPORTS),
+        "Squash" to listOf(HobbyCategory.SPORTS),
+        "Tabletop Gaming" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Tennis" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
+        "Volleyball" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR)
+    )
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         // Remove back press option, to prevent double updates to database
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_interest)
@@ -32,9 +98,58 @@ class InterestActivity : AppCompatActivity() {
         // Select interest from drop down list
         val spinner: Spinner = findViewById(R.id.spinner)
         var selectedInterest = ""
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, hobbiesCategoriesMap.keys.toList())
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 selectedInterest = spinner.selectedItem as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle no selection
+            }
+        }
+
+        val filterSpinner: Spinner = findViewById(R.id.filter_spinner)
+        filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val category = filterSpinner.selectedItem as String
+                if (category == "None") {
+                    val adapter = ArrayAdapter(this@InterestActivity, android.R.layout.simple_spinner_item, hobbiesCategoriesMap.keys.toList())
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinner.adapter = adapter
+                } else {
+                    var categoryToFilter: HobbyCategory? = null
+                    when (category) {
+                        "Academic related" -> {
+                            categoryToFilter = HobbyCategory.ACADEMIC_RELATED
+                        }
+                        "Arts & Entertainment" -> {
+                            categoryToFilter = HobbyCategory.ARTS_ENTERTAINMENT
+                        }
+                        "Charitable" -> {
+                            categoryToFilter = HobbyCategory.CHARITABLE
+                        }
+                        "Indoor" -> {
+                            categoryToFilter = HobbyCategory.INDOOR
+                        }
+                        "Outdoor" -> {
+                            categoryToFilter = HobbyCategory.OUTDOOR
+                        }
+                        "Social" -> {
+                            categoryToFilter = HobbyCategory.SOCIAL
+                        }
+                        "Sports" -> {
+                            categoryToFilter = HobbyCategory.SPORTS
+                        }
+                    }
+                    val adapter = ArrayAdapter(this@InterestActivity, android.R.layout.simple_spinner_item, hobbiesCategoriesMap.filter { it.value.contains(categoryToFilter) }.keys.toList())
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinner.adapter = adapter
+                }
+                adapter.notifyDataSetChanged()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
