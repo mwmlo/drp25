@@ -12,6 +12,7 @@
         android:layout_marginTop="@dimen/text_margin_32"
         android:layout_marginHorizontal="56dp"
         android:text="Select your interest!"
+        android:textColor="@color/stream_ui_accent_red"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/back_button_interests"
         app:layout_constraintBottom_toTopOf="@id/spinner"/>
