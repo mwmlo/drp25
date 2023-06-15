@@ -14,6 +14,7 @@
         android:text="@string/enter_as_max"
         app:layout_constraintBottom_toTopOf="@+id/enter_kevin_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,9 +24,20 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#1F7AC3"
         android:text="@string/enter_as_kevin"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/enter_committee_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_max_button" />
+
+    <Button
+        android:id="@+id/enter_committee_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#74A119"
+        android:text="@string/enter_as_committee"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enter_kevin_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -106,11 +106,6 @@ fun addUser(uniId: String, name: String, nationality: String, year: String, cour
     return userId
 }
 
-//fun putInterestRating(uniId: String, userId: String, interest: String) {
-//    val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
-//    interestsRef.child(interest).setValue(null)
-//}
-
 fun addInterest(uniId: String, userId: String, interest: String) {
     val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
     interestsRef.child(interest).setValue(5)
@@ -119,4 +114,16 @@ fun addInterest(uniId: String, userId: String, interest: String) {
 fun removeInterest(uniId: String, userId: String, interest: String) {
     val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
     interestsRef.child(interest).removeValue()
+}
+
+fun addEvent(uniId: String, eventName: String, eventDate: String, eventDesc: String) {
+    val eventsRef = unisRef.child(uniId).child("events")
+    val eventId = eventsRef.push().key
+    if (eventId != null) {
+        val eventRef = eventsRef.child(eventId)
+        eventRef.child("eventName").setValue(eventName)
+        eventRef.child("eventDate").setValue(eventDate)
+        eventRef.child("eventDesc").setValue(eventDesc)
+        eventRef.child("society").setValue("ballet")
+    }
 }

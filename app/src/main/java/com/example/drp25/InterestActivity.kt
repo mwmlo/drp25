@@ -170,7 +170,7 @@ class InterestActivity : AppCompatActivity() {
         // Back button returns to profile
         val backButton = findViewById<Button>(R.id.back_button_interests)
         backButton.setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
+            val intent = Intent(this, UserProfileActivity::class.java)
             startActivity(intent)
         }
     }

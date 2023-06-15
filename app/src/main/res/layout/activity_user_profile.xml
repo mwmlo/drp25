@@ -5,7 +5,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".UserProfileActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/profile_toolbar"
@@ -24,6 +24,7 @@
             android:layout_height="48dp"
             android:layout_margin="@dimen/margin_16"
             android:background="@drawable/arrow_back"
+            android:contentDescription="@string/back_to_chats"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

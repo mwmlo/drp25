@@ -3,7 +3,7 @@
     android:layout_height="125dp"
     android:scaleType="centerCrop"
     android:layout_margin="@dimen/margin_16"
-    android:contentDescription="stamp image view"
+    android:contentDescription="@string/stamp_view_descr"
     android:scaleX="0.75"
     android:scaleY="0.75"
 />
