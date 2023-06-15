@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TableRow
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.drp25.databinding.ActivityUserProfileBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -51,8 +52,6 @@ class UserProfileActivity : AppCompatActivity() {
         stampLayout = findViewById(R.id.stamp_layout)
         noStampsTextView = findViewById(R.id.no_stamps_prompt)
 
-        imageFile = File(filesDir, "pfp$UNI_ID$USER_ID.png")
-
         // set up views
         val uniRef = FirebaseDatabase.getInstance().reference.child("universities")
             .child(UNI_ID)
@@ -63,9 +62,11 @@ class UserProfileActivity : AppCompatActivity() {
                 val name: String = snapshot.child("name").value as String
                 val course = snapshot.child("course").value
                 val year = snapshot.child("year").value
-                val pfpPath = snapshot.child("pfp").value
-                if (pfpPath != null) {
-                    displayImageFromFile(pfpPath as String)
+                val pfpUri = snapshot.child("pfp").value
+                if (pfpUri != null) {
+                    Glide.with(this@UserProfileActivity)
+                        .load(pfpUri as String)
+                        .into(binding.profileImageView)
                 } else {
                     binding.profileImageView.setImageResource(R.drawable.default_profile)
                 }
@@ -149,27 +150,8 @@ class UserProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             val selectedImageUri: Uri? = data.data
-            saveImageToFile(selectedImageUri)
+            updatePfp(UNI_ID, USER_ID, selectedImageUri.toString())
         }
     }
 
-    private fun saveImageToFile(imageUri: Uri?) {
-        imageUri?.let { uri ->
-            val inputStream = contentResolver.openInputStream(uri)
-            val outputStream = FileOutputStream(imageFile)
-
-            inputStream?.use { input ->
-                outputStream.use { output ->
-                    input.copyTo(output)
-                }
-            }
-        }
-        updatePfp(UNI_ID, USER_ID, imageFile.absolutePath)
-        displayImageFromFile(imageFile.absolutePath)
-    }
-
-    private fun displayImageFromFile(path: String) {
-        val imageBitmap = BitmapFactory.decodeFile(path)
-        binding.profileImageView.setImageBitmap(imageBitmap)
-    }
 }

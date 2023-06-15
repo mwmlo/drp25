@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -53,10 +54,11 @@ class MatchActivity : AppCompatActivity() {
                         val course = snapshot.child("course").value
                         val year = snapshot.child("year").value
 
-                        val pfpPath = snapshot.child("pfp").value
-                        if (pfpPath != null) {
-                            val imageBitmap = BitmapFactory.decodeFile(pfpPath as String)
-                            pfpImage.setImageBitmap(imageBitmap)
+                        val pfpUri = snapshot.child("pfp").value
+                        if (pfpUri != null) {
+                            Glide.with(this@MatchActivity)
+                                .load(pfpUri as String)
+                                .into(pfpImage)
                         } else {
                             pfpImage.setImageResource(R.drawable.default_profile)
                         }

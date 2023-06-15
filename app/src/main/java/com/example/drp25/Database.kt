@@ -1,14 +1,10 @@
 package com.example.drp25
 
-import android.widget.LinearLayout
-import android.widget.RatingBar
 import com.example.drp25.matchers.MyMatcher
-import com.example.drp25.matchers.RatingMatcherWithNationality
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.gson.Gson
 
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
 private val matcher: Matcher = MyMatcher()
@@ -20,8 +16,8 @@ fun sendStamp(uniId: String, userId: String, stampName: String) {
     stampsRef.push().setValue(stampName)
 }
 
-fun updatePfp(uniId: String, userId: String, filepath: String) {
-    unisRef.child(uniId).child("users").child(userId).child("pfp").setValue(filepath)
+fun updatePfp(uniId: String, userId: String, imgUri: String) {
+    unisRef.child(uniId).child("users").child(userId).child("pfp").setValue(imgUri)
 }
 
 fun deletePfp(uniId: String, userId: String) {
