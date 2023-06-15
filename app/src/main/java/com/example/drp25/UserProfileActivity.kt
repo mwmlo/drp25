@@ -65,7 +65,7 @@ class UserProfileActivity : AppCompatActivity() {
                 val year = snapshot.child("year").value
                 val hasPfp = snapshot.child("pfp").value as Boolean
                 if (hasPfp) {
-                    displayPfp()
+                    displayPfp(UNI_ID, USER_ID, binding.profileImageView)
                 } else {
                     binding.profileImageView.setImageResource(R.drawable.default_profile)
                 }
@@ -152,20 +152,6 @@ class UserProfileActivity : AppCompatActivity() {
             if (selectedImageUri != null) {
                 updatePfp(UNI_ID, USER_ID, selectedImageUri)
             }
-        }
-    }
-
-    private fun displayPfp() {
-        val pfpRef = imageRef.child("pfp_${UNI_ID}_${USER_ID}.png")
-
-        pfpRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {imageData ->
-            // Use the bytes to display the image
-            // Convert the image data to a Bitmap
-            val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
-            // Set the Bitmap to your ImageView
-            binding.profileImageView.setImageBitmap(bitmap)
-        }.addOnFailureListener {
-            // Handle any errors
         }
     }
 

@@ -1,6 +1,8 @@
 package com.example.drp25
 
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.widget.ImageView
 import com.example.drp25.matchers.MyMatcher
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,6 +19,20 @@ val matchObservers = mutableListOf<Observer>()
 
 val storage = Firebase.storage
 val imageRef = storage.reference.child("images")
+
+fun displayPfp(uniId: String, userId: String, imageView: ImageView) {
+    val pfpRef = imageRef.child("pfp_${uniId}_${userId}.png")
+
+    pfpRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {imageData ->
+        // Use the bytes to display the image
+        // Convert the image data to a Bitmap
+        val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
+        // Set the Bitmap to your ImageView
+        imageView.setImageBitmap(bitmap)
+    }.addOnFailureListener {
+        // Handle any errors
+    }
+}
 
 fun sendStamp(uniId: String, userId: String, stampName: String) {
     val stampsRef = unisRef.child(uniId).child("users").child(userId).child("stamps")
