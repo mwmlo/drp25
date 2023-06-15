@@ -3,13 +3,13 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_height="wrap_content" android:layout_width="wrap_content"
-        android:orientation="vertical">
+        android:layout_gravity="center" android:orientation="vertical">
         <TextView
             android:id="@+id/name_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:gravity="center_vertical"
+            android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/text_margin_32"
             android:layout_marginTop="0dp"
             android:text="[Name]"
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:gravity="center_vertical"
+            android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/text_margin_32"
             android:layout_marginTop="0dp"
             android:text="[Course info]"
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:gravity="center_vertical"
+            android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/text_margin_32"
             android:layout_marginTop="0dp"
             android:text="Interests"
@@ -47,6 +47,7 @@
             android:textSize="24sp"/>
         <TableLayout
             android:id="@+id/interests_view"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/text_margin_32"

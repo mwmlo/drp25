@@ -13,11 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin_32"
-        android:text="@string/match_matched"
+        android:text="Select your match"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="@color/stream_ui_accent_blue"
-        android:textSize="48sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,23 +58,5 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </HorizontalScrollView>
-
-    <!--    <ImageButton-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:src="@drawable/stream_ui_arrow_left"-->
-    <!--        android:scaleX="2"-->
-    <!--        android:scaleY="2"-->
-    <!--        app:layout_constraintTop_toTopOf="@id/matches_scroll_view"-->
-    <!--        app:layout_constraintBottom_toBottomOf="@id/matches_scroll_view"-->
-    <!--        app:layout_constraintEnd_toStartOf="@id/matches_scroll_view"/>-->
-
-    <!--    <ImageButton-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:src="@drawable/stream_ui_ic_filled_right_arrow"-->
-    <!--        app:layout_constraintTop_toTopOf="@id/matches_scroll_view"-->
-    <!--        app:layout_constraintBottom_toBottomOf="@id/matches_scroll_view"-->
-    <!--        app:layout_constraintStart_toEndOf="@id/matches_scroll_view" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
