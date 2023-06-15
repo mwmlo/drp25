@@ -169,14 +169,20 @@
                 android:textAlignment="center"
                 android:visibility="gone"/>
 
-            <LinearLayout
-                android:id="@+id/stamp_layout"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/text_margin_32"
-                android:layout_marginRight="@dimen/text_margin_32"
-                android:orientation="horizontal"
-                android:visibility="gone"/>
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/stamp_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/text_margin_32"
+                    android:layout_marginRight="@dimen/text_margin_32"
+                    android:orientation="horizontal"
+                    android:visibility="gone"/>
+
+            </HorizontalScrollView>
 
             <Button
                 android:id="@+id/profile_match_button"
