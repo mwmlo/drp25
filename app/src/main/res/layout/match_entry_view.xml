@@ -1,65 +1,82 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_height="wrap_content" android:layout_width="wrap_content"
-        android:layout_gravity="center" android:orientation="vertical">
-        <TextView
-            android:id="@+id/name_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="@dimen/text_margin_32"
-            android:layout_marginTop="0dp"
-            android:text="[Name]"
-            android:textColor="@color/stream_ui_accent_red"
-            android:textSize="24sp"/>
-        <TextView
-            android:id="@+id/info_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="@dimen/text_margin_32"
-            android:layout_marginTop="0dp"
-            android:text="[Course info]"
-            android:textColor="@color/stream_ui_accent_red"
-            android:textSize="24sp"/>
-        <ImageView
-            android:id="@+id/match_pfp_view"
-            android:layout_width="148dp"
-            android:layout_height="148dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/stream_ui_picture_placeholder"
-            android:contentDescription="@string/profile_picture_descr"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/text_margin_32"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="@dimen/text_margin_32"
-            android:layout_marginTop="0dp"
-            android:text="Interests"
-            android:textColor="@color/stream_ui_accent_red"
-            android:textSize="24sp"/>
-        <TableLayout
-            android:id="@+id/interests_view"
-            android:layout_gravity="center"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_8"
+    card_view:contentPadding="@dimen/text_margin_32">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/text_margin_32"
-            android:layout_marginRight="@dimen/text_margin_32">
-        </TableLayout>
-        <Button
-            android:id="@+id/match_with_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/stream_ui_blue_alice"
-            android:textColor="@color/stream_ui_accent_blue"
-            android:text="[Match with]"
-            android:layout_gravity="center" />
-    </LinearLayout>
-</ScrollView>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nationality_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="British"
+                android:textSize="20sp"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:id="@+id/name_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_8"
+                android:text="Howdy"
+                android:textColor="@color/stream_ui_accent_red"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/info_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:textSize="20sp"/>
+
+            <ImageView
+                android:id="@+id/match_pfp_view"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/profile_picture_descr"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/text_margin_32"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/text_margin_32"
+                android:text="Interests"
+                android:textColor="@color/stream_ui_accent_red"
+                android:textSize="24sp"/>
+
+            <LinearLayout
+                android:id="@+id/interests_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/text_margin_32"
+                android:orientation="vertical" />
+
+            <Button
+                android:id="@+id/match_with_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_16"
+                android:backgroundTint="@color/stream_ui_blue_alice"
+                android:textColor="@color/stream_ui_accent_blue" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.cardview.widget.CardView>
