@@ -1,5 +1,6 @@
 package com.example.drp25.matchers
 
+import android.util.Log
 import com.example.drp25.Matcher
 import com.google.firebase.database.DataSnapshot
 
@@ -12,7 +13,7 @@ class MyMatcher : Matcher {
 
         // Check not already matched
         val user2Id = user2Snapshot.key
-        val matched1Ref = user1Snapshot.child("matches")
+        val matched1Ref = user1Snapshot.child("matched")
         for (child in matched1Ref.children) {
             if (child.value == user2Id) return false
         }
