@@ -14,8 +14,8 @@ class MyMatcher : Matcher {
         // Check not already matched
         val user2Id = user2Snapshot.key
         val matched1Ref = user1Snapshot.child("matched")
-        for (child in matched1Ref.children) {
-            if (child.value == user2Id) return false
+        for (match in matched1Ref.children) {
+            if (match.child("matchId").value == user2Id) return false
         }
 
         val interests1Ref = user1Snapshot.child("interests")
