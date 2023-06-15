@@ -2,6 +2,7 @@ package com.example.drp25
 
 import android.widget.LinearLayout
 import android.widget.RatingBar
+import com.example.drp25.matchers.MyMatcher
 import com.example.drp25.matchers.RatingMatcherWithNationality
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -10,7 +11,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
-private val matcher: Matcher = RatingMatcherWithNationality()
+private val matcher: Matcher = MyMatcher()
 val matches = mutableSetOf<String>()
 val matchObservers = mutableListOf<Observer>()
 
@@ -26,6 +27,12 @@ fun updatePfp(uniId: String, userId: String, filepath: String) {
 fun addMatchObserver(observer: Observer) {
     matchObservers.add(observer)
     observer.notify(matches)
+}
+
+fun addMatched(uniId: String, user1Id: String, user2Id: String) {
+    val usersRef = unisRef.child(uniId).child("users")
+    usersRef.child(user1Id).child("matched").push().setValue(user2Id)
+    usersRef.child(user2Id).child("matched").push().setValue(user1Id)
 }
 
 fun listenToUser(uniId: String, userId: String) {
