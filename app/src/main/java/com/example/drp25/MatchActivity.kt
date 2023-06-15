@@ -5,16 +5,11 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Layout.Alignment
 import android.view.LayoutInflater
 import android.view.View.TEXT_ALIGNMENT_CENTER
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RatingBar
-import android.widget.ScrollView
-import android.widget.TableLayout
-import android.widget.TableRow
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.google.firebase.database.DataSnapshot
@@ -29,14 +24,17 @@ class MatchActivity : AppCompatActivity() {
     private var selectedMatchName: String? = null
 
     private val observer = object : Observer {
-        override fun notify(matchIds: Set<String>) {
+        override fun notify(data: Set<String>) {
+            val matchIds = data
             parentLayout.removeAllViews()
             for (matchId in matchIds) {
                 val inflater = LayoutInflater.from(this@MatchActivity)
-//                val scrollView = inflater.inflate(R.layout.match_entry_view, parentLayout, false) as ScrollView
-//                parentLayout.addView(scrollView)
-                val cardView = inflater.inflate(R.layout.match_entry_view, parentLayout, false) as CardView
+                /* Creates a match_entry_view for each match. */
+                val cardView = inflater.inflate(
+                    R.layout.match_entry_view, parentLayout, false
+                ) as CardView
                 parentLayout.addView(cardView)
+                /* Each View within the match entry. */
                 val pfpImage = cardView.findViewById<ImageView>(R.id.match_pfp_view)
                 val nameText = cardView.findViewById<TextView>(R.id.name_view)
                 val nationalityText = cardView.findViewById<TextView>(R.id.nationality_view)
@@ -61,7 +59,7 @@ class MatchActivity : AppCompatActivity() {
 
                         nameText.text = name
                         nationalityText.text = nationality.toString()
-                        infoText.text = "Year $year $course"
+                        infoText.text = getString(R.string.entry_info, year, course)
 
                         /* Generates TextViews for each interest. */
                         for (interest in snapshot.child("interests").children) {
@@ -72,7 +70,7 @@ class MatchActivity : AppCompatActivity() {
                             interestsTable.addView(interestNameView)
                         }
 
-                        matchWithBtn.text = "Match with $name"
+                        matchWithBtn.text = getString(R.string.entry_match_with, name)
                         matchWithBtn.setOnClickListener {
                             selectedMatchId = matchId
                             selectedMatchName = name

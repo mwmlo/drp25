@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin_32"
-        android:text="Select your match"
+        android:text="@string/match_select_match"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="@color/stream_ui_accent_blue"

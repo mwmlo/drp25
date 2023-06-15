@@ -7,12 +7,15 @@
     <string name="back_button">back</string>
 
     <!-- Match Page -->
-    <string name="match_matched">matched!</string>
+    <string name="match_select_match">Select Your Match</string>
     <string name="match_caption">Swipe to see your matches.</string>
     <string name="match_prompt">Send a stamp to start a chat!</string>
-    <string name="match_send_button">send</string>
+    <!-- Match Entries -->
+    <string name="entry_info">Year %s %s</string>
+    <string name="entry_match_with">Match with %s</string>
     <!-- Necessary Content Description(s) -->
     <string name="matches_descr">matches display</string>
+    <string name="match_with_descr">match with X</string>
 
     <!--Interest selection page-->
     <string name="interest_prompt">Enter new interest</string>
