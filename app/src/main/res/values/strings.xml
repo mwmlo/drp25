@@ -6,6 +6,11 @@
     <string name="meet_someone_button">meet someone new!</string>
     <string name="back_button">back</string>
 
+    <!-- Login Page -->
+    <string name="enter_as_committee">Enter as committee member</string>
+    <string name="enter_as_max">Enter as MAX</string>
+    <string name="enter_as_kevin">Enter as KEVIN</string>
+
     <!-- Match Page -->
     <string name="match_select_match">Select Your Match</string>
     <string name="match_caption">Swipe to see your matches.</string>
@@ -16,28 +21,42 @@
     <!-- Necessary Content Description(s) -->
     <string name="matches_descr">matches display</string>
     <string name="match_with_descr">match with X</string>
+    <string name="stamp_view_descr">stamp image view</string>
 
     <!--Interest selection page-->
     <string name="interest_prompt">Enter new interest</string>
+    <string name="back_to_profile">back to profile</string>
 
-    <!-- Profile Page -->
+    <!-- User Profile Page -->
+    <string name="upload_profile_picture">Upload Profile Picture</string>
     <string name="personal_info">Personal Info</string>
     <string name="interests">Interests</string>
     <string name="stamps">Stamps</string>
     <string name="stamps_prompt">You don\'t have any stamps yet. Meet new friends to collect stamps.</string>
     <!-- Necessary Content Description(s) -->
+    <string name="back_to_chats">back to chat page</string>
     <string name="profile_picture_descr">profile picture placeholder</string>
     <string name="rating_descr">interest level rating</string>
-    <!-- Hardcoded Kevin Example -->
-    <string name="kevin">Kevin</string>
-    <string name="kevin_info">Year 1  |  Physics  |  Imperial College</string>
-    <string name="kevin_info_year">Year 1</string>
-    <string name="kevin_info_course">Physics</string>
-    <string name="kevin_info_uni">Imperial College</string>
-    <string name="kevin_interests">Ballet  |  Cooking  |  Football</string>
-    <string name="kevin_interest_1">Ballet</string>
-    <string name="kevin_interest_2">Cooking</string>
-    <string name="kevin_interest_3">Football</string>
+
+    <!-- Committee Profile Page -->
+    <string name="media_instagram">Instagram</string>
+    <string name="media_email">Email</string>
+    <!-- Hardcoded Content -->
+    <string name="ballet_society">BalletSoc</string>
+    <string name="ballet_soc_insta">\@balletsoc</string>
+    <string name="ballet_soc_email">balletsoc\@outlook.com</string>
+
+    <!-- Committee Events Page -->
+    <string name="events_page_title">Upcoming Events</string>
+    <string name="broadcast_event">Broadcast</string>
+    <!-- Necessary Content Descriptions -->
+    <string name="events_to_profile">to profile page</string>
+
+    <!-- Hardcoded Content -->
+    <string name="event_name">Event</string>
+    <string name="event_descr">Description of the event.</string>
+    <string name="new_event_name">This is a new event with a super long title!</string>
+    <string name="new_event_descr">This is the description for the new event.</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -80,8 +99,6 @@
     <string name="select_interest_s">Select interest(s)</string>
     <string name="update">Update</string>
     <string name="add_new_interest">Add new interest</string>
-    <string name="enter_as_max">Enter as MAX</string>
-    <string name="enter_as_kevin">Enter as KEVIN</string>
     <string-array name="interest_array">
         <item>Anime</item>
         <item>Archery</item>
@@ -89,6 +106,7 @@
         <item>Astronomy</item>
         <item>Badminton</item>
         <item>Baking</item>
+        <item>Ballet</item>
         <item>Baseball and Softball</item>
         <item>Basketball</item>
         <item>Bridge</item>
@@ -133,6 +151,16 @@
         <item>Tabletop Gaming</item>
         <item>Tennis</item>
         <item>Volleyball</item>
+    </string-array>
+    <string-array name="category_array">
+        <item>None</item>
+        <item>Academic related</item>
+        <item>Arts &amp; Entertainment</item>
+        <item>Charitable</item>
+        <item>Indoor</item>
+        <item>Outdoor</item>
+        <item>Social</item>
+        <item>Sports</item>
     </string-array>
     <string name="title_activity_club_interest">ClubInterestActivity</string>
     <string name="large_text">
@@ -225,8 +253,11 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
-    <string name="back_to_profile">back to profile</string>
     <string name="please_choose_remove_your_interests_from_the_list_below">Please choose / remove your interests.</string>
     <string name="app_logo">app logo</string>
-    <string name="upload_profile_picture">Upload Profile Picture</string>
+    <string name="create_a_new_event">Create a new event</string>
+    <string name="event_name_prompt">Event Name</string>
+    <string name="name">Name</string>
+    <string name="event_date">Event Date</string>
+    <string name="event_description">Event Description</string>
 </resources>

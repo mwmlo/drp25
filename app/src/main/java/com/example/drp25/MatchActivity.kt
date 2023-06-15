@@ -74,6 +74,8 @@ class MatchActivity : AppCompatActivity() {
                         matchWithBtn.setOnClickListener {
                             selectedMatchId = matchId
                             selectedMatchName = name
+                            addMatched(UNI_ID, USER_ID, selectedMatchId!!)
+
                             val intent = Intent(this@MatchActivity, StampActivity::class.java)
                             intent.putExtra("selectedMatchId", selectedMatchId)
                             intent.putExtra("selectedMatchName", selectedMatchName)

@@ -3,7 +3,6 @@ package com.example.drp25
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import com.example.drp25.ChatActivity.Companion.setCurrentUser
 
@@ -17,6 +16,7 @@ class UserActivity : AppCompatActivity() {
 
         val maxButton = findViewById<Button>(R.id.enter_max_button)
         val kevinButton = findViewById<Button>(R.id.enter_kevin_button)
+        val committeeButton = findViewById<Button>(R.id.enter_committee_button)
 
         maxButton.setOnClickListener {
             USER_ID = "-NXPnWs-phdiaSN_S87V"
@@ -31,6 +31,11 @@ class UserActivity : AppCompatActivity() {
             setCurrentUser("kevin")
             listenToUser(UNI_ID, USER_ID)
             val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
+        }
+
+        committeeButton.setOnClickListener {
+            val intent = Intent(this, CommitteeEventsActivity::class.java)
             startActivity(intent)
         }
     }

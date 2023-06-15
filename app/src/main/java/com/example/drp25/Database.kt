@@ -2,6 +2,7 @@ package com.example.drp25
 
 import android.widget.LinearLayout
 import android.widget.RatingBar
+import com.example.drp25.matchers.MyMatcher
 import com.example.drp25.matchers.RatingMatcherWithNationality
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -10,13 +11,13 @@ import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 
 private val unisRef = FirebaseDatabase.getInstance().reference.child("universities")
-private val matcher: Matcher = RatingMatcherWithNationality()
+private val matcher: Matcher = MyMatcher()
 val matches = mutableSetOf<String>()
 val matchObservers = mutableListOf<Observer>()
 
-fun sendStamp(uniId: String, userId: String, imageId: Int) {
+fun sendStamp(uniId: String, userId: String, stampName: String) {
     val stampsRef = unisRef.child(uniId).child("users").child(userId).child("stamps")
-    stampsRef.push().setValue(imageId)
+    stampsRef.push().setValue(stampName)
 }
 
 fun updatePfp(uniId: String, userId: String, filepath: String) {
@@ -26,6 +27,39 @@ fun updatePfp(uniId: String, userId: String, filepath: String) {
 fun addMatchObserver(observer: Observer) {
     matchObservers.add(observer)
     observer.notify(matches)
+}
+
+fun addMatched(uniId: String, user1Id: String, user2Id: String) {
+    val usersRef = unisRef.child(uniId).child("users")
+    val key1 = usersRef.child(user1Id).child("matched").push()
+    val key2 = usersRef.child(user2Id).child("matched").push()
+    key1.child("matchId").setValue(user2Id)
+    key2.child("matchId").setValue(user1Id)
+
+    usersRef.child(user1Id).child("interests").addListenerForSingleValueEvent(object: ValueEventListener {
+        override fun onDataChange(snapshot1: DataSnapshot) {
+            usersRef.child(user2Id).child("interests").addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onDataChange(snapshot2: DataSnapshot) {
+                    for (child in snapshot1.children) {
+                        if (child.key?.let { snapshot2.hasChild(it) } == true) {
+                            key1.child("sharedInterests").push().setValue(child.key)
+                            key2.child("sharedInterests").push().setValue(child.key)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            TODO("Not yet implemented")
+        }
+
+    })
 }
 
 fun listenToUser(uniId: String, userId: String) {
@@ -99,11 +133,6 @@ fun addUser(uniId: String, name: String, nationality: String, year: String, cour
     return userId
 }
 
-//fun putInterestRating(uniId: String, userId: String, interest: String) {
-//    val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
-//    interestsRef.child(interest).setValue(null)
-//}
-
 fun addInterest(uniId: String, userId: String, interest: String) {
     val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
     interestsRef.child(interest).setValue(5)
@@ -112,4 +141,16 @@ fun addInterest(uniId: String, userId: String, interest: String) {
 fun removeInterest(uniId: String, userId: String, interest: String) {
     val interestsRef = unisRef.child(uniId).child("users").child(userId).child("interests")
     interestsRef.child(interest).removeValue()
+}
+
+fun addEvent(uniId: String, eventName: String, eventDate: String, eventDesc: String) {
+    val eventsRef = unisRef.child(uniId).child("events")
+    val eventId = eventsRef.push().key
+    if (eventId != null) {
+        val eventRef = eventsRef.child(eventId)
+        eventRef.child("eventName").setValue(eventName)
+        eventRef.child("eventDate").setValue(eventDate)
+        eventRef.child("eventDesc").setValue(eventDesc)
+        eventRef.child("society").setValue("ballet")
+    }
 }

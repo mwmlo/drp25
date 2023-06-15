@@ -146,10 +146,14 @@ class ChatActivity : AppCompatActivity() {
         }
 
         binding.channelListHeaderView.setOnUserAvatarClickListener{
-            val intent = Intent(this, ProfileActivity::class.java)
+            val intent = Intent(this, UserProfileActivity::class.java)
             startActivity(intent)
         }
 
+        binding.channelListHeaderView.setOnTitleLongClickListener {
+            // Broadcast to all channels.
+            //val intent = Intent(this, )
+        }
         setContentView(binding.root)
 
         binding.channelListHeaderView.setOnlineTitle("Globe Chatter")
