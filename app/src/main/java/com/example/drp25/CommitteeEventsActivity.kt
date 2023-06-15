@@ -4,10 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.core.view.allViews
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -43,7 +41,7 @@ class CommitteeEventsActivity : AppCompatActivity() {
                     val eventCard = inflater.inflate(
                         R.layout.committee_event_view, eventsList, false
                     ) as CardView
-                    eventCard.findViewById<TextView>(R.id.new_event_title).text = name
+                    eventCard.findViewById<TextView>(R.id.share_prompt).text = name
                     eventCard.findViewById<TextView>(R.id.new_event_descr).text = desc
                     eventCard.findViewById<TextView>(R.id.new_event_date).text = date
                     eventsList.addView(eventCard)

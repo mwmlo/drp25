@@ -29,7 +29,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/new_event_title"
+                android:id="@+id/share_prompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/text_margin_32"

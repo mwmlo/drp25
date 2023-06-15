@@ -250,4 +250,5 @@
     <string name="list_of_events">list of events</string>
     <string name="recommended_events">Recommended Events</string>
     <string name="upcoming_events_related_to_your_interests">Upcoming events</string>
+    <string name="share_with_a_friend">Share</string>
 </resources>

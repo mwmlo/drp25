@@ -3,31 +3,115 @@ package com.example.drp25
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import org.w3c.dom.Text
 
 class UserEventsActivity : AppCompatActivity() {
 
     private val interests: MutableList<String> = ArrayList()
 
-    private fun createEventCard(event: DataSnapshot, inflater: LayoutInflater, eventsList: LinearLayout) {
+    private fun getInterestedFriends(society: String, view: View) {
+
+    }
+
+    private fun createEventCard(event: DataSnapshot, inflater: LayoutInflater, eventsList: LinearLayout, society: String) {
         val name: String = event.child("eventName").value as String
         val date = event.child("eventDate").value as String
         val desc = event.child("eventDesc").value as String
 
         val eventCard = inflater.inflate(
-            R.layout.committee_event_view, eventsList, false
+            R.layout.user_event_view, eventsList, false
         ) as CardView
-        eventCard.findViewById<TextView>(R.id.new_event_title).text = name
+        eventCard.findViewById<TextView>(R.id.share_prompt).text = name
         eventCard.findViewById<TextView>(R.id.new_event_descr).text = desc
         eventCard.findViewById<TextView>(R.id.new_event_date).text = date
+
+        val shareBtn = eventCard.findViewById<Button>(R.id.share_button)
+        shareBtn.setOnClickListener {
+            // Inflate the pop-up overlay layout
+            val view = inflater.inflate(R.layout.popup_share, null)
+
+            // Fill in share prompt and friend details
+            val invite = "Invite your friends to come along to $name!"
+            view.findViewById< TextView>(R.id.share_prompt).text = invite
+
+            val friends: MutableList<String> = ArrayList()
+            // Get list of matched friends with the same interest
+            val userRef = FirebaseDatabase.getInstance().reference.child("universities")
+                .child(UNI_ID).child("users").child(USER_ID)
+            userRef.addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (match in snapshot.child("matched").children) {
+                        Log.e("match", match.toString())
+                        val sharedInterests = match.child("sharedInterests").children
+                        for (interest in sharedInterests) {
+                            Log.e("interest", interest.toString())
+                            if (society == interest.value.toString()) {
+                                friends.add(match.child("matchId").value.toString())
+                            }
+                        }
+
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+            // Find name of friends
+            val usersRef = FirebaseDatabase.getInstance().reference.child("universities")
+                .child(UNI_ID).child("users")
+            val names: MutableList<String> = ArrayList()
+            usersRef.addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (user in snapshot.children) {
+                        Log.e("user", user.toString())
+                        if (friends.contains(user.key)) {
+                            Log.e("user key", user.key.toString())
+                            Log.e("user value", user.value.toString())
+                            Log.e("user child", user.child("name").value.toString())
+                            names.add(user.child("name").value.toString())
+                            val friendPrompt = "$names might be interested."
+                            view.findViewById<TextView>(R.id.friends_list).text = friendPrompt
+                            Log.e("names", names.toString())
+                        }
+
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+
+//            val friendPrompt = "$names might be interested."
+//            view.findViewById<TextView>(R.id.friends_list).text = friendPrompt
+            Log.e("names", names.toString())
+
+            // Create the pop-up window
+            val popupWindow = PopupWindow(view,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                true)
+
+            // Set up dismiss listener to close the pop-up window when clicked outside
+            popupWindow.isOutsideTouchable = true
+            popupWindow.isFocusable = true
+
+            // Show the pop-up window
+            popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
+        }
         eventsList.addView(eventCard)
     }
 
@@ -65,7 +149,7 @@ class UserEventsActivity : AppCompatActivity() {
                 for (event in snapshot.children) {
                     val society = event.child("society").value as String
                     if (interests.contains(society)) {
-                        createEventCard(event, inflater, eventsList)
+                        createEventCard(event, inflater, eventsList, society)
                     }
                 }
             }
