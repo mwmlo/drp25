@@ -49,6 +49,21 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/stream_ui_accent_blue"
+        app:layout_constraintBottom_toTopOf="@+id/home_events_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/home_events_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/text_margin_32"
+        android:backgroundTint="@color/stream_ui_blue_alice"
+        android:text="@string/recommended_events"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/stream_ui_accent_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
