@@ -3,6 +3,8 @@ package com.example.drp25
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 
@@ -150,7 +152,14 @@ class ChatActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        /* Functionality of profile avatar -> takes user to profile page. */
         binding.channelListHeaderView.setOnUserAvatarClickListener{
+            val intent = Intent(this, UserProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        /* Functionality of profile button -> takes user to profile page. */
+        binding.profileButton.setOnClickListener {
             val intent = Intent(this, UserProfileActivity::class.java)
             startActivity(intent)
         }

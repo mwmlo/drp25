@@ -11,6 +11,9 @@
     <string name="enter_as_max">Enter as MAX</string>
     <string name="enter_as_kevin">Enter as KEVIN</string>
 
+    <!-- Home (Chat List) Page -->
+    <string name="home_profile">profile</string>
+
     <!-- Match Page -->
     <string name="match_select_match">Select Your Match</string>
     <string name="match_caption">Swipe to see your matches.</string>
