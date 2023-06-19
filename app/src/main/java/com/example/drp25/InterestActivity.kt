@@ -35,6 +35,7 @@ class InterestActivity : AppCompatActivity() {
         "Astronomy" to listOf(HobbyCategory.ACADEMIC_RELATED),
         "Badminton" to listOf(HobbyCategory.SPORTS, HobbyCategory.INDOOR),
         "Baking" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
+        "Ballet" to listOf(HobbyCategory.ARTS_ENTERTAINMENT),
         "Baseball and Softball" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
         "Basketball" to listOf(HobbyCategory.SPORTS, HobbyCategory.OUTDOOR),
         "Bridge" to listOf(HobbyCategory.SOCIAL),
