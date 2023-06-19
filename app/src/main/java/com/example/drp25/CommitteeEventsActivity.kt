@@ -41,6 +41,8 @@ class CommitteeEventsActivity : AppCompatActivity() {
                     val eventCard = inflater.inflate(
                         R.layout.committee_event_view, eventsList, false
                     ) as CardView
+                    eventCard.setCardBackgroundColor(getColor(R.color.light_grey_0))
+                    /* Views in the card. */
                     eventCard.findViewById<TextView>(R.id.share_prompt).text = name
                     eventCard.findViewById<TextView>(R.id.new_event_descr).text = desc
                     eventCard.findViewById<TextView>(R.id.new_event_date).text = date
