@@ -82,6 +82,7 @@ class UserProfileActivity : AppCompatActivity() {
                     }
                 })
 
+                binding.interestsTable.removeAllViews()
                 for (interest in snapshot.child("interests").children) {
                     val inflater = LayoutInflater.from(this@UserProfileActivity)
                     val rowView = inflater.inflate(R.layout.profile_interest, binding.interestsTable, false) as TableRow

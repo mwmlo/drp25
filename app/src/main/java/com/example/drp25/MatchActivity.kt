@@ -70,6 +70,7 @@ class MatchActivity : AppCompatActivity() {
                                 val sharedInterests = mutableListOf<String>()
 
                                 /* Generates TextViews for each interest. */
+                                interestsTable.removeAllViews()
                                 for (interest in snapshot.child("interests").children) {
                                     if (interest.key?.let { usSnapshot.hasChild(it) } == true) {
                                         // This interest is shared
