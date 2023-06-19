@@ -28,12 +28,23 @@ class MatchActivity : AppCompatActivity() {
         override fun notify(data: Set<String>) {
             val matchIds = data
             parentLayout.removeAllViews()
+
+            if (matchIds.isEmpty()) {
+                val textView = TextView(context)
+                textView.text = getString(R.string.no_matches)
+                textView.textAlignment = TEXT_ALIGNMENT_CENTER
+                textView.textSize = 20f
+                parentLayout.addView(textView)
+            }
+
+            /* Generate match cards. */
             for (matchId in matchIds) {
                 val inflater = LayoutInflater.from(this@MatchActivity)
                 /* Creates a match_entry_view for each match. */
                 val cardView = inflater.inflate(
                     R.layout.match_entry_view, parentLayout, false
                 ) as CardView
+                cardView.setCardBackgroundColor(getColor(R.color.light_grey_0))
                 parentLayout.addView(cardView)
                 /* Each View within the match entry. */
                 val pfpImage = cardView.findViewById<ImageView>(R.id.match_pfp_view)
