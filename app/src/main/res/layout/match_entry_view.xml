@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_8"
-    card_view:contentPadding="@dimen/text_margin_32">
+    card_view:contentPadding="24dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -44,15 +44,15 @@
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/profile_picture_descr"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/text_margin_32"/>
+                android:layout_marginVertical="@dimen/text_margin_32"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="@dimen/text_margin_32"
-                android:text="Your shared interests"
+                android:layout_marginHorizontal="@dimen/text_margin_16"
+                android:text="@string/entry_shared_interests"
                 android:textColor="@color/stream_ui_accent_red"
                 android:textSize="24sp"/>
 
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="@dimen/text_margin_32"
+                android:layout_marginHorizontal="@dimen/text_margin_16"
                 android:orientation="vertical" />
 
             <Button

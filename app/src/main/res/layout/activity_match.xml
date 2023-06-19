@@ -43,9 +43,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/match_caption"
-        app:layout_constraintHeight_percent="0.65"
-        app:layout_constraintWidth_percent="0.75"
-        app:layout_constraintVertical_bias="0.35">
+        app:layout_constraintHeight_percent="0.7"
+        app:layout_constraintWidth_percent="0.85"
+        app:layout_constraintVertical_bias="0.45">
 
         <LinearLayout
             android:id="@+id/match_matches"
