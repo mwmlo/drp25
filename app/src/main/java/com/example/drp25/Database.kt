@@ -162,6 +162,6 @@ fun addEvent(uniId: String, eventName: String, eventDate: String, eventDesc: Str
         eventRef.child("eventName").setValue(eventName)
         eventRef.child("eventDate").setValue(eventDate)
         eventRef.child("eventDesc").setValue(eventDesc)
-        eventRef.child("society").setValue("ballet")
+        eventRef.child("society").setValue("Ballet")
     }
 }

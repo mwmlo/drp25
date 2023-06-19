@@ -42,9 +42,9 @@ class ChatActivity : AppCompatActivity() {
             name = "Felix",
             image = "upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_India.png/800px-Flag_of_India.png"
         )
-        private val david = User(
-            id = "David",
-            name = "David",
+        private val anna = User(
+            id = "Anna",
+            name = "Anna",
             image = "img.freepik.com/premium-vector/german-flag-vector_230920-1254.jpg"
         )
 
@@ -53,10 +53,10 @@ class ChatActivity : AppCompatActivity() {
         fun setCurrentUser(name: String) {
             if (name == "kevin") {
                 currentUser = kevin
-                potentialFriends = listOf(pierre, max, felix, david)
+                potentialFriends = listOf(pierre, max, felix, anna)
             } else {
                 currentUser = max
-                potentialFriends = listOf(pierre, kevin, felix, david)
+                potentialFriends = listOf(pierre, kevin, felix, anna)
             }
         }
     }
