@@ -18,6 +18,7 @@
     <string name="no_matches">There are no possible matches available.</string>
     <!-- Match Entries -->
     <string name="entry_info">Year %s %s</string>
+    <string name="entry_shared_interests">Your shared interests</string>
     <string name="entry_match_with">Match with %s</string>
     <!-- Necessary Content Description(s) -->
     <string name="matches_descr">matches display</string>
